@@ -1,0 +1,90 @@
+Questions:
+
+- where should i give credit to the illustrator of the doodles and to the sources for the actions?
+- should I download the country code plugin instead of using the link?
+- only accept domestic phone numbers?
+
+things to do:
+- figure out git
+  - add a gitignore file to ignore blog_posts files and vendor files
+- figure out parallax scrolling
+- design separate pages for showing all posts in each category
+- have an if/else in getblogPOsts functions to check if there is actually a file that corresponds to the preview, if not delete the row with that preview
+- make a login page for admin
+- make new pages mobile friendly
+- create donation page
+- research legals abt texting
+  - https://www.textedly.com/sms-compliance-guide/sms-opt-in-rules/
+  - https://blog.textedly.com/text-messaging-laws-every-business-has-to-know-about
+- when ready to upload site activate the texting function
+  - buy sms api
+  - add an opening text when people sign up
+  - add text stop to opt out
+  - add a clear opt in form on sign up (look up legal stuff)
+  - remove user if they dont respond or complete an action 5 or 10 days after check in text
+- delete all files in blog_posts folder
+- add cron job in hosting platform so that cron_functions gets run every 5 minutes
+  - remove 'include cron_functions.php' from top of user_join.php
+  - add $actions_array function from cron functions to user page as well
+  - https://www.dummies.com/web-design-development/web-hosting/how-to-automate-functions-on-your-website-with-cron-jobs/
+- change connection.php to connect to new database
+- Launch site!!
+- create social media accounts, build up hype, link accounts in footer
+- look into copyright, terms and conditions
+
+bugs to fix:
+
+
+styles to add:
+- make input boxes border red when errors inputting
+
+cool features to add:
+- a tool for billionairs to find environmental charities that will use their money most effectively
+- more security, terms and conditions statement
+- maybe add a way for users to text back if they completed action instead of having to log in on site
+- give people actions personalized to their zipcode
+- make count of total actions completed continuously update
+- show users carbon impact of their assigned action and link to more info on why
+  - what iimpact would be if everyone did it
+- add more content to site
+  - blog format, have educational content
+    - make that content into youtube vids
+- make the special action of the day div >> maybe include in first 'update' of the site
+  - maybe have a selection of a few actions for users to choose from
+- Gharuv idea: give people little characters to level up and buy things for by completing actions to earn an in-game currency
+  - would make site alot less simple and adult-oriented so maybe not
+- have a place on the site with 5ish current news articles about the environment that are regularly refreshed
+  - maybe send out as an action periodically to read one of the articles?
+  - split into two columns, one for negative and one for positive stories
+- 'cant complete this action? click here to get a new one'
+- let users choose what time to be texted at
+- if i connect it to other shopping websites, get addUsersExternally function in order
+- use AI to give actions that people are more likely to complete and also that will be more relevant and effective for those people
+  - use coolclimate.org calculator, enter the user zipcode to get avg emmissions for that area and see what would be best to fix for ppl living there
+  - take action page shows most useful actions
+- send texts over dm or snapchat instead if users want
+
+
+Expenses:
+ - Texting API, toll free number
+  - twilio
+  - Textlocal
+- google api paid account
+  - if its too expensive just do a timezone dropdown instead
+- web hosting
+  - look into managed wordpress hosting
+  siteground.com start up plan: 3.99 per month
+
+
+Possible ways of funding:
+- affiliate marketing
+  - sea hugger?
+  - fiverr?
+  - sustainable clothing, patagonia
+  - vegetarian diets
+- have a page where users can submit voluntary donations
+- request a $0.75 or $1 donation on sign up
+  - make it optional probably
+- sell something
+  - some sustainably produced bracelet to let people recognize others in the community https://www.etsy.com/listing/654532445/adjustable-hemp-bracelet-pick-the-color?ga_order=most_relevant&ga_search_type=all&ga_view_type=gallery&ga_search_query=woven+hemp+bracelet&ref=sr_gallery-1-4
+  - unlock a feature like analytics abt their env impact

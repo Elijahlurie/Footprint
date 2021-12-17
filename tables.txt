@@ -1,0 +1,24 @@
+TABLES
+
+  Main
+    -universal stuff for the whole site
+    - columns: id INTEGER PRIMARY KEY AUTO_INCREMENT, total_actions INTEGER [all the actions completed so far by the community], special_action TEXT [the action of the day available to everyone on the home page]
+
+  Users
+    -each user and all the relevant info about them
+    - columns: id INTEGER PRIMARY KEY AUTO_INCREMENT, name VARCHAR, phone VARCHAR, admin BOOL [whether or not they are an admin], completed_action BOOL [whether or not they've completed their daily action], texted INTEGER [time they were texted that day], actions_completed INTEGER [total actions they've completed], curr_action INTEGER [id of the action they were assigned today], completed_yesterday BOOL [whether they completed their action yesterday], yesterday INTEGER [yesterday for the user's timezone], timezone INTEGER [offset for the user's timezone from GMT timezone], zipcode VARCHAR, last_completed_action INTEGER [stores the # days since jan 1 1970 on the day the user last completed an action to keep track of inactivity]
+    - default 0 for admin, completed_action, texted, acitons_completed
+
+  Actions
+    -id INTEGER PRIMARY KEY AUTO_INCREMENT, action TEXT,
+
+  Messages
+    - id INTEGER PRIMARY KEY AUTO_INCREMENT, greeting TEXT [hi, hello, what's up, etc to mix up the messages to users]
+
+  Past_actions
+    - keeps track of actions users have had recently so they will not get the same actions again soon
+    - id INTEGER PRIMARY KEY AUTO_INCREMENT, user_id INTEGER [will correspond with that user's row in the users table], day0 INTEGER [the user's current action], day1 INTEGER [the action the user had yesterday], day 2 INTEGER [the action they had 2 days ago], etc until day19 INTEGER.  For day1 through day19 default should be -1 to not leave table cells blank
+
+  Blog
+    - Stores information needed to create previews for blog post files
+    - id INTEGER PRIMARY KEY AUTO_INCREMENT, time INTEGER [stores the php time() when blog post was posted] category TEXT, author TEXT, title TEXT, description TEXT, file_name TEXT [stores the name of the corresponding blog post so preview can link to the blog post's page]
