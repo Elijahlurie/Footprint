@@ -314,39 +314,10 @@ select{
 /*---------Central Blog.php Page----------*/
 /* Explanation for parallax scrolling effect:
 https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
-.parallax{
-  perspective: 1px;
-  height:100vh;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-.parallax__group{
-  position: relative;
-  transform-style: preserve-3d;
-  height: 500px;
-  border: 5px solid black;
-}
-.spacer{
-  height: 200px;
-  background-color:blue;
-}
-.parallax__layer{
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-.featured_previews_container{
-  color: red;
-  height: 400px;
-}
-.featured_previews_background{
-  background-image: url('../images/dunes.jpg');
-  width: 100%;
-  height: 550px;
-  transform: translateZ(-1px) scale(1);
 
+.featured_previews_container{
+  height: 400px;
+  padding-top: 200px;
 }
 #featured_previews{
   display: flex;

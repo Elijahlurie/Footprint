@@ -77,7 +77,6 @@ include "user_join.php";
     </div>
     <div class="parallax_group">
         <div class="featured_previews_background parallax_layer">
-          <h1>Background</h1>
         </div>
         <div class="featured_previews_container parallax_layer">
           <h1>Blog</h1>
