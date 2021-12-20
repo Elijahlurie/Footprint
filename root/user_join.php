@@ -384,11 +384,13 @@ function blogPost($connection){
 		$_SESSION['blog_input_timestamp'] = time();
 
 		//check that no inputs are empty
-		if($_POST['blog_category']!= "" && $_POST['blog_title'] != "" && $_POST['blog_author'] !="" && $_POST['blog_description'] != "" && $_POST['blog_content'] != ""){
+		if($_POST['blog_category']!= "" && $_POST['blog_preview_image'] != "" && $_POST['blog_title'] != "" && $_POST['blog_author'] !="" && $_POST['blog_description'] != "" && $_POST['blog_content'] != ""){
 		//Enter preview information into database
 			//remove whitespace from beginning and end of inputs and remove special characters
 			$category = trim($_POST['blog_category']);
 			$category = filter_var($category, FILTER_SANITIZE_STRING);
+
+			$preview_img_name = $_FILES['blog_preview_image']["name"];
 
 			$title = trim($_POST['blog_title']);
 			$title = filter_var($title, FILTER_SANITIZE_STRING);
@@ -396,7 +398,7 @@ function blogPost($connection){
 			$author = trim($_POST['blog_author']);
 			$author = filter_var($author, FILTER_SANITIZE_STRING);
 
-			$time = time();
+			$time = date("m/d/Y");
 
 			$description = trim($_POST['blog_description']);
 			$description = filter_var($description, FILTER_SANITIZE_STRING);
@@ -419,9 +421,14 @@ function blogPost($connection){
 			endforeach;
 			//if the title hasnt been used, proceed with creating blog post
 			if($i == 0){
-				$blog_sql = "INSERT INTO blog (time, category, author, title, description, file_name) VALUES ('$time', '$category', '$author', '$title', '$description', '$file_name');";
+			//enter information needed for preview into database
+				$blog_sql = "INSERT INTO blog (time, category, author, title, description, preview_image, file_name) VALUES ('$time', '$category', '$author', '$title', '$description', '$preview_img_name', '$file_name');";
 				$blog_result = mysqli_query($connection, $blog_sql);
-
+				//if it is not already in directory, upload image to directory in the images/preview_images folder
+				$image_file_path = 'images/preview_images/'.$preview_img_name;
+				if(!file_exists($image_file_path)){
+					move_uploaded_file($_FILES['blog_preview_image']["tmp_name"], $image_file_path);
+				}
 			//Create new blog post file
 				//create a variable to hold the whole html content of the new file for the blog post with the specifics for this post added in as variables
 				$php_file_content = '

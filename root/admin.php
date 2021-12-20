@@ -26,13 +26,15 @@ include "user_join.php";
       <h2>Blog Form</h2>
       <?php
         echo '
-          <form id="blog_form" method="POST" action="'.blogPost($conn).'">
+          <form id="blog_form" method="POST" action="'.blogPost($conn).'" enctype="multipart/form-data">
             <p>Category</p>
             <select name="blog_category">
               <option value="Action of the Day">Action of the Day</option>
               <option value="Global Climate News">Global Climate News</option>
               <option value="Editorial">Editorial</option>
             </select>
+            <p>Image for Preview</p>
+            <input name="blog_preview_image" type="file" accept="image/png, image/jpeg, image/jpg">
           ';
           if(isset($_SESSION['blog_post_error'])){
             //fill in with session variable values from their previous input

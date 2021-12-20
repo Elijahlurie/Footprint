@@ -15,6 +15,28 @@ include "user_join.php";
 
 <body>
   <?php
+    //have a separate function for formatting previews into html so I dont't have to repeat the code in multiple functions
+    //a single row from blog table is inputted, function outputs a formatted html preview for the row
+    function formatPreview($blog_post_row){
+      if($blog_post_row['preview_image']){
+      //if post has an image file for its preview, include the image in the preview
+        $image_html = '<img src="images/preview_images/'.$blog_post_row['preview_image'].'" width="200px" alt="Preview image">';
+      } else{
+        $image_html = "";
+      }
+
+      $preview= '
+        <div class="blog_post_preview">
+          <h2>'.$blog_post_row['title'].'</h2>
+          <p>Author: '.$blog_post_row['author'].'</p>
+          <p>Published: '.$blog_post_row['time'].'</p>
+          <p>Description: '.$blog_post_row['description'].'</p>
+          <p><a href="blog_posts/'.$blog_post_row['file_name'].'">Link to post</a></p>
+          '.$image_html.'
+        </div>
+      ';
+      return $preview;
+    };
     //get the full list of blog posts and return an array of formatted html blog posts
     function getBlogPosts($connection, $number){
     	$sql = "SELECT * FROM blog ORDER BY time DESC;";
@@ -23,18 +45,19 @@ include "user_join.php";
       $newarray = [];
       for($i = 0; $i<$number; $i++){
         //if there is a blog post in the array (maybe there arent enough posts in this category yet)
-        if($posts_array[$i]){
-          //append another preview html to the array so it can be printed in the page
-          $newarray[] = '
-            <div class="blog_post_preview">
-              <h2>'.$posts_array[$i]['title'].'</h2>
-              <p>Author: '.$posts_array[$i]['author'].'</p>
-              <p>Published: '.$posts_array[$i]['time'].'</p>
-              <p>Description: '.$posts_array[$i]['description'].'</p>
-              <p><a href="blog_posts/'.$posts_array[$i]['file_name'].'">Link to post</a></p>
-            </div>
-          ';
-        }
+        if($posts_array[$i]):
+          //if the corresponding file exists
+          $file_path = 'blog_posts/'.$posts_array[$i]['file_name'];
+          if(file_exists($file_path)){
+            //append another preview html to the array so it can be printed in the page
+            $newarray[] = formatPreview($posts_array[$i]);
+          } else{
+            $file_name = $posts_array[$i]['file_name'];
+            //if the corresponding file does not exist, delete the row from the database
+            $delete_post_sql = "DELETE FROM blog WHERE file_name = '$file_name';";
+            $delete_post_result = mysqli_query($connection, $delete_post_sql);
+          }
+        endif;
       }
       return $newarray;
     };
@@ -49,18 +72,19 @@ include "user_join.php";
        //for the specified number of times
        for($i = 0; $i<$number; $i++){
          //if there is a blog post in the array (maybe there arent enough posts in this category yet)
-         if($category_posts[$i]){
-           //append another preview html to the array so it can be printed in the page
-           $newarray[] = '
-             <div class="blog_post_preview">
-               <h2>'.$category_posts[$i]['title'].'</h2>
-               <p>Author: '.$category_posts[$i]['author'].'</p>
-               <p>Published: '.$category_posts[$i]['time'].'</p>
-               <p>Description: '.$category_posts[$i]['description'].'</p>
-               <p><a href="blog_posts/'.$category_posts[$i]['file_name'].'">Link to post</a></p>
-             </div>
-           ';
-         }
+         if($category_posts[$i]):
+           //if the corresponding file exists
+           $file_path = 'blog_posts/'.$category_posts[$i]['file_name'];
+           if(file_exists($file_path)){
+             //append another preview html to the array so it can be printed in the page
+             $newarray[] = formatPreview($category_posts[$i]);;
+           } else{
+             $file_name = $category_posts[$i]['file_name'];
+             //if the corresponding file does not exist, delete the row from the database
+             $delete_post_sql = "DELETE FROM blog WHERE file_name = '$file_name';";
+             $delete_post_result = mysqli_query($connection, $delete_post_sql);
+           }
+         endif;
        }
        return $newarray;
    };
@@ -72,7 +96,6 @@ include "user_join.php";
     <?php
       include "nav_tag.php";
     ?>
-
       <div class="spacer"></div>
     </div>
     <div class="parallax_group">
