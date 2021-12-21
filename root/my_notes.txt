@@ -1,18 +1,31 @@
 Questions:
-
 - where should i give credit to the illustrator of the doodles and to the sources for the actions?
-- should I download the country code plugin instead of using the link?
-- only accept domestic phone numbers?
+- do we want images for previews to be mandatory (as of now they are)
 
 things to do:
-- figure out git
-  - add a gitignore file to ignore blog_posts files and vendor files
-- figure out parallax scrolling
-- design separate pages for showing all posts in each category
-- have an if/else in getblogPOsts functions to check if there is actually a file that corresponds to the preview, if not delete the row with that preview
-- make a login page for admin
+- get nate set up
+  - learn git/github, add him as contributor on github
+  - set up mysql, localhost, mamp
+  - use php to generate sql scripts for nate to enter into his local database to get the same table content i have
+  - have him change connection.php for his password
+- sketch designs for each new page
+- Style blog.php
+  - figure out parallax scrolling
+  - make sharing posts easy https://wordpress.org/plugins/shared-counts/
+- Style category_pages files
+- Style blog post pages
+  - figure out how adding images to posts will work
+- Add the if/else that checks if there is actually a file that corresponds to the preview to any function that generates previews
+- Finish Admin page
+  - style the page
+  - add login system (if user has 1 in admin column give them access)
+- Create Donate page
+- remove test.php from repository
 - make new pages mobile friendly
-- create donation page
+- Set up socials
+  - register email
+  - create youtube account
+  - create instagram account
 - research legals abt texting
   - https://www.textedly.com/sms-compliance-guide/sms-opt-in-rules/
   - https://blog.textedly.com/text-messaging-laws-every-business-has-to-know-about
@@ -29,7 +42,7 @@ things to do:
   - https://www.dummies.com/web-design-development/web-hosting/how-to-automate-functions-on-your-website-with-cron-jobs/
 - change connection.php to connect to new database
 - Launch site!!
-- create social media accounts, build up hype, link accounts in footer
+- post social media content, build up hype, link accounts in footer
 - look into copyright, terms and conditions
 
 bugs to fix:

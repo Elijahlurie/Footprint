@@ -1,0 +1,16 @@
+Work during the week, catch up during the weekend
+
+Week 1: Dec 20 - 24
+  - get Nate set up
+    - learn git/github, add him as contributor on github
+    - set up mysql, localhost, mamp
+    - use php to generate sql scripts for nate to enter into his local database to get the same table content i have
+    - have him change connection.php for his password
+  - Elijah work on code
+    - [decide what to complete 1st week]
+
+Week 2: Dec 27 - 31
+
+Week 3: Jan 3 - 7
+
+Wrapping up break: Jan 10
