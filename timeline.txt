@@ -6,10 +6,11 @@ Week 1: Dec 20 - 24
     - set up mysql, localhost, mamp
     - use php to generate sql scripts for nate to enter into his local database to get the same table content i have
     - have him change connection.php for his password
-  - Elijah work on code
-    - [decide what to complete 1st week]
+  - Nate work on one perfectly formatted blog post on google docs so we can make the admin form suited to how it should turn out
+  - Elijah work on blog.php page, make previews look nice
 
 Week 2: Dec 27 - 31
+- nate work on parallax branch
 
 Week 3: Jan 3 - 7
 

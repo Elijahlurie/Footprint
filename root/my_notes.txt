@@ -35,7 +35,7 @@ things to do:
   - add text stop to opt out
   - add a clear opt in form on sign up (look up legal stuff)
   - remove user if they dont respond or complete an action 5 or 10 days after check in text
-- delete all files in blog_posts folder
+- delete all files in blog_posts folder, delete my_notes.txt
 - add cron job in hosting platform so that cron_functions gets run every 5 minutes
   - remove 'include cron_functions.php' from top of user_join.php
   - add $actions_array function from cron functions to user page as well
