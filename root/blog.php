@@ -15,11 +15,11 @@ include "blog_page_functions.php";
 
 <body>
   <div class="blog_page_container parallax">
-
-    <div class="parallax_group">
     <?php
       include "nav_tag.php";
     ?>
+    <div class="parallax_group">
+
       <div id="blog_header_container">
         <div id="blog_header_text">
           <h1>The Footprint Blog.</h1><br><br>
@@ -33,19 +33,19 @@ include "blog_page_functions.php";
     <div class="parallax_group">
       <div class="featured_previews_background parallax_layer">
       </div>
-        <div class="featured_previews_container parallax_layer">
-          <h1>Featured</h1>
-          <hr>
-          <div id="featured_previews">
-            <?php
-              foreach(getBlogPosts($conn, 3) as $blog_post){
-                echo $blog_post;
-              }
-            ?>
-          </div>
+      <div class="featured_previews_container parallax_layer">
+        <h1>Featured</h1>
+        <hr>
+        <div id="featured_previews">
+          <?php
+            foreach(getBlogPosts($conn, 3) as $blog_post){
+              echo $blog_post;
+            }
+          ?>
         </div>
       </div>
-      <div class="parallax_group">
+    </div>
+    <div class="parallax_group">
         <div id="aotd_previews_cont_2">
           <div id="aotd_previews_cont">
             <div id="aotd_header">
@@ -91,10 +91,11 @@ include "blog_page_functions.php";
           </div>
           <p><a href="category_pages/editorial.php">See More</a></p>
         </div>
-      <?php
-        include "footer.php";
-       ?>
+        <?php
+          include "footer.php";
+         ?>
    </div>
+
   </div>
    <script src="scripts/scripts.js"></script>
    <script src="scripts/preview_background.js"></script>

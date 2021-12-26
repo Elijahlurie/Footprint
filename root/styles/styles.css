@@ -348,9 +348,35 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
   height: 100%;
 }
   /*featured posts section*/
+.parallax{
+  perspective: 1px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.parallax_group{
+  position: relative;
+  height: 100vh;
+  transform-style: preserve-3d;
+}
+.parallax_layer{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.featured_previews_background{
+  top: -700px;
+  transform: translateZ(-1px) scale(2);
+  background-image: url('../images/preview_images/post_wire.png');
+  background-size: cover;
+  height: 700px;
+}
 .featured_previews_container{
+  transform: translateZ(0);
   height: 600px;
   padding: 30px 30px 0px 30px;
+  margin-top: 30px;
 }
 .featured_previews_container hr{
   margin-bottom: 30px;
@@ -425,6 +451,7 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
   /*action of the day posts div*/
 #aotd_previews_cont_2{
   padding: 50px 50px;
+  background-color:white;
 }
 #aotd_previews_cont{
   background-color: #2C423F;
