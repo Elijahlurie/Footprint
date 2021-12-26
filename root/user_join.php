@@ -384,13 +384,13 @@ function blogPost($connection){
 		$_SESSION['blog_input_timestamp'] = time();
 
 		//check that no inputs are empty
-		if($_POST['blog_category']!= "" && $_POST['blog_preview_image'] != "" && $_POST['blog_title'] != "" && $_POST['blog_author'] !="" && $_POST['blog_description'] != "" && $_POST['blog_content'] != ""){
+		if($_FILES['blog_preview_image'] != "" && $_POST['blog_title'] != "" && $_POST['blog_author'] !="" && $_POST['blog_description'] != "" && $_POST['blog_content'] != ""){
 		//Enter preview information into database
 			//remove whitespace from beginning and end of inputs and remove special characters
 			$category = trim($_POST['blog_category']);
 			$category = filter_var($category, FILTER_SANITIZE_STRING);
 
-			$preview_img_name = $_FILES['blog_preview_image']["name"];
+			$preview_img_name = str_replace(' ', '_', $_FILES['blog_preview_image']["name"]);
 
 			$title = trim($_POST['blog_title']);
 			$title = filter_var($title, FILTER_SANITIZE_STRING);
@@ -450,6 +450,18 @@ function blogPost($connection){
 
 				</head>
 				<body>
+					<!--Preview information from database in case row in table is deleted-->
+					<div id="blog_data_meta">
+						<ul>
+							<li>Time: '.$time.'</li>
+							<li>Category: '.$category.'</li>
+							<li>Author: '.$author.'</li>
+							<li>Title: '.$title.'</li>
+							<li>Description: '.$description.'</li>
+							<li>Preview image: '.$preview_img_name.'</li>
+							<li>File name: '.$file_name.'</li>
+						</ul>
+					</div>
 					<?php
 						include "../nav_tag.php";
 					?>
@@ -491,4 +503,43 @@ function blogPost($connection){
 			$_SESSION['blog_post_error'] = "An input is still empty.";
 		}
 	}
+};
+
+//delete a blog post
+function deletePost($connection){
+	if(isset($_POST['delete_post_submit'])):
+    //get an array of all blog posts in blog table in databse
+    $sql = "SELECT * FROM blog;";
+    $result = mysqli_query($connection, $sql);
+    $array_posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    //turn input to all lowercase characters to make inputs not case sensitive
+    $lowercase_input = strtolower($_POST['delete_post_title']);
+    //start a counter variable to see if no posts match
+    $i = 0;
+    foreach($array_posts as $blog_post):
+      //make this post's title lowercase to compare without case being a factor
+      $lowercase_title = strtolower($blog_post['title']);
+      if($lowercase_input == $lowercase_title){
+				//delete row from blog table in database (dont delete the file from directory in case we want to recover the blog post)
+				$delete_post_sql = 'DELETE FROM blog WHERE id = '.$blog_post['id'].';';
+				$delete_post_result = mysqli_query($connection, $delete_post_sql);
+        //add 1 to counter variable to show that there has been a match
+        $i += 1;
+      }
+    endforeach;
+		//display messages based on how many posts in the databse matched with user input
+    if($i == 0){
+      echo '
+        <p>There are no matches in the database.</p>
+      ';
+    } else if($i == 1){
+			echo '
+				<p>Deleted one post from database.</p>
+			';
+		} else{
+			echo '
+				<p>Deleted '.$i.' posts from database.</p>
+			';
+		}
+  endif;
 };

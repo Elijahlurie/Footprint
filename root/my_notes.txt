@@ -1,23 +1,29 @@
-Questions:
+Questions/issues:
 - where should i give credit to the illustrator of the doodles and to the sources for the actions?
-- do we want images for previews to be mandatory (as of now they are)
+- what should we call action of the day posts
+- should featured posts just be the most recent posts or should we hand pick them?
+  - we should hand pick them, what should the mechanism be for doing that?
+- should feautred posts also be listed below with their sections?
+- should deleted posts also be deleted from directory? or keep them as a backup just in case
+  - if keeping them as a backup, have a hidden div with all the info from the table in case we want to repost
+  - if keeping the files, make sure they cant be accessed by typing in the url
+    - have a php check at top of blog page if(blog post row deleted = true) then redirect? that means not actually deleting the row in table but just entering a 1 in that column
 
 things to do:
-- get nate set up
-  - learn git/github, add him as contributor on github
-  - set up mysql, localhost, mamp
-  - use php to generate sql scripts for nate to enter into his local database to get the same table content i have
-  - have him change connection.php for his password
 - sketch designs for each new page
 - Style blog.php
   - figure out parallax scrolling
-  - make sharing posts easy https://wordpress.org/plugins/shared-counts/
+    - try to get middle preview to scroll at diff speed than side previews
+  - add category links to featured previews if possible
 - Style category_pages files
 - Style blog post pages
   - figure out how adding images to posts will work
+  - have back button link to specific spot on blog.php where they were looking
 - Add the if/else that checks if there is actually a file that corresponds to the preview to any function that generates previews
 - Finish Admin page
   - style the page
+  - have form look different based on what category is chosen
+  - have max character counts for title and description, have a little number in the corner of the textbox counting down
   - add login system (if user has 1 in admin column give them access)
 - Create Donate page
 - remove test.php from repository
@@ -43,15 +49,26 @@ things to do:
 - change connection.php to connect to new database
 - Launch site!!
 - post social media content, build up hype, link accounts in footer
+  - get Blair Conklin to shout it out on insta/youtube?
 - look into copyright, terms and conditions
+- start developing some of the 'cool features to add'
+- start a newsletter?
 
 bugs to fix:
 
 
-styles to add:
+features to add at some point:
+- include time in blog post date so that if 2 posted in one day they arent just arranged alphabetically
+- have a nicer delete post ux
+- loading screen if users connection is bad
 - make input boxes border red when errors inputting
+- change preview styles a bit when they are actively clicked on
 
-cool features to add:
+- edit blog ost function
+
+cool extra features to add:
+- track most popular posts and have a section for viewing them
+- make sharing posts easy https://wordpress.org/plugins/shared-counts/
 - a tool for billionairs to find environmental charities that will use their money most effectively
 - more security, terms and conditions statement
 - maybe add a way for users to text back if they completed action instead of having to log in on site
@@ -59,9 +76,7 @@ cool features to add:
 - make count of total actions completed continuously update
 - show users carbon impact of their assigned action and link to more info on why
   - what iimpact would be if everyone did it
-- add more content to site
-  - blog format, have educational content
-    - make that content into youtube vids
+  - have cool parallax scrolling effects on most pages
 - make the special action of the day div >> maybe include in first 'update' of the site
   - maybe have a selection of a few actions for users to choose from
 - Gharuv idea: give people little characters to level up and buy things for by completing actions to earn an in-game currency

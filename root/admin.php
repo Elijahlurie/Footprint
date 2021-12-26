@@ -66,10 +66,17 @@ include "user_join.php";
               </form>
             ';
           }
-
-
       ?>
-
+      <h2>Delete Blog Post Form</h2>
+      <?php
+        echo '
+          <form method="POST" action="'.deletePost($conn).'">
+            <h3>Post Title</h3>
+            <input name="delete_post_title" type="text" placeholder="Title">
+            <button name="delete_post_submit" type="submit">Delete Post</button>
+          </form>
+        ';
+      ?>
     </div>
   </div>
   <?php

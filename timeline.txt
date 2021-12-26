@@ -13,5 +13,5 @@ Week 2: Dec 27 - 31
 - nate work on parallax branch
 
 Week 3: Jan 3 - 7
-
+- start making pages mobile friendly
 Wrapping up break: Jan 10
