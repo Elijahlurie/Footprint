@@ -51,7 +51,7 @@ function addUsers($connection){
 		$_SESSION['input_phone'] =  $_POST['phone'];
     $_SESSION['input_timestamp'] = time();
 
-    if($_POST['name'] != "" && $_POST['phone'] != "" && $_POST['zipcode'] != ""){
+    if($_POST['name'] != "" && $_POST['phone'] != "" && $_POST['zipcode'] != "" && $_POST['password'] != ""){
       //get an array of the current list of users
       $get_users_sql = "SELECT * FROM users;";
       $get_users_result = mysqli_query($connection, $get_users_sql);
@@ -68,7 +68,10 @@ function addUsers($connection){
 			//remove all special characters other than numbers from phone and add +1 to start
 			$no_space_phone = str_replace(" ", "", $_POST['phone']);
 			$phone = preg_replace("/[^0-9,.]/", "", $no_space_phone);
-			$phone = '+1' . $phone;
+			$phone_stored = '+1' . $phone;
+
+			//turn password into a hash so it is not openly displayed in the database
+			$password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
 			//remove all special characters other than numbers from zip code
 			$no_space_zipcode = str_replace(" ", "", $_POST['zipcode']);
@@ -87,48 +90,52 @@ function addUsers($connection){
 	    $user_curr_time = time() + 3600 * ($timezone_stored/100);
 	    $user_days = ($user_curr_time/86400) - ($user_curr_time%86400)/86400;
 
-			if(strlen($phone) == 11){
+			if(strlen($phone) == 10){
 				if(strlen($zipcode)== 5){
-					//check if there is a duplicate phone number
-					$i = 0;
-					//go through array of users, if there are any matches add one to counter
-					foreach($users_array as $user):
-						if($phone == $user['phone']){
-							$i+=1;
+					if(strlen($_POST['password']) >= 8){
+						//check if there is a duplicate phone number
+						$i = 0;
+						//go through array of users, if there are any matches add one to counter
+						foreach($users_array as $user):
+							if($phone == $user['phone']){
+								$i+=1;
+							}
+						endforeach;
+						if($i == 0){
+							//if there is not a duplicate insert user into database
+							$sql = "INSERT INTO users (name, phone, password_hash, texted, curr_action, yesterday, timezone, zipcode, last_completed_action) VALUES ('$name','$phone_stored','$password_hash',0,'$rand', '$user_days', '$timezone_stored', '$zipcode', '$user_days');";
+							$result = mysqli_query($connection, $sql);
+
+							//run this sql again to get the updated list of users
+							$get_users_result = mysqli_query($connection, $get_users_sql);
+							$users_array = mysqli_fetch_all($get_users_result, MYSQLI_ASSOC);
+
+							//count the amount of users now and use that number to find the last user in our array of users, then get that user (the new user) 's id.
+							$count_users = count($users_array);
+							$new_session_id = $users_array[$count_users-1]['id'];
+							$curr_action = $users_array[$count_users-1]['curr_action'];
+
+							//add a row to past_actions table for the user to track the actions they'e had and not give duplicates and start the row off by filling in today's action for the day0 column
+							$past_action_table_sql = "INSERT INTO past_actions (user_id, day0) VALUES ($new_session_id, $curr_action);";
+							$past_action_table_result = mysqli_query($connection, $past_action_table_sql);
+
+							//unset the session values for what they inputted because they're not needed anymore
+							unset($_SESSION['input_name']);
+					    unset($_SESSION['input_zipcode']);
+							unset($_SESSION['input_phone']);
+					    unset($_SESSION['input_timestamp']);
+
+							//log in user
+							$_SESSION['id'] = $new_session_id;
+							$_SESSION['timestamp'] = time();
+		         //redirect user to user page
+						 header("Location: user_page.php");
+						//store errors in session variables to be used in signup_error <p> in user join form
+						} else{
+							$_SESSION['signup_error'] = "A user with this phone number already exists.";
 						}
-					endforeach;
-					if($i == 0){
-						//if there is not a duplicate insert user into database
-						$sql = "INSERT INTO users (name, phone, texted, curr_action, yesterday, timezone, zipcode, last_completed_action) VALUES ('$name','$phone',0,'$rand', '$user_days', '$timezone_stored', '$zipcode', '$user_days');";
-						$result = mysqli_query($connection, $sql);
-
-						//run this sql again to get the updated list of users
-						$get_users_result = mysqli_query($connection, $get_users_sql);
-						$users_array = mysqli_fetch_all($get_users_result, MYSQLI_ASSOC);
-
-						//count the amount of users now and use that number to find the last user in our array of users, then get that user (the new user) 's id.
-						$count_users = count($users_array);
-						$new_session_id = $users_array[$count_users-1]['id'];
-						$curr_action = $users_array[$count_users-1]['curr_action'];
-
-						//add a row to past_actions table for the user to track the actions they'e had and not give duplicates and start the row off by filling in today's action for the day0 column
-						$past_action_table_sql = "INSERT INTO past_actions (user_id, day0) VALUES ($new_session_id, $curr_action);";
-						$past_action_table_result = mysqli_query($connection, $past_action_table_sql);
-
-						//unset the session values for what they inputted because they're not needed anymore
-						unset($_SESSION['input_name']);
-				    unset($_SESSION['input_zipcode']);
-						unset($_SESSION['input_phone']);
-				    unset($_SESSION['input_timestamp']);
-
-						//log in user
-						$_SESSION['id'] = $new_session_id;
-						$_SESSION['timestamp'] = time();
-	         //redirect user to user page
-					 header("Location: user_page.php");
-					//store errors in session variables to be used in signup_error <p> in user join form
 					} else{
-						$_SESSION['signup_error'] = "A user with this phone number already exists.";
+						$_SESSION['signup_error'] = "Password must be at least 8 characters long.";
 					}
 				} else{
 					$_SESSION['signup_error'] = "Postal code must be 5 digits.";
@@ -145,8 +152,7 @@ function addUsers($connection){
   endif;
 };
 
-//if a user has been texted button is set when page reloads and it hasn't been
-//pressed yet today, set texted time to time() for that user
+//if a user has been texted button is set when page reloads and it hasn't been pressed yet today, set texted time to time() for that user
 foreach($array_users as $user){
   $button_name = 'texted_'.$user["id"];
   if($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST[$button_name]) && $user['texted'] == 0){
@@ -159,8 +165,7 @@ foreach($array_users as $user){
 
 //Login for users:
 //adds 1 to $i for each user in database that the input doesn't match,
-//if $i equals the total users in database(meaning input dosnt match any user),
-//then outputs "user not found"
+//if $i equals the total users in database(meaning input dosnt match any user),then outputs "user not found"
 //redierect user to user page
 function loginUsers($connection){
   $sql = "SELECT * FROM users;";
@@ -168,13 +173,11 @@ function loginUsers($connection){
   $array_users = mysqli_fetch_all($result, MYSQLI_ASSOC);
   if(isset($_POST['login_submit'])){
     $i = 0;
-    $no_space_name = str_replace(" ", "", $_POST['login_name']);
-    $name = strtolower(filter_var($no_space_name, FILTER_SANITIZE_STRING));
     $no_space_number = str_replace(" ", "", $_POST['login_phone']);
     $phone = preg_replace("/[^0-9,.]/", "", $no_space_number);
 		$phone = '+1' . $phone;
     foreach($array_users as $user):
-      if(strtolower($user['name']) == $name && $user['phone'] == $phone){
+      if(strtolower($user['phone']) == $phone && password_verify($_POST['login_password'], $user['password_hash'])){
           $_SESSION['id'] = $user['id'];
           $_SESSION['timestamp'] = time();
           header("Location: user_page.php");
@@ -206,7 +209,7 @@ function editProfile($connection){
       //remove all special characters other than numbers from phone number with country code added
       $no_space_number = str_replace(" ", "", $_POST['edit_phone']);
       $phone = preg_replace("/[^0-9,.]/", "", $no_space_number);
-			$phone = '+' . $phone;
+			$stored_phone = '+' . $phone;
 			//remove all special characters other than numbers from zip code
 			$no_space_zipcode = str_replace(" ", "", $_POST['edit_zipcode']);
 			$zipcode = preg_replace("/[^0-9,.]/", "", $no_space_zipcode);
@@ -236,7 +239,7 @@ function editProfile($connection){
             }
             if($phone != $specific_user['phone']){
 							//if phone number has changed update phone column for that user
-              $edit_phone_sql = "UPDATE users SET phone = '".$phone."' WHERE id = ".$_SESSION['id'].";";
+              $edit_phone_sql = "UPDATE users SET phone = '".$stored_phone."' WHERE id = ".$_SESSION['id'].";";
               $edit_phone_result = mysqli_query($connection, $edit_phone_sql);
             }
             if($zipcode != $specific_user['zipcode']){
@@ -262,10 +265,10 @@ function editProfile($connection){
             $_SESSION['edit_profile_error'] = "Another user with this phone number already exists.";
           }
 				} else{
-					$_SESSION['signup_error'] = "Postal code must be 5 digits.";
+					$_SESSION['edit_profile_error'] = "Postal code must be 5 digits.";
 				}
 			} else{
-				$_SESSION['signup_error'] = "Phone number length is invalid.";
+				$_SESSION['edit_profile_error'] = "Phone number length is invalid.";
 			}
     } else{
       $_SESSION['edit_profile_error'] = "An input is still empty.";
@@ -371,6 +374,19 @@ if(isset($_SESSION['id'])):
   }
 endif;
 
+//search blog table in database for a row that corresponds to this blog post file, if there is no row in the database for this file, redirect to blog.php because this post was deleted
+function findPreview($connection){
+	//if there is no row in the database for this file, redirect to blog.php because this post was deleted
+	//select the row from blog table where the value in the file name column equals this name of this file
+	$find_preview_sql = 'SELECT * FROM blog WHERE file_name = "'.basename($_SERVER['PHP_SELF']).'";';
+	$find_preview_result = mysqli_query($connection, $find_preview_sql);
+	$find_preview_array = mysqli_fetch_all($find_preview_result, MYSQLI_ASSOC);
+	//if resulting array is empty, meaning there is no row in database to match this file, redirect to blog.php
+	if(empty($find_preview_array)){
+		header("Location: ../blog.php");
+	}
+};
+
 //enter info needed for blog post preview to the database and create a new file for the blog post in the blog_posts folder of directory
 function blogPost($connection){
 	if(isset($_POST['submit_blog'])){
@@ -430,6 +446,16 @@ function blogPost($connection){
 					move_uploaded_file($_FILES['blog_preview_image']["tmp_name"], $image_file_path);
 				}
 			//Create new blog post file
+				//get the newly added row from the database
+				$new_sql = "SELECT * FROM blog WHERE title = '$title';";
+				$new_result = mysqli_query($connection, $new_sql);
+				$new_result_array = mysqli_fetch_all($new_result, MYSQLI_ASSOC)[0];
+				//generate a string with that information and store that string in a variable so the information can be held in an html comment on the blog file in case the row in the table is deleted
+				$list = [];
+				foreach($new_result_array as $key => $value){
+					$list[] = $key." (".$value.")";
+				}
+				$row_contents = "Data from blog table: " . implode("; " , $list);
 				//create a variable to hold the whole html content of the new file for the blog post with the specifics for this post added in as variables
 				$php_file_content = '
 				<!DOCTYPE html>
@@ -437,6 +463,9 @@ function blogPost($connection){
 				$time = date_default_timezone_set("America/Los_Angeles");
 				include "../connection.php";
 				include "../user_join.php";
+
+				//call findPreview to check if this post has been deleted and redierct user if it has
+				findPreview($conn);
 
 				//define $path variable so links inside nav tag and footer still point to the right page even though this file is in a folder
 				$path = "../";
@@ -450,18 +479,10 @@ function blogPost($connection){
 
 				</head>
 				<body>
-					<!--Preview information from database in case row in table is deleted-->
+					<!--Preview information from database in case row in table is deleted
 					<div id="blog_data_meta">
-						<ul>
-							<li>Time: '.$time.'</li>
-							<li>Category: '.$category.'</li>
-							<li>Author: '.$author.'</li>
-							<li>Title: '.$title.'</li>
-							<li>Description: '.$description.'</li>
-							<li>Preview image: '.$preview_img_name.'</li>
-							<li>File name: '.$file_name.'</li>
-						</ul>
-					</div>
+						'.$row_contents.'
+					</div>-->
 					<?php
 						include "../nav_tag.php";
 					?>

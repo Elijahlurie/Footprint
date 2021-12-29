@@ -4,12 +4,14 @@ Questions/issues:
 - should featured posts just be the most recent posts or should we hand pick them?
   - we should hand pick them, what should the mechanism be for doing that?
 - should feautred posts also be listed below with their sections?
-- should deleted posts also be deleted from directory? or keep them as a backup just in case
-  - if keeping them as a backup, have a hidden div with all the info from the table in case we want to repost
-  - if keeping the files, make sure they cant be accessed by typing in the url
-    - have a php check at top of blog page if(blog post row deleted = true) then redirect? that means not actually deleting the row in table but just entering a 1 in that column
 
 things to do:
+- have admin form look different based on what category is chosen
+  - category select is separate form, sets a session variable with chosen category
+  - if category session variable is set, there are 3 options for how form will look...
+    - hidden input with value set as session variable value for category choice
+  - adjust blog post function accordingly
+  - make sure category session variable is unset at the right time
 - sketch designs for each new page
 - Style blog.php
   - figure out parallax scrolling
@@ -22,10 +24,10 @@ things to do:
 - Add the if/else that checks if there is actually a file that corresponds to the preview to any function that generates previews
 - Finish Admin page
   - style the page
-  - have form look different based on what category is chosen
   - have max character counts for title and description, have a little number in the corner of the textbox counting down
-  - add login system (if user has 1 in admin column give them access)
+  - lock page and footer link to anyone not an admin
 - Create Donate page
+- make signup form styling a bit nicer?
 - remove test.php from repository
 - make new pages mobile friendly
 - Set up socials
@@ -41,6 +43,7 @@ things to do:
   - add text stop to opt out
   - add a clear opt in form on sign up (look up legal stuff)
   - remove user if they dont respond or complete an action 5 or 10 days after check in text
+  - let users change password by getting texted a onetime code
 - delete all files in blog_posts folder, delete my_notes.txt
 - add cron job in hosting platform so that cron_functions gets run every 5 minutes
   - remove 'include cron_functions.php' from top of user_join.php
@@ -56,21 +59,18 @@ things to do:
 
 bugs to fix:
 
-
-features to add at some point:
+styles/features to add at some point:
 - include time in blog post date so that if 2 posted in one day they arent just arranged alphabetically
 - have a nicer delete post ux
 - loading screen if users connection is bad
 - make input boxes border red when errors inputting
 - change preview styles a bit when they are actively clicked on
 
-- edit blog ost function
-
 cool extra features to add:
 - track most popular posts and have a section for viewing them
 - make sharing posts easy https://wordpress.org/plugins/shared-counts/
 - a tool for billionairs to find environmental charities that will use their money most effectively
-- more security, terms and conditions statement
+- terms and conditions statement
 - maybe add a way for users to text back if they completed action instead of having to log in on site
 - give people actions personalized to their zipcode
 - make count of total actions completed continuously update

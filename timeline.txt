@@ -11,6 +11,9 @@ Week 1: Dec 20 - 24
 
 Week 2: Dec 27 - 31
 - nate work on parallax branch
+- nate get set up with php
+- elijah make sql scripts for nate to enter in his database
+
 
 Week 3: Jan 3 - 7
 - start making pages mobile friendly

@@ -14,10 +14,11 @@
           //append another preview html to the array so it can be printed in the page
           $newarray[] = formatPreview($posts_array[$i], "");
         } else{
-          $file_name = $posts_array[$i]['file_name'];
           //if the corresponding file does not exist, delete the row from the database
+          $file_name = $posts_array[$i]['file_name'];
           $delete_post_sql = "DELETE FROM blog WHERE file_name = '$file_name';";
           $delete_post_result = mysqli_query($connection, $delete_post_sql);
+          header("Location: blog.php");
         }
       endif;
     }
@@ -45,6 +46,7 @@
            $file_name = $category_posts[$i]['file_name'];
            $delete_post_sql = "DELETE FROM blog WHERE file_name = '$file_name';";
            $delete_post_result = mysqli_query($connection, $delete_post_sql);
+           header("Location: blog.php");
          }
        endif;
      }

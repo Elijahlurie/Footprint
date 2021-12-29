@@ -84,6 +84,7 @@ include "user_join.php";
    ?>
    <script src="scripts/scripts.js"></script>
    <script>
+   //code for initializing the rich text editor plugin
     tinymce.init({
       selector: 'textarea',
       plugins: 'a11ychecker advcode casechange export formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',

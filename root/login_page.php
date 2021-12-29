@@ -32,13 +32,13 @@ include "user_join.php";
       <div id="user_login_form">
         <form method="POST" action="'.loginUsers($conn).'">
           <div class="login_input_container">
-            <h4>First Name</h4>
-            <input class="form_input" type="text" name="login_name" placeholder="First Name">
-          </div>
-          <div class="login_input_container">
             <h4>Phone Number</h4>
             <input  id="login_phone_input" class="form_input" type="text" name="login_phone" placeholder="(xxx) xxx-xxxx">
             <p id="country_code">+1</p>
+          </div>
+          <div class="login_input_container">
+            <h4>Password</h4>
+            <input class="form_input" type="text" name="login_password" placeholder="Password">
           </div>
           <button id="login_submit" type="submit" name="login_submit">Enter</button>
         </form>

@@ -17,7 +17,6 @@ include "user_join.php";
   <?php
   include "nav_tag.php";
 
-
   //if user logged in, send them to home page
     if(isset($_SESSION['id'])){
       header("Location:index.php");

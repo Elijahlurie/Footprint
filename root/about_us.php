@@ -67,8 +67,8 @@ include "user_join.php";
     </div>
     <div id="quote_container_cont">
     <div id="quote_container">
-      <p><span class="italic">“You cannot get through a single day without having an impact on the world around you. What you do makes a difference and you have to decide what kind of a difference you want to make.”</span>
-      <br>—Jane Goodall</p>
+      <p><span class="italic">“Action is the antidote to despair.”</span>
+      <br><br>—Joan Baez</p>
     </div>
     </div>
 </div>

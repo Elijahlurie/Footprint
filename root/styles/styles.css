@@ -429,6 +429,8 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
 #aotd_previews_cont{
   background-color: #2C423F;
   background: linear-gradient(180deg, #2C423F 0%, #263b38 65%);
+  box-shadow: 0px 0px 30px 1px rgba(0, 0, 0, 0.3);
+
 }
 #aotd_header{
   padding: 80px 0px 100px 0px;
@@ -633,7 +635,9 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
   font-size: 1.5em;
   font-weight: bold;
 }
-#completed_action_button {: linear-gradient(to right, #2C423F 0%, #395652  51%, #2C423F  100%)}
+#completed_action_button {
+  background-image: linear-gradient(to right, #2C423F 0%, #395652  51%, #2C423F  100%);
+}
 #completed_action_button {
   font-size:1.1em;
   position:relative;
@@ -785,7 +789,7 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
 }
 #quote_container_cont{
   background-color: #ffdc85;
-  padding: 90px 50px;
+  padding: 90px;
 }
 #quote_container{
   height: 400px;
@@ -804,6 +808,7 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
 .italic{
   font-style: italic;
   font-family: 'Open Sans', sans-serif;
+  font-size: 1.7em;
 }
 /*--------Login Page--------*/
 #login_page_container{
@@ -941,7 +946,7 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
   cursor: pointer;
   font-size: 0.8em;
   margin-top: -5px;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 }
 #zipcode_explanation{
   display: none;
@@ -958,7 +963,7 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
 }
 #submit_user {background-image: linear-gradient(to right, #1FA2FF 0%, #12D8FA  51%, #1FA2FF  100%)}
 #submit_user {
-  margin: 10px;
+  margin: 20px 10px 10px 10px;
   padding: 10px 35px;
   text-align: center;
   transition: 0.5s;
@@ -1221,11 +1226,12 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
   margin-bottom: 25px;
 }
 #quote_container_cont{
-  padding: 40px 30px;
+  padding: 40px;
 }
 #quote_container{
   line-height: 1.3em;
-  padding: 80px 70px;
+  padding: 60px 50px;
+  height: 250px;
 }
 #quote_container p{
   font-size: 0.9em;
@@ -1341,8 +1347,4 @@ align-items: center;
 }
 #image_404{
 width:80%;
-}
-
-
-
 }

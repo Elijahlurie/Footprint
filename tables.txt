@@ -6,7 +6,7 @@ TABLES
 
   Users
     -each user and all the relevant info about them
-    - columns: id INTEGER PRIMARY KEY AUTO_INCREMENT, name VARCHAR, phone VARCHAR, admin BOOL [whether or not they are an admin], completed_action BOOL [whether or not they've completed their daily action], texted INTEGER [time they were texted that day], actions_completed INTEGER [total actions they've completed], curr_action INTEGER [id of the action they were assigned today], completed_yesterday BOOL [whether they completed their action yesterday], yesterday INTEGER [yesterday for the user's timezone], timezone INTEGER [offset for the user's timezone from GMT timezone], zipcode VARCHAR, last_completed_action INTEGER [stores the # days since jan 1 1970 on the day the user last completed an action to keep track of inactivity]
+    - columns: id INTEGER PRIMARY KEY AUTO_INCREMENT, name VARCHAR, phone VARCHAR, password_hash VARCHAR (255) [the user's password after being run through php password_hash function to encrypt it], admin BOOL [whether or not they are an admin], completed_action BOOL [whether or not they've completed their daily action], texted INTEGER [time they were texted that day], actions_completed INTEGER [total actions they've completed], curr_action INTEGER [id of the action they were assigned today], completed_yesterday BOOL [whether they completed their action yesterday], yesterday INTEGER [yesterday for the user's timezone], timezone INTEGER [offset for the user's timezone from GMT timezone], zipcode VARCHAR, last_completed_action INTEGER [stores the # days since jan 1 1970 on the day the user last completed an action to keep track of inactivity]
     - default 0 for admin, completed_action, texted, acitons_completed
 
   Actions
@@ -21,4 +21,4 @@ TABLES
 
   Blog
     - Stores information needed to create previews for blog post files
-    - id INTEGER PRIMARY KEY AUTO_INCREMENT, time INTEGER [stores the php time() when blog post was posted] category TEXT, author TEXT, title TEXT, description TEXT, file_name TEXT [stores the name of the corresponding blog post so preview can link to the blog post's page]
+    - id INTEGER PRIMARY KEY AUTO_INCREMENT, time INTEGER [stores the php time() when blog post was posted] category TEXT, author TEXT, title TEXT, description TEXT, preview_image TEXT [the file name of the image in the preview_images folder to be displayed on the preview for the blog post], file_name TEXT [stores the name of the corresponding blog post so preview can link to the blog post's page]

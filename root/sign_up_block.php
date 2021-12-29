@@ -28,6 +28,10 @@ echo '
             <input  id="zipcode_input" class="form_input" type="text" name="zipcode" value="'.$_SESSION['input_zipcode'].'">
           </div>
           <p id="why_zipcode_link">Why do we ask for this?</p>
+          <div class="input_container">
+            <h4>Password</h4>
+            <input id="password_input" class="form_input" type="text" name="password" placeholder="Min. 8 Characters">
+          </div>
           <p id="signup_error">'.$_SESSION['signup_error'].'</p>
           <button id="submit_user" type="submit" name="user_submit">Ready!</button>
         </form>
@@ -53,6 +57,10 @@ echo '
           <input  id="zipcode_input" class="form_input" type="text" name="zipcode" placeholder="Postal Code">
         </div>
         <p id="why_zipcode_link">Why do we ask for this?</p>
+        <div class="input_container">
+          <h4>Password</h4>
+          <input id="password_input" class="form_input" type="text" name="password" placeholder="Min. 8 Characters">
+        </div>
         <button id="submit_user" type="submit" name="user_submit">Ready!</button>
         </form>
       </div>
@@ -65,7 +73,7 @@ echo '
       unset($_SESSION['input_zipcode']);
       unset($_SESSION['input_phone']);
       unset($_SESSION['input_timestamp']);
-    }  
+    }
   }
 
 ?>
