@@ -20,10 +20,45 @@ include "user_join.php";
   /*    if($specific_user['admin'] != 1){
         header("Location: index.php");
       }*/
+      //unset old error messages for updating featured posts
+      if(isset($_SESSION["update_featured_error_time"]) && time() - $_SESSION["update_featured_error_time"] >10){
+        //if there is an error message set and it has been for over 10 seconds, unset the error message variables and reload the page
+        unset($_SESSION["update_featured_error"]);
+        unset($_SESSION["update_featured_error_time"]);
+        header('Location: '.$_SERVER['REQUEST_URI']);
+      }
+      //unset old error messages for deleting posts
+      if(isset($_SESSION['delete_post_message_time']) && time() - $_SESSION['delete_post_message_time'] >10){
+        //if there is an error message set and it has been for over 10 seconds, unset the error message variables and reload the page
+        unset($_SESSION['delete_post_message']);
+        unset($_SESSION['delete_post_message_time']);
+        header('Location: '.$_SERVER['REQUEST_URI']);
+      }
      ?>
     <div id="admin_page_container">
       <h1>Admin</h1>
-      <h2>Blog Form</h2>
+      <h2>Update Featured Posts</h2>
+      <?php
+        $featured_posts_array = getFeaturedPosts($conn);
+
+        echo '
+          <form method="POST" action="'.updateFeaturedPosts($conn, $featured_posts_array).'">
+            <ol>
+          ';
+        for ($i = 0; $i < count($featured_posts_array); $i++){
+          echo '<li><input name="update_featured'.$i.'" type="text" value="'.$featured_posts_array[$i]['title'].'"></li>';
+        }
+        echo '
+            </ol>
+            <button type="submit" name="update_featured_submit">Update</button>
+          </form>
+          <div id="update_featured_error">'.$_SESSION["update_featured_error"].'</div>
+        ';
+
+        //have a form where each inputs value is one of the featured posts Title
+        //action of form is editFeaturdPosts
+      ?>
+      <h2>Post a Blog Entry</h2>
       <?php
         echo '
           <form id="blog_form" method="POST" action="'.blogPost($conn).'" enctype="multipart/form-data">
@@ -67,7 +102,7 @@ include "user_join.php";
             ';
           }
       ?>
-      <h2>Delete Blog Post Form</h2>
+      <h2>Delete Blog Post</h2>
       <?php
         echo '
           <form method="POST" action="'.deletePost($conn).'">
@@ -75,6 +110,7 @@ include "user_join.php";
             <input name="delete_post_title" type="text" placeholder="Title">
             <button name="delete_post_submit" type="submit">Delete Post</button>
           </form>
+          <p>'.$_SESSION['delete_post_message'].'</p>
         ';
       ?>
     </div>

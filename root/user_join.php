@@ -203,7 +203,7 @@ function logOut(){
 //lets users change their profiles
 function editProfile($connection){
   if(isset($_POST['edit_profile_submit'])):
-    if($_POST['edit_name'] != "" && $_POST['edit_phone'] != ""){
+    if($_POST['edit_name'] != "" && $_POST['edit_phone'] != "" && $_POST['edit_zipcode'] != ""){
       $no_space_name = str_replace(" ", "", $_POST['edit_name']);
       $name = ucfirst(strtolower(filter_var($no_space_name, FILTER_SANITIZE_STRING)));
       //remove all special characters other than numbers from phone number with country code added
@@ -533,34 +533,117 @@ function deletePost($connection){
     $sql = "SELECT * FROM blog;";
     $result = mysqli_query($connection, $sql);
     $array_posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    //turn input to all lowercase characters to make inputs not case sensitive
-    $lowercase_input = strtolower($_POST['delete_post_title']);
+		//get an array of featured post ids from featured_blog table from database
+		$featured_sql = "SELECT featured_id FROM featured_blog;";
+		$featured_result = mysqli_query($connection, $featured_sql);
+		$array_featured_ids = mysqli_fetch_all($featured_result, MYSQLI_ASSOC);
+			//make an array with purely a list of the featured id numbers because $array_featured_ids is an array of arrays, inside of which are the information we need
+		$new_array_ids = [];
+		foreach($array_featured_ids as $id_array){
+			$new_array_ids[] = $id_array['featured_id'];
+		}
     //start a counter variable to see if no posts match
     $i = 0;
     foreach($array_posts as $blog_post):
-      //make this post's title lowercase to compare without case being a factor
-      $lowercase_title = strtolower($blog_post['title']);
-      if($lowercase_input == $lowercase_title){
-				//delete row from blog table in database (dont delete the file from directory in case we want to recover the blog post)
-				$delete_post_sql = 'DELETE FROM blog WHERE id = '.$blog_post['id'].';';
-				$delete_post_result = mysqli_query($connection, $delete_post_sql);
-        //add 1 to counter variable to show that there has been a match
-        $i += 1;
+      if($_POST['delete_post_title'] == $blog_post['title']){
+				//if the requested title matches this title from the arry of blog posts, continue
+				if(!in_array($blog_post['id'], $new_array_ids)){
+					//if the id of this blog post is not one of the featured posts
+					//delete row from blog table in database (dont delete the file from directory in case we want to recover the blog post)
+					$delete_post_sql = 'DELETE FROM blog WHERE id = '.$blog_post['id'].';';
+					$delete_post_result = mysqli_query($connection, $delete_post_sql);
+	        //add 1 to counter variable to show that there has been a match
+	        $i += 1;
+				} else {
+					$_SESSION['delete_post_message'] = 'The requested post is currently featured, so it cannot be deleted.';
+					$_SESSION['delete_post_message_time'] = time();
+					return;
+				}
       }
     endforeach;
 		//display messages based on how many posts in the databse matched with user input
     if($i == 0){
-      echo '
-        <p>There are no matches in the database.</p>
-      ';
+      $_SESSION['delete_post_message'] =  'There are no matches in the database.';
+			$_SESSION['delete_post_message_time'] = time();
     } else if($i == 1){
-			echo '
-				<p>Deleted one post from database.</p>
-			';
+			$_SESSION['delete_post_message'] = 'Deleted one post from database.';
+			$_SESSION['delete_post_message_time'] = time();
 		} else{
-			echo '
-				<p>Deleted '.$i.' posts from database.</p>
-			';
+			$_SESSION['delete_post_message'] = 'Deleted '.$i.' posts from database.';
+			$_SESSION['delete_post_message_time'] = time();
 		}
   endif;
+};
+
+	//get array of all posts whose ids are featured in featured_blog table by joining blog table on featured_blog table
+function getFeaturedPosts($connection){
+	$join_sql = "SELECT * FROM blog JOIN featured_blog ON blog.id = featured_blog.featured_id ORDER BY featured_blog.id;";
+	$join_result = mysqli_query($connection, $join_sql);
+	$featured_posts_array = mysqli_fetch_all($join_result, MYSQLI_ASSOC);
+	return $featured_posts_array;
+}
+
+//allows admin to change which blog posts are currently featured
+function updateFeaturedPosts($connection, $featured_posts_array){
+	if(isset($_POST['update_featured_submit'])):
+		//get an array of all titles of blog posts in blog table in databse
+		$sql = "SELECT title FROM blog;";
+		$result = mysqli_query($connection, $sql);
+		$array_titles = mysqli_fetch_all($result, MYSQLI_ASSOC);
+			//make an array with purely a list of the title strings because $array_titles is an array of arrays, inside of which are the information we need
+		$new_array_titles = [];
+			foreach($array_titles as $title_array){
+				$new_array_titles[] = $title_array['title'];
+			}
+		//get an array of featured post ids from featured_blog table from database
+		$featured_sql = "SELECT featured_id FROM featured_blog;";
+		$featured_result = mysqli_query($connection, $featured_sql);
+		$array_featured_ids = mysqli_fetch_all($featured_result, MYSQLI_ASSOC);
+			//make an array with purely a list of the featured id numbers because $array_featured_ids is an array of arrays, inside of which are the information we need
+		$new_array_ids = [];
+		foreach($array_featured_ids as $id_array){
+			$new_array_ids[] = $id_array['featured_id'];
+		}
+		//start a counter to see if no inputs are changed
+		$unchanged_input_counter = 0;
+		//check each input separately to see if user has changed something
+		for($i = 0; $i <3; $i++){
+			$title_input_name = 'update_featured' . $i;
+			$requested_title = $_POST[$title_input_name];
+				//compare user input to the title of the currently featured post that corresponds with that input to see if it has been changed
+			if($requested_title != $featured_posts_array[$i]['title']){
+				if(in_array($requested_title, $new_array_titles)){
+					//if the title corresponds to an existing post, continue
+					//get an array with the information from the row of the blog table that matches the inputted title.
+					$row_sql = "SELECT * FROM blog WHERE title='$requested_title';";
+					$row_result = mysqli_query($connection, $row_sql);
+					$requested_post = mysqli_fetch_all($row_result, MYSQLI_ASSOC)[0];
+					$requested_id = $requested_post['id'];
+					if(!in_array($requested_id, $new_array_ids)){
+						//if the id of the requested post is not already listed in the featured_id column of the featured_blog table
+						//clear error message variables
+						unset($_SESSION["update_featured_error"]);
+						unset($_SESSION["update_featured_error_time"]);
+						//run sql to insert the id of the requested post into the correct row of the featured_blog table in the featured_id column, replacing the id that was previously there
+						$update_featured_sql = "UPDATE featured_blog SET featured_id = $requested_id WHERE id = ($i + 1)";
+						$update_featured_result = mysqli_query($connection, $update_featured_sql);
+
+					} else{
+						$_SESSION["update_featured_error"] = "The requested post is already featured.";
+						$_SESSION["update_featured_error_time"] = time();
+					}
+				} else{
+					$_SESSION["update_featured_error"] = "This title does not appear in database.";
+					$_SESSION["update_featured_error_time"] = time();
+				}
+			} else{
+				$unchanged_input_counter += 1;
+			}
+		}
+		if($unchanged_input_counter == 3){
+			//if no inputs have been changed but submit button was pressed, unset error message variable.
+			unset($_SESSION["update_featured_error"]);
+			unset($_SESSION["update_featured_error_time"]);
+		}
+	endif;
 };

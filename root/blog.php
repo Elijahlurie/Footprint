@@ -38,7 +38,14 @@ include "blog_page_functions.php";
           <hr>
           <div id="featured_previews">
             <?php
-              foreach(getBlogPosts($conn, 3) as $blog_post){
+            //get all info on each of the featured blog posts
+              $featured_posts_array = getFeaturedPosts($conn);
+              //create an array of formatted previews for these posts
+              $featured_previews_array = [];
+              foreach($featured_posts_array as $featured_row){
+                $featured_previews_array[] = formatPreview($featured_row, "");
+              }
+              foreach($featured_previews_array as $blog_post){
                 echo $blog_post;
               }
             ?>
