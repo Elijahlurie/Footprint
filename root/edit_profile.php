@@ -8,7 +8,7 @@ include "user_join.php";
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Profile</title>
+  <title>Edit Profile</title>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <link rel="stylesheet" href="styles/styles.css">
 </head>

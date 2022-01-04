@@ -350,7 +350,9 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
   /*featured posts section*/
 .featured_previews_container{
   height: 600px;
-  padding: 30px 30px 0px 30px;
+  padding: 30px;
+  background-color: #FBAB7E;
+  background-image: linear-gradient(50deg, #FBAB7E 0%, #F7CE68 100%);
 }
 .featured_previews_container hr{
   margin-bottom: 30px;
@@ -389,7 +391,7 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
   text-align: center;
   padding: 15px 20px 20px 20px;
   box-sizing: border-box;
-  color: #2C423F;
+  color: #000;
   background-color: #f7f7f7;
   height: calc(100% - 200px);
   border-radius: 0px 0px 5px 5px;
@@ -423,24 +425,44 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
   -webkit-box-orient: vertical;
 }
   /*action of the day posts div*/
-#aotd_previews_cont_2{
-  padding: 50px 50px;
-}
 #aotd_previews_cont{
-  background-color: #2C423F;
-  background: linear-gradient(180deg, #2C423F 0%, #263b38 65%);
-  box-shadow: 0px 0px 30px 1px rgba(0, 0, 0, 0.3);
-
+  background-color: #070db0;
+  background-image: linear-gradient(164deg, #070db0 0%, #030063 100%);
+  color: #fff;
 }
 #aotd_header{
-  padding: 80px 0px 100px 0px;
+  padding: 90px 0px 100px 0px;
   display:flex;
   flex-direction: column;
   align-items: center;
-  color: #fff;
+  font-size: 0.8em;
+}
+#aotd_header_text{
+  display:flex;
+  flex-direction:row;
+  justify-content: center;
+  font-size: 1em;
+}
+#aotd_header_text h1{
+  border-right: 5px solid #fff;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 40px 15px 60px;
+  box-sizing: border-box;
+  font-size: 3.5em;
+}
+#aotd_header_text p{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 60px 15px 40px;
+  box-sizing: border-box;
+  font-size: 1.5em;
+  width: 50%;
 }
 #aotd_header hr{
-  border-top: 5px solid #fff;
+  border-top: 3px solid #fff;
   margin-top: 35px;
   width: 72%;
 }
@@ -449,7 +471,7 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
   flex-wrap: wrap;
   justify-content: space-around;
   max-height: 1200px;
-  padding: 0px 50px;
+  padding: 0px 20px;
 }
 #aotd_category_link{
   width: 100%;
@@ -458,7 +480,7 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
   padding-bottom: 100px;
   box-sizing: border-box;
   color: #fff;
-  font-size: 1.2em;
+  font-size: 1.4em;
 }
 #aotd_category_link a{
   text-decoration: none;
@@ -468,10 +490,10 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
 }
     /*styling for action deep dive previews*/
 .aotd_post_preview{
-  width: 35%;
+  width: 40%;
+  min-width: 230px;
   box-sizing: border-box;
-  margin-bottom: 80px;
-  color: #fff;
+  margin: 0px 10px 60px 10px;
 }
 .aotd_post_preview a{
   text-decoration: none;
@@ -480,8 +502,8 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
   cursor:pointer;
 }
 .aotd_preview_image_cont{
-  height: 200px;
-  box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.1);
+  height: 23vw;
+  box-shadow: 0px 0px 20px 2px rgba(255, 255, 255, 0.2);
   background-size: cover;
   background-color: #fff;
 }
@@ -492,37 +514,36 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
   display: none;
 }
 .aotd_preview_content{
-  font-size: 0.9em;
+  font-size: 0.8em;
   padding: 25px 20px 30px 20px;
   box-sizing: border-box;
-  background-color:#22302e;
-  border-radius: 0px 0px 5px 5px;
-  max-height: 150px;
-  min-height: 100px;
+  text-align: center;
+  color:#fff;
+  height: 100px;
   overflow:hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
 .aotd_preview_content:hover{
-  color: #e8e8e8;
+  color:#ededed;
 }
-  /*global climate news posts div*/
-#news_previews_container{
+  /*climate news posts div*/
+.news_previews_container{
   padding-bottom: 100px;
   padding-top: 40px;
 }
-#news_header{
+.news_header{
   display: flex;
   flex-direction:column;
   justify-content: center;
   padding: 40px 80px 0px 30px;
 }
-#news_header hr{
+.news_header hr{
   border: 2px solid black;
   margin-top: 20px;
 }
-#news_category_link{
+.news_category_link{
   font-size: 1.5em;
   text-align: right;
   padding: 30px 70px 15px 0px;
@@ -579,9 +600,67 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
   font-size: 0.8em;
 }
   /*editorial posts div*/
-#editorial_previews_container{
-  background-color:yellow;
-  height:500px;
+.editorial_previews_container{
+  background-color: #21D4FD;
+  background-image: linear-gradient(#21D4FD 0%, #dee5ff 65%);
+}
+#editorial_previews{
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 80px 25% 0px 80px;
+}
+
+  /*Editorial Previews*/
+.editorial_post_preview{
+  color: #fff;
+  width: 43%;
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin-bottom: 70px;
+}
+.editorial_post_preview:hover{
+  box-shadow:1px 3px 20px 1px rgba(0,0, 0,0.3);
+  cursor:pointer;
+}
+.editorial_preview_image_cont{
+  height: 180px;
+  background-size:cover;
+  border-radius: 5px 5px 0px 0px;
+}
+.editorial_image_path{
+  display:none;
+}
+.editorial_preview_content{
+  text-align: center;
+  padding: 15px 20px 20px 20px;
+  box-sizing: border-box;
+  color: #000;
+  background-color: #fff;
+  border-radius: 0px 0px 5px 5px;
+  position: relative;
+  height: 150px;
+}
+.editorial_author_date_cont{
+  display:flex;
+  justify-content: space-between;
+}
+.editorial_title_cont{
+  text-align:left;
+  font-size: 0.9em;
+  overflow:hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.editorial_desc_cont{
+  text-align:left;
+  position: absolute;
+  width: calc(100% - 60px);
+  overflow:hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 /*------ Blog Post Pages--------*/
 #blog_post_page{

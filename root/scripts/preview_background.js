@@ -16,3 +16,5 @@ setPreviewImage("preview_image_cont", "image_path");
 setPreviewImage("aotd_preview_image_cont", "aotd_image_path");
 //call for climate news previews
 setPreviewImage("news_preview_image_cont", "news_image_path");
+//call for editorial previews
+setPreviewImage("editorial_preview_image_cont", "editorial_image_path");

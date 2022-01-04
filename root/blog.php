@@ -53,11 +53,12 @@ include "blog_page_functions.php";
         </div>
       </div>
       <div class="parallax_group">
-        <div id="aotd_previews_cont_2">
           <div id="aotd_previews_cont">
             <div id="aotd_header">
-              <h1>Action Deep Dives</h1>
-              <hr>
+              <div id="aotd_header_text">
+                <h1>Action Deep Dives</h1>
+                <p>What's the real-world impact of the actions you complete?</p>
+              </div>
             </div>
             <div id="aotd_previews">
               <?php
@@ -70,12 +71,11 @@ include "blog_page_functions.php";
               <p><a href="category_pages/aotd.php">See More</a></p>
             </div>
           </div>
-        </div>
-        <div id="news_previews_container">
-          <div id="news_header">
+        <div class="news_previews_container">
+          <div class="news_header">
             <h1>Climate News</h1>
             <hr>
-            <div id="news_category_link">
+            <div class="news_category_link">
               <a href="category_pages/news.php">See More >></a>
             </div>
           </div>
@@ -87,16 +87,22 @@ include "blog_page_functions.php";
             ?>
           </div>
         </div>
-        <div id="editorial_previews_container">
-          <h1>Editorial Posts</h1>
-          <div class="previews_container">
+        <!--Editorial section, uses same css classes as news section-->
+        <div class="editorial_previews_container news_previews_container">
+          <div class="news_header">
+            <h1>Editorial</h1>
+            <hr>
+            <div class="news_category_link">
+              <a href="category_pages/editorial.php">See More >></a>
+            </div>
+          </div>
+          <div id="editorial_previews">
             <?php
-              foreach(getPostsByCategory($conn, 'Editorial', 3) as $blog_post){
+              foreach(getPostsByCategory($conn, 'Editorial', 4) as $blog_post){
                 echo $blog_post;
               };
             ?>
           </div>
-          <p><a href="category_pages/editorial.php">See More</a></p>
         </div>
       <?php
         include "footer.php";

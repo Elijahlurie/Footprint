@@ -27,6 +27,7 @@
 
   //get all the blog posts for a specified category and echo the [number specified] most recent posts formatted in html .
   function getPostsByCategory($connection, $categoryWanted, $number){
+    //get an array of all blog posts in requested category
      $sql = "SELECT * FROM blog WHERE category = '$categoryWanted' ORDER BY time DESC;";
      $result = mysqli_query($connection, $sql);
      $category_posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -63,16 +64,7 @@
  	} else{
  		$image_html = "";
  	}
-/*
- 	//include the correct link based on what category the post is
- 	if($blog_post_row['category'] == "Action of the Day"){
- 		$category_link = 'category_pages/aotd.php';
- 	} else if($blog_post_row['category'] == "Global Climate News"){
- 		$category_link = 'category_pages/news.php';
- 	} else if($blog_post_row['category'] == "Editorial"){
- 		$category_link = 'category_pages/editorial.php';
- 	}
-*/
+
 //format the preview html depending on what section of the blog.php page it will be displayed on
   if($category == "Action of the Day"){
     $preview= '
@@ -109,7 +101,27 @@
    			</div>
    	';
   } else if($category == "Editorial"){
-
+    $preview= '
+   			<div class="editorial_post_preview">
+   				<a href="blog_posts/'.$blog_post_row['file_name'].'">
+   					<div class="editorial_preview_image_cont">
+   						<p class="editorial_image_path">images/preview_images/'.$blog_post_row['preview_image'].'</p>
+   					</div>
+   					<div class="editorial_preview_content">
+              <div class="editorial_author_date_cont">
+   							<p>'.$blog_post_row['author'].'</p>
+   							<p>'.$blog_post_row['time'].'</p>
+              </div>
+   						<div class="editorial_title_cont">
+   							<h2>'.$blog_post_row['title'].'</h2>
+   						</div>
+   						<div class="editorial_desc_cont">
+   							<p>'.$blog_post_row['description'].'</p>
+   						</div>
+   					</div>
+   				</a>
+   			</div>
+   	';
   } else{
     //if no category was specified, format html for featured posts section
     $preview= '

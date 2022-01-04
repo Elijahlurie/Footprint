@@ -7,14 +7,14 @@ include "user_join.php";
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Admin</title>
+  <title>Donate</title>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <link rel="stylesheet" href="styles/styles.css">
 
 </head>
 
 <body>
-  <?php 
+  <?php
     include "nav_tag.php";
   ?>
   <div id="pageWrapper">

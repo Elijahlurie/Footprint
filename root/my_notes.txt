@@ -1,17 +1,21 @@
 Questions/issues:
 - where should i give credit to the illustrator of the doodles and to the sources for the actions?
+  - make a credits page?
 - what should we call action of the day posts
 - when one of us changes one of the table structures, make sure to tell the other so we can have same databases
+- where should category links fit in featured previews?
 
 things to do:
-- add error message if admin tries to delete a post that is featured, do a commit & push
+
+- prevent featured previews from being listed again below (use a while loop instead of for?)
+  - maybe dont implement until we have a larger amount of posts created?
 - have admin form look different based on what category is chosen
   - category select is separate form, sets a session variable with chosen category
   - if category session variable is set, there are 3 options for how form will look...
-    - hidden input with value set as session variable value for category choice
+    - hidden input with value set as session variable value for category choice or just remember the session variable that was set
   - adjust blog post function accordingly
   - make sure category session variable is unset at the right time
-- sketch designs for each new page
+  - or.. have each category option link to a separate page with a big blog form. inputs are spaced out and styled so its like filling in the blanks of the blog page
 - Style blog.php
   - figure out parallax scrolling
     - try to get middle preview to scroll at diff speed than side previews
@@ -20,15 +24,18 @@ things to do:
 - Style blog post pages
   - figure out how adding images to posts will work
   - have back button link to specific spot on blog.php where they were looking
-- Add the if/else that checks if there is actually a file that corresponds to the preview to any function that generates previews
+    - https://forum.squarespace.com/topic/154900-how-to-return-to-the-same-scroll-position-when-using-browsers-back-button/
+- Add the if/else that checks if there is actually a file that corresponds to the preview to any function that generates previews minus featued preview function
 - Finish Admin page
   - style the page
   - have max character counts for title and description, have a little number in the corner of the textbox counting down
   - lock page and footer link to anyone not an admin
 - Create Donate page
-- make signup form styling a bit nicer?
 - remove test.php from repository
 - make new pages mobile friendly
+  - have logo as home link in nav?
+  - make nav tag into dropdown?
+  - make signup form get smaller smoothly, zipcode explanation div gets opened in weird places
 - Set up socials
   - register email
   - create youtube account
@@ -57,17 +64,11 @@ things to do:
 - start a newsletter?
 
 bugs to fix:
-- why dow e ask for postal code doesnt work on signup page
-- if user just clicks sve on edit profile wout changing anything it says number is already taken
-- nave tag lookks bad mobile view (make in to dropdown?)
-- login form looks bad mobile view, check over all new changes
-- exlanation div on index.php looks bad mobile
-- make logo in footer link to home page?
-- have logo as home link in nav tag mobile view
 
 styles/features to add at some point:
 - include time in blog post date so that if 2 posted in one day they arent just arranged alphabetically
 - have a nicer delete post ux
+- have a way to edit blog posts
 - loading screen if users connection is bad
 - make input boxes border red when errors inputting
 - change preview styles a bit when they are actively clicked on
@@ -109,17 +110,3 @@ Expenses:
 - web hosting
   - look into managed wordpress hosting
   siteground.com start up plan: 3.99 per month
-
-
-Possible ways of funding:
-- affiliate marketing
-  - sea hugger?
-  - fiverr?
-  - sustainable clothing, patagonia
-  - vegetarian diets
-- have a page where users can submit voluntary donations
-- request a $0.75 or $1 donation on sign up
-  - make it optional probably
-- sell something
-  - some sustainably produced bracelet to let people recognize others in the community https://www.etsy.com/listing/654532445/adjustable-hemp-bracelet-pick-the-color?ga_order=most_relevant&ga_search_type=all&ga_view_type=gallery&ga_search_query=woven+hemp+bracelet&ref=sr_gallery-1-4
-  - unlock a feature like analytics abt their env impact
