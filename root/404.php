@@ -10,7 +10,7 @@
   <div id="page_wrapper_404">
     <div id="text_container_404">
       <h1>Whoops!</h1><br>
-      <p>The page you requested doesn't exist.</p><br>
+      <p>The page you requested wasn't found on this server.</p><br>
       <button><a href="../index.php">Come Home</a></button>
     </div>
     <img id="image_404" src="../images/404_image.png" alt="Illustration of man trying to plug cord into palm tree">
