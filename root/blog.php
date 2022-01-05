@@ -110,6 +110,6 @@ include "blog_page_functions.php";
    </div>
   </div>
    <script src="scripts/scripts.js"></script>
-   <script src="scripts/preview_background.js"></script>
+   <script src="scripts/background_image.js"></script>
 </body>
 </html>

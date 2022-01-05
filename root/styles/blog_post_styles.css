@@ -1,0 +1,65 @@
+/*----AOTD Post Page Styling----*/
+#aotd_page_wrapper{
+  padding-top: 100px;
+}
+#aotd_page_header_cont{
+  background-size: cover;
+  height: 500px;
+  width: 100%;
+  display:flex;
+  align-items: center;
+  padding: 50px 0px 0px 100px;
+  box-sizing: border-box;
+}
+#aotd_page_header{
+  height: 350px;
+  width: 50%;
+  background-color: #fff;
+}
+.inline{
+  display: flex;
+  flex-wrap:wrap;
+}
+#aotd_page_image_path{
+  display:none;
+}
+#aotd_page_stats_cont{
+  padding: 50px;
+  box-sizing: border-box;
+}
+#aotd_page_stats{
+  display: flex;
+  width: 100%;
+  padding: 20px 0px;
+  justify-content: center;
+}
+#aotd_page_stats div{
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#aotd_form_content{
+  width: 100%;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+#aotd_content_text{
+  width: 90%;
+  padding: 100px 0px;
+}
+#aotd_content_text textarea{
+  height: 400px;
+}
+#aotd_submit_post_cont{
+  height: 150px;
+  display:flex;
+  justify-content: center;
+  background-color:yellow;
+}
+
+
+/*----Editorial Post Page Styling----*/
+
+/*----Climate News Post Page Styling----*/

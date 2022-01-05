@@ -21,7 +21,7 @@ TABLES
 
   Blog
     - Stores information needed to create previews for blog post files
-    - id INTEGER PRIMARY KEY AUTO_INCREMENT, time INTEGER [stores the php time() when blog post was posted] category TEXT, author TEXT, title TEXT, description TEXT, preview_image TEXT [the file name of the image in the preview_images folder to be displayed on the preview for the blog post], file_name TEXT [stores the name of the corresponding blog post so preview can link to the blog post's page]
+    - id INTEGER PRIMARY KEY AUTO_INCREMENT, time INTEGER [stores the php time() when blog post was posted], date INTEGER [stores the date at the time the blog post is created] category TEXT, author TEXT, title TEXT, description TEXT, preview_image TEXT [the file name of the image in the preview_images folder to be displayed on the preview for the blog post], file_name TEXT [stores the name of the corresponding blog post so preview can link to the blog post's page]
 
 Featured_blog
   - stores the id's of posts that are currently featured on blog.php

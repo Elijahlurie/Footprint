@@ -16,7 +16,7 @@
             <li><a href="'.$path.'sign_up_page.php">Sign Up</a></li>
             <li><a href="'.$path.'about_us.php">About Footprint</a></li>
             <li><a href="mailto: elijahlurie@berkeley.edu?subject=Footprint Question/Comment">Contact us</a></li>
-            <li><a href="'.$path.'admin.php">Admin</a></li>
+            <li><a href="'.$path.'admin/admin.php">Admin</a></li>
           </ul>
       ';
     ?>

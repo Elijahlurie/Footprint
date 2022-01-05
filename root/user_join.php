@@ -293,10 +293,12 @@ function deleteAccount($connection){
 
 //Get the profile of the logged in user
 function getTheUser($connection){
-  $sql = "SELECT * FROM users WHERE id=".$_SESSION['id'].";";
-  $result = mysqli_query($connection, $sql);
-  $array_user = mysqli_fetch_all($result, MYSQLI_ASSOC);
-  return $array_user[0];
+	if($_SESSION['id']){
+		$sql = "SELECT * FROM users WHERE id=".$_SESSION['id'].";";
+	  $result = mysqli_query($connection, $sql);
+	  $array_user = mysqli_fetch_all($result, MYSQLI_ASSOC);
+	  return $array_user[0];
+	}
 };
 
 //if logged in user doesn't exist, end session and go to home page
@@ -386,141 +388,226 @@ function findPreview($connection){
 		header("Location: ../blog.php");
 	}
 };
-
-//enter info needed for blog post preview to the database and create a new file for the blog post in the blog_posts folder of directory
-function blogPost($connection){
-	if(isset($_POST['submit_blog'])){
-		//unset session lbog post error variable in case it was already set
-		unset($_SESSION['blog_post_error']);
+//enter info needed for blog post preview to the database
+function createBlogPreview($connection){
+	if(isset($_POST['submit_blog_preview'])){
+		//unset session blog preview error variable in case it was already set
+		unset($_SESSION['blog_preview_error']);
 		//save the inputs in session variables so if theres an error the computer can remember what they had so they dot start from scratch
 		$_SESSION['blog_input_title'] = $_POST['blog_title'];
 		$_SESSION['blog_input_author'] = $_POST['blog_author'];
 		$_SESSION['blog_input_description'] = $_POST['blog_description'];
-		$_SESSION['blog_input_content'] = $_POST['blog_content'];
 		$_SESSION['blog_input_timestamp'] = time();
 
 		//check that no inputs are empty
-		if($_FILES['blog_preview_image'] != "" && $_POST['blog_title'] != "" && $_POST['blog_author'] !="" && $_POST['blog_description'] != "" && $_POST['blog_content'] != ""){
-		//Enter preview information into database
-			//remove whitespace from beginning and end of inputs and remove special characters
-			$category = trim($_POST['blog_category']);
-			$category = filter_var($category, FILTER_SANITIZE_STRING);
+		if($_FILES['blog_preview_image'] != "" && $_POST['blog_title'] != "" && $_POST['blog_author'] !="" && $_POST['blog_description'] != ""){
+			//Enter preview information into database
+				//remove whitespace from beginning and end of inputs and remove special characters
+				$category = $_POST['blog_category'];
 
-			$preview_img_name = str_replace(' ', '_', $_FILES['blog_preview_image']["name"]);
+				$preview_img_name = str_replace(' ', '_', $_FILES['blog_preview_image']["name"]);
+				$title = trim($_POST['blog_title']);
+				$title = filter_var($title, FILTER_SANITIZE_STRING);
 
-			$title = trim($_POST['blog_title']);
-			$title = filter_var($title, FILTER_SANITIZE_STRING);
+				$author = trim($_POST['blog_author']);
+				$author = filter_var($author, FILTER_SANITIZE_STRING);
 
-			$author = trim($_POST['blog_author']);
-			$author = filter_var($author, FILTER_SANITIZE_STRING);
+				$time = time();
 
-			$time = date("m/d/Y");
+				$date = date("m/d/Y");
 
-			$description = trim($_POST['blog_description']);
-			$description = filter_var($description, FILTER_SANITIZE_STRING);
+				$description = trim($_POST['blog_description']);
+				$description = filter_var($description, FILTER_SANITIZE_STRING);
 
-			$file_name = str_replace(' ', '_', $title) . '.php';
+				$file_name = str_replace(' ', '_', $title) . '.php';
 
-			$content = $_POST['blog_content'];
-
-			//get an array of all the current blog posts in the database to make sure the title (and file name) is not already taken
-			$all_posts_sql = "SELECT * FROM blog;";
-			$all_posts_result = mysqli_query($connection, $all_posts_sql);
-			$all_posts_array = mysqli_fetch_all($all_posts_result, MYSQLI_ASSOC);
-			//go through array of posts, if there are any matches (regardless of upercase/lowercase) add one to counter
-			$i = 0;
-			$lowercase_title = strtolower($title);
-			foreach($all_posts_array as $blog_post):
-				if($lowercase_title == strtolower($blog_post['title'])){
-					$i+=1;
+				//get an array of all the current blog posts in the database to make sure the title (and file name) is not already taken
+				$all_posts_sql = "SELECT * FROM blog;";
+				$all_posts_result = mysqli_query($connection, $all_posts_sql);
+				$all_posts_array = mysqli_fetch_all($all_posts_result, MYSQLI_ASSOC);
+				//go through array of posts, if there are any matches (regardless of upercase/lowercase) add one to counter
+				$i = 0;
+				$lowercase_title = strtolower($title);
+				foreach($all_posts_array as $blog_post):
+					if($lowercase_title == strtolower($blog_post['title'])){
+						$i+=1;
+					}
+				endforeach;
+				//if the title hasnt been used, proceed with creating blog post
+				if($i == 0){
+				//enter information needed for preview into database
+					$blog_sql = "INSERT INTO blog (time, date, category, author, title, description, preview_image, file_name) VALUES ('$time', '$date', '$category', '$author', '$title', '$description', '$preview_img_name', '$file_name');";
+					$blog_result = mysqli_query($connection, $blog_sql);
+					//if it is not already in directory, upload image to directory in the images/preview_images folder
+					$image_file_path = '../images/preview_images/'.$preview_img_name;
+					if(!file_exists($image_file_path)){
+						move_uploaded_file($_FILES['blog_preview_image']["tmp_name"], $image_file_path);
+					}
+				//unset the session variables for the things they've entered because they are no longer needed
+					unset($_SESSION['blog_input_title']);
+					unset($_SESSION['blog_input_author']);
+					unset($_SESSION['blog_input_description']);
+					unset($_SESSION['blog_input_timestamp']);
+				//set a session variable showing a preview has just been made so user isnt redirected from category form page
+					$_SESSION['created_preview'] = time();
+				//redirect user to the appropriate form page for the requested category to finish creating the content of the blog post
+					if($category == "Action of the Day"){
+						header("Location: aotd_form.php");
+					} else if($category == "Global Climate News"){
+						header("Location: news_form.php");
+					} else if($category == "Editorial"){
+						header("Location: editorial_form.php");
+					}
+				}	 else{
+				$_SESSION['blog_preview_error'] = "This title has already been used.";
 				}
-			endforeach;
-			//if the title hasnt been used, proceed with creating blog post
-			if($i == 0){
-			//enter information needed for preview into database
-				$blog_sql = "INSERT INTO blog (time, category, author, title, description, preview_image, file_name) VALUES ('$time', '$category', '$author', '$title', '$description', '$preview_img_name', '$file_name');";
-				$blog_result = mysqli_query($connection, $blog_sql);
-				//if it is not already in directory, upload image to directory in the images/preview_images folder
-				$image_file_path = 'images/preview_images/'.$preview_img_name;
-				if(!file_exists($image_file_path)){
-					move_uploaded_file($_FILES['blog_preview_image']["tmp_name"], $image_file_path);
-				}
+		} else if($_POST['blog_category']== "" && $_POST['blog_title'] == "" && $_POST['blog_author'] =="" && $_POST['blog_description'] == "" && $_POST['blog_content'] == ""){
+			//if all the inputs are empty, dont even show an error message and just clear the session variable storing the error
+			unset($_SESSION['blog_preview_error']);
+		} else{
+			$_SESSION['blog_preview_error'] = "An input is still empty.";
+		}
+	}
+};
+
+//create a new file for the blog post in the blog_posts folder of directory
+function createBlogPost($connection){
+	if(isset($_POST['submit_blog_post'])){
+		//unset session blog post error variable in case it was already set
+		unset($_SESSION['blog_post_error']);
+		//check that no inputs are empty
+		$count = 0;
+		//for each of the set post variables, add 1 to the $count counter variable if the input was left empty
+		//at the same time, save the inputs in session variables so if theres an error the computer can remember what they had so they dot start from scratch
+		//start $i as a counter to give a unique name to each session variable with user inputs
+		$i = 0;
+		foreach($_POST as $input){
+			if($input == ""){
+				$count += 1;
+			}
+			$_SESSION['blog_post_input_'.$i] = $input;
+			$i += 1;
+		}
+		if($count == 1){
+			//if $count = 1, meaning every input (except for the submit button) has some value, continue
 			//Create new blog post file
-				//get the newly added row from the database
-				$new_sql = "SELECT * FROM blog WHERE title = '$title';";
+				//get an array of all blog posts from the database
+				$new_sql = "SELECT * FROM blog;";
 				$new_result = mysqli_query($connection, $new_sql);
-				$new_result_array = mysqli_fetch_all($new_result, MYSQLI_ASSOC)[0];
-				//generate a string with that information and store that string in a variable so the information can be held in an html comment on the blog file in case the row in the table is deleted
+				$new_result_array = mysqli_fetch_all($new_result, MYSQLI_ASSOC);
+				//get the last item of that array, the information for the newest blog post
+				$new_result_row = end($new_result_array);
+				//generate a string with the column names and values and store that string in a variable so the information can be held in an html comment on the blog file in case the row in the table is deleted
 				$list = [];
-				foreach($new_result_array as $key => $value){
+				foreach($new_result_row as $key => $value){
 					$list[] = $key." (".$value.")";
 				}
 				$row_contents = "Data from blog table: " . implode("; " , $list);
-				//create a variable to hold the whole html content of the new file for the blog post with the specifics for this post added in as variables
-				$php_file_content = '
-				<!DOCTYPE html>
-				<?php
-				$time = date_default_timezone_set("America/Los_Angeles");
-				include "../connection.php";
-				include "../user_join.php";
-
-				//call findPreview to check if this post has been deleted and redierct user if it has
-				findPreview($conn);
-
-				//define $path variable so links inside nav tag and footer still point to the right page even though this file is in a folder
-				$path = "../";
-				?>
-				<html>
-				<head>
-					<meta charset="utf-8">
-					<?php echo "<title>'.$title.'</title>";?>
-					<meta name="viewport" content="width=device-width,initial-scale=1"/>
-					<link rel="stylesheet" href="../styles/styles.css">
-
-				</head>
-				<body>
-					<!--Preview information from database in case row in table is deleted
-					<div id="blog_data_meta">
-						'.$row_contents.'
-					</div>-->
+				//create a variable to hold the whole html content of the new file for the blog post with the specifics for this post added in as variables, formatted based on category of post
+				if($new_result_row["category"] == "Action of the Day"){
+					$php_file_content = '
+					<!DOCTYPE html>
 					<?php
-						include "../nav_tag.php";
+					$time = date_default_timezone_set("America/Los_Angeles");
+					include "../connection.php";
+					include "../user_join.php";
+
+					//call findPreview to check if this post has been deleted and redierct user if it has
+					findPreview($conn);
+
+					//define $path variable so links inside nav tag and footer still point to the right page even though this file is in a folder
+					$path = "../";
 					?>
-					<div id="pageWrapper">
-						<div id="blog_post_page">
-							<p><a href="../blog.php"><--Back</a></p>
-									<h1>Title: '.$title.'</h1>
-									<p>Author: '.$author.'</p>
-									<p>Published: '.$time.'</p>
-									<p>Category: '.$category.'</p>
-									'.$content.'
-						</div>
-					</div>
-					<?php
-						include "../footer.php";
-					 ?>
-					 <script src="../scripts/scripts.js"></script>
-				</body>
-				</html>
-				';
+					<html>
+					<head>
+						<meta charset="utf-8">
+						<?php echo "<title>'.$new_result_row["title"].'</title>";?>
+						<meta name="viewport" content="width=device-width,initial-scale=1"/>
+						<link rel="stylesheet" href="../styles/styles.css">
+						<link rel="stylesheet" href="../styles/blog_post_styles.css">
+					</head>
+					<body>
+						<!--Preview information from database in case row in table is deleted
+						<div id="blog_data_meta">
+							'.$row_contents.'
+						</div>-->
+						<?php
+					    include "../nav_tag.php";
+					   ?>
+						 <div id="aotd_page_wrapper">
+	 							<div id="aotd_page_header_cont">
+	 								<div id="aotd_page_header">
+	 									<div class="inline">
+	 										<h1>By '.$_POST['aotd_input_header_action'].'. . .</h1>
+	 									</div>
+	 									<div>
+	 										'.$_POST['aotd_input_header_impact'].'
+	 									</div>
+	 									<p><strong>Check the facts</strong></p>
+	 								</div>
+	 								<p id="aotd_page_image_path">../images/preview_images/'.$new_result_row["preview_image"].'</p>
+	 							</div>
+	 							<div id="aotd_page_stats_cont">
+	 								<div class="inline">
+	 									<h2>If everyone '.$_POST['aotd_input_stats_action'].' today, we\'d save . . .</h2>
+	 								</div>
+	 								<div id="aotd_page_stats">
+	 									<div>
+	 										<h2>'.$_POST['aotd_input_stats_number_1'].'</h2>
+	 										<p>'.$_POST['aotd_input_stats_unit_1'].'</p>
+	 										<p><em>'.$_POST['aotd_input_stats_impact_1'].'</em></p>
+	 									</div>
+	 									<div>
+	 									<h2>'.$_POST['aotd_input_stats_number_2'].'</h2>
+	 									<p>'.$_POST['aotd_input_stats_unit_2'].'</p>
+	 									<p><em>'.$_POST['aotd_input_stats_impact_2'].'</em></p>
+	 									</div>
+	 									<div>
+	 									<h2>'.$_POST['aotd_input_stats_number_3'].'</h2>
+	 									<p>'.$_POST['aotd_input_stats_unit_3'].'</p>
+	 									<p><em>'.$_POST['aotd_input_stats_impact_3'].'</em></p>
+	 									</div>
+	 								</div>
+	 								<h2>. . . And that\'s just in the USA!</h2>
+	 							</div>
+	 							<div id="aotd_form_content">
+	 								<div id="aotd_content_text">
+	 									'.$_POST['aotd_input_content'].'
+	 								</div>
+	 							</div>
+	 						<p>By '.$new_result_row["author"].', '.$new_result_row["date"].'</p>
+	 					</div>
+	 					<?php
+	 						include "../footer.php";
+	 					 ?>
+	 					 <script src="scripts/scripts.js"></script>
+	 					 <script>
+	 					 //set background image of header div
+	 					 aotd_page_header = document.getElementById("aotd_page_header_cont");
+	 					 aotd_page_image_path = document.getElementById("aotd_page_image_path");
+	 					 aotd_page_header.style.backgroundImage =  "url(" + aotd_page_image_path.innerHTML + ")";
+	 				</script>
+	 				</body>
+					</html>
+					';
+				} else if($new_result_row["category"] == "Global Climate News"){
+					$php_file_content = '
+
+					';
+				} else if($new_result_row["category"] == "Editorial"){
+					$php_file_content = '
+
+					';
+				}
 				//create a new file in the blog_posts folder of the directory with this php file content
-				$file_path = "blog_posts/" . $file_name;
+				$file_path = "../blog_posts/" . $new_result_row["file_name"];
 				$newfile = fopen($file_path, "w") or die("Unable to open file!");
 				fwrite($newfile, $php_file_content);
-
-				//unset the session variables for the things they've entered because they are no longer needed
-				unset($_SESSION['blog_input_title']);
-				unset($_SESSION['blog_input_author']);
-				unset($_SESSION['blog_input_description']);
-				unset($_SESSION['blog_input_content']);
-				unset($_SESSION['blog_input_timestamp']);
-			} else{
-			$_SESSION['blog_post_error'] = "This title has already been used.";
-			}
-		} else if($_POST['blog_category']== "" && $_POST['blog_title'] == "" && $_POST['blog_author'] =="" && $_POST['blog_description'] == "" && $_POST['blog_content'] == ""){
-			//if all the inputs are empty, dont even show an error message and just clear the session variable storing the error
-			unset($_SESSION['blog_post_error']);
-		} else{
+				//unset $_SESSION['created_preview'] so that users will be redirected from category form pages unless they make a new post
+				unset($_SESSION['created_preview']);
+				//redirect user to the blog post they just made
+				header('Location:'.$file_path);
+		}else{
 			$_SESSION['blog_post_error'] = "An input is still empty.";
 		}
 	}

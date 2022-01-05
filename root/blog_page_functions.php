@@ -95,7 +95,7 @@
    						<p>'.$blog_post_row['description'].'</p>
    					</div><br>
             <div class="news_preview_author_date_cont">
-   						<p>'.$blog_post_row['author'].', '.$blog_post_row['time'].'</p>
+   						<p>'.$blog_post_row['author'].', '.$blog_post_row['date'].'</p>
    					</div>
    				</div>
    			</div>
@@ -110,7 +110,7 @@
    					<div class="editorial_preview_content">
               <div class="editorial_author_date_cont">
    							<p>'.$blog_post_row['author'].'</p>
-   							<p>'.$blog_post_row['time'].'</p>
+   							<p>'.$blog_post_row['date'].'</p>
               </div>
    						<div class="editorial_title_cont">
    							<h2>'.$blog_post_row['title'].'</h2>
@@ -133,7 +133,7 @@
    					<div class="preview_content">
    						<div class="preview_author_date_cont">
    							<p>'.$blog_post_row['author'].'</p>
-   							<p>'.$blog_post_row['time'].'</p>
+   							<p>'.$blog_post_row['date'].'</p>
    						</div>
    						<div class="preview_title_cont">
    							<h2>'.$blog_post_row['title'].'</h2>

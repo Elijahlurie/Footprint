@@ -7,24 +7,19 @@ Questions/issues:
 
 things to do:
 
-- prevent featured previews from being listed again below (use a while loop instead of for?)
-  - maybe dont implement until we have a larger amount of posts created?
-- have admin form look different based on what category is chosen
-  - category select is separate form, sets a session variable with chosen category
-  - if category session variable is set, there are 3 options for how form will look...
-    - hidden input with value set as session variable value for category choice or just remember the session variable that was set
-  - adjust blog post function accordingly
-  - make sure category session variable is unset at the right time
-  - or.. have each category option link to a separate page with a big blog form. inputs are spaced out and styled so its like filling in the blanks of the blog page
+- have way of counting each time each action is completed
 - Style blog.php
   - figure out parallax scrolling
     - try to get middle preview to scroll at diff speed than side previews
   - add category links to featured previews if possible
 - Style category_pages files
 - Style blog post pages
-  - figure out how adding images to posts will work
   - have back button link to specific spot on blog.php where they were looking
     - https://forum.squarespace.com/topic/154900-how-to-return-to-the-same-scroll-position-when-using-browsers-back-button/
+  - for aotd posts:
+    - turn statistic numbers into words: https://marc.info/?l=php-general&m=99928281523866&w=2
+    - use js to change stats to day week or year
+    - include place for sources to be listed
 - Add the if/else that checks if there is actually a file that corresponds to the preview to any function that generates previews minus featued preview function
 - Finish Admin page
   - style the page
@@ -62,8 +57,16 @@ things to do:
 - look into copyright, terms and conditions
 - start developing some of the 'cool features to add'
 - start a newsletter?
+- at some point go through php and streamline code / fix logic errors
 
 bugs to fix:
+- signup and login look weird on nates browser
+- blog page doesnt automatically reload if a preview is deleted bc the file doesnt exist
+- problems will arise if 2 ppl try to post at same time bc code just gets the most recent preview made to sub in values for the category form
+- if i make a preview and go to category post page and then go to blog page, preview gets deleted bc of check on blog page but the session variables save my progress for the category form.
+  - give a warning if user tries to leave category page halfway through?
+  - or just automatically delete preview and unset session variables if they leave halfway through?
+
 
 styles/features to add at some point:
 - include time in blog post date so that if 2 posted in one day they arent just arranged alphabetically
@@ -71,8 +74,11 @@ styles/features to add at some point:
 - have a way to edit blog posts
 - loading screen if users connection is bad
 - make input boxes border red when errors inputting
+- if errors on forms, only sub in the users' inputs for the boxes where they typed; for the empty ones leave in placeholders
 - change preview styles a bit when they are actively clicked on
 - in fucntions where i check if phone number or title is already used, use in_array() instead of a loop to streamline code
+- prevent featured previews from being listed again below (use a while loop instead of for?)
+- have the top part of aotd posts generated automatically if we include more data on each action in the database
 
 cool extra features to add:
 - track most popular posts and have a section for viewing them

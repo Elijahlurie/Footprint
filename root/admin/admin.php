@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <?php
 $time = date_default_timezone_set('America/Los_Angeles');
-include "connection.php";
-include "user_join.php";
+include "../connection.php";
+include "../user_join.php";
+
+//define $path variable so links inside nav tag and footer still point to the right page even though this file is in a folder
+$path = "../";
  ?>
 <html>
 <head>
   <meta charset="utf-8">
   <title>Admin</title>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <link rel="stylesheet" href="styles/styles.css">
+  <link rel="stylesheet" href="../styles/styles.css">
+  <!--script for rich text editor-->
   <script src="https://cdn.tiny.cloud/1/pqwdz7bddbd3ranupfkf3fghsfyr18540uxmv2kdc7w3jhub/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 </head>
 
 <body>
   <div id="pageWrapper">
     <?php
-      include "nav_tag.php";
+      include "../nav_tag.php";
   /*    if($specific_user['admin'] != 1){
         header("Location: index.php");
       }*/
@@ -37,6 +41,47 @@ include "user_join.php";
      ?>
     <div id="admin_page_container">
       <h1>Admin</h1>
+      <h2>Post a Blog Entry</h2>
+      <?php
+        echo '
+          <form id="blog_form" method="POST" action="'.createBlogPreview($conn).'" enctype="multipart/form-data">
+            <p>Category</p>
+            <select name="blog_category">
+              <option value="Action of the Day">Action of the Day</option>
+              <option value="Global Climate News">Global Climate News</option>
+              <option value="Editorial">Editorial</option>
+            </select>
+            <p>Image for Preview</p>
+            <input name="blog_preview_image" type="file" accept="image/png, image/jpeg, image/jpg">
+          ';
+          if(isset($_SESSION['blog_preview_error'])){
+            //fill in with session variable values from their previous input
+            echo '
+              <p>Author Name</p>
+              <input name="blog_author" type="text" value="'.$_SESSION['blog_input_author'].'">
+              <p>Title</p>
+              <input name="blog_title" type="text" value="'.$_SESSION['blog_input_title'].'">
+              <p>Description</p>
+              <input name="blog_description" type="text" value="'.$_SESSION['blog_input_description'].'">
+              <button name="submit_blog_preview" type="submit">Post</button>
+            </form>
+
+            <p>Error: '.$_SESSION['blog_preview_error'].'</p>
+            ';
+          } else{
+            echo '
+                <p>Author Name</p>
+                <input name="blog_author" type="text">
+                <p>Title</p>
+                <input name="blog_title" type="text">
+                <p>Description</p>
+                <input name="blog_description" type="text">
+                <button name="submit_blog_preview" type="submit">Post</button>
+              </form>
+            ';
+          }
+      ?>
+
       <h2>Update Featured Posts</h2>
       <?php
         $featured_posts_array = getFeaturedPosts($conn);
@@ -54,53 +99,6 @@ include "user_join.php";
           </form>
           <div id="update_featured_error">'.$_SESSION["update_featured_error"].'</div>
         ';
-
-        //have a form where each inputs value is one of the featured posts Title
-        //action of form is editFeaturdPosts
-      ?>
-      <h2>Post a Blog Entry</h2>
-      <?php
-        echo '
-          <form id="blog_form" method="POST" action="'.blogPost($conn).'" enctype="multipart/form-data">
-            <p>Category</p>
-            <select name="blog_category">
-              <option value="Action of the Day">Action of the Day</option>
-              <option value="Global Climate News">Global Climate News</option>
-              <option value="Editorial">Editorial</option>
-            </select>
-            <p>Image for Preview</p>
-            <input name="blog_preview_image" type="file" accept="image/png, image/jpeg, image/jpg">
-          ';
-          if(isset($_SESSION['blog_post_error'])){
-            //fill in with session variable values from their previous input
-            echo '
-              <p>Author Name</p>
-              <input name="blog_author" type="text" value="'.$_SESSION['blog_input_author'].'">
-              <p>Title</p>
-              <input name="blog_title" type="text" value="'.$_SESSION['blog_input_title'].'">
-              <p>Description</p>
-              <input name="blog_description" type="text" value="'.$_SESSION['blog_input_description'].'">
-              <p>Content:</p>
-              <textarea name="blog_content" type="text">'.$_SESSION['blog_input_content'].'</textarea>
-              <button name="submit_blog" type="submit">Post</button>
-            </form>
-
-            <p>Error: '.$_SESSION['blog_post_error'].'</p>
-            ';
-          } else{
-            echo '
-                <p>Author Name</p>
-                <input name="blog_author" type="text">
-                <p>Title</p>
-                <input name="blog_title" type="text">
-                <p>Description</p>
-                <input name="blog_description" type="text">
-                <p>Content:</p>
-                <textarea name="blog_content" type="text">Write content here</textarea>
-                <button name="submit_blog" type="submit">Post</button>
-              </form>
-            ';
-          }
       ?>
       <h2>Delete Blog Post</h2>
       <?php
@@ -116,7 +114,7 @@ include "user_join.php";
     </div>
   </div>
   <?php
-    include "footer.php";
+    include "../footer.php";
    ?>
    <script src="scripts/scripts.js"></script>
    <script>
@@ -132,3 +130,4 @@ include "user_join.php";
 </script>
 </body>
 </html>
+$_SESSION['blog_preview_error']
