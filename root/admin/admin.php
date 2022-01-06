@@ -130,4 +130,3 @@ $path = "../";
 </script>
 </body>
 </html>
-$_SESSION['blog_preview_error']

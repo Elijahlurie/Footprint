@@ -18,6 +18,9 @@
           $file_name = $posts_array[$i]['file_name'];
           $delete_post_sql = "DELETE FROM blog WHERE file_name = '$file_name';";
           $delete_post_result = mysqli_query($connection, $delete_post_sql);
+          //in case it was set, unset $_SESSION['created_preview'] so that users will be redirected from category form pages unless they make a new post
+          unset($_SESSION['created_preview']);
+          
           header("Location: blog.php");
         }
       endif;
@@ -47,6 +50,9 @@
            $file_name = $category_posts[$i]['file_name'];
            $delete_post_sql = "DELETE FROM blog WHERE file_name = '$file_name';";
            $delete_post_result = mysqli_query($connection, $delete_post_sql);
+           //in case it was set, unset $_SESSION['created_preview'] so that users will be redirected from category form pages unless they make a new post
+   				 unset($_SESSION['created_preview']);
+
            header("Location: blog.php");
          }
        endif;

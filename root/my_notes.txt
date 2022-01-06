@@ -18,7 +18,6 @@ things to do:
     - https://forum.squarespace.com/topic/154900-how-to-return-to-the-same-scroll-position-when-using-browsers-back-button/
   - for aotd posts:
     - turn statistic numbers into words: https://marc.info/?l=php-general&m=99928281523866&w=2
-    - use js to change stats to day week or year
     - include place for sources to be listed
 - Add the if/else that checks if there is actually a file that corresponds to the preview to any function that generates previews minus featued preview function
 - Finish Admin page
@@ -46,6 +45,7 @@ things to do:
   - remove user if they dont respond or complete an action 5 or 10 days after check in text
   - let users change password by getting texted a onetime code
 - delete all files in blog_posts folder, delete my_notes.txt
+- make sure 404 page works
 - add cron job in hosting platform so that cron_functions gets run every 5 minutes
   - remove 'include cron_functions.php' from top of user_join.php
   - add $actions_array function from cron functions to user page as well
@@ -60,6 +60,7 @@ things to do:
 - at some point go through php and streamline code / fix logic errors
 
 bugs to fix:
+- error messes for empty inputs sometimes doesnt work on category form
 - signup and login look weird on nates browser
 - blog page doesnt automatically reload if a preview is deleted bc the file doesnt exist
 - problems will arise if 2 ppl try to post at same time bc code just gets the most recent preview made to sub in values for the category form
@@ -69,16 +70,21 @@ bugs to fix:
 
 
 styles/features to add at some point:
-- include time in blog post date so that if 2 posted in one day they arent just arranged alphabetically
-- have a nicer delete post ux
-- have a way to edit blog posts
-- loading screen if users connection is bad
 - make input boxes border red when errors inputting
+- unset session variables for category form inputs if post is successfully created?
+  - doesnt rly matter bc they are only shown if a new error session variable is set but to clear up clutter of session variables
+- loading screen if users connection is bad
+- have a way to edit blog posts
+- have a nicer delete post ux
 - if errors on forms, only sub in the users' inputs for the boxes where they typed; for the empty ones leave in placeholders
-- change preview styles a bit when they are actively clicked on
-- in fucntions where i check if phone number or title is already used, use in_array() instead of a loop to streamline code
 - prevent featured previews from being listed again below (use a while loop instead of for?)
+  - only once we have plenty of posts
 - have the top part of aotd posts generated automatically if we include more data on each action in the database
+- give a warning if admin tries to leave category page halfway through bc if they go to blog page the preview will be deleted and $_SESSION['created_preview'] will be unset so their progress will be lost
+- delete session variables for filling in blanks on category pages if the $_SESSION['created_preview'] is unset bc they wont be able to revisit that page anyway unless they create a new post?
+  - only reason not to would be if preview accidentally gets deleted so admin goes to form and makes new preview to be rerouted to category form in hpes that their progress is still there
+  - but if trying to make a brand new post it will be annoying to have that there
+- in fucntions where i check if phone number or title is already used, use in_array() instead of a loop to streamline code
 
 cool extra features to add:
 - track most popular posts and have a section for viewing them

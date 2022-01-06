@@ -400,7 +400,7 @@ function createBlogPreview($connection){
 		$_SESSION['blog_input_timestamp'] = time();
 
 		//check that no inputs are empty
-		if($_FILES['blog_preview_image'] != "" && $_POST['blog_title'] != "" && $_POST['blog_author'] !="" && $_POST['blog_description'] != ""){
+		if($_FILES['blog_preview_image']["name"] != "" && $_POST['blog_title'] != "" && $_POST['blog_author'] !="" && $_POST['blog_description'] != ""){
 			//Enter preview information into database
 				//remove whitespace from beginning and end of inputs and remove special characters
 				$category = $_POST['blog_category'];
@@ -549,26 +549,35 @@ function createBlogPost($connection){
 	 							</div>
 	 							<div id="aotd_page_stats_cont">
 	 								<div class="inline">
-	 									<h2>If everyone '.$_POST['aotd_input_stats_action'].' today, we\'d save . . .</h2>
+	 									<h2>If everyone* '.$_POST['aotd_input_stats_action'].'&nbsp</h2>
+										<div id="stat_timespan_dropdown">
+											<h2 id="stat_timespan">today</h2>
+											<div id="stat_timespan_content">
+												<div id="today_option" class="stat_timespan_option">today</div>
+												<div id="week_option" class="stat_timespan_option">this week</div>
+												<div id="year_option" class="stat_timespan_option">this year</div>
+											</div>
+										</div>
+										<h2>, we\'d save . . .</h2>
 	 								</div>
 	 								<div id="aotd_page_stats">
 	 									<div>
-	 										<h2>'.$_POST['aotd_input_stats_number_1'].'</h2>
+	 										<h2 class="statistic_number">'.$_POST['aotd_input_stats_number_1'].'</h2>
 	 										<p>'.$_POST['aotd_input_stats_unit_1'].'</p>
 	 										<p><em>'.$_POST['aotd_input_stats_impact_1'].'</em></p>
 	 									</div>
 	 									<div>
-	 									<h2>'.$_POST['aotd_input_stats_number_2'].'</h2>
-	 									<p>'.$_POST['aotd_input_stats_unit_2'].'</p>
-	 									<p><em>'.$_POST['aotd_input_stats_impact_2'].'</em></p>
+		 									<h2 class="statistic_number">'.$_POST['aotd_input_stats_number_2'].'</h2>
+		 									<p>'.$_POST['aotd_input_stats_unit_2'].'</p>
+		 									<p><em>'.$_POST['aotd_input_stats_impact_2'].'</em></p>
 	 									</div>
 	 									<div>
-	 									<h2>'.$_POST['aotd_input_stats_number_3'].'</h2>
-	 									<p>'.$_POST['aotd_input_stats_unit_3'].'</p>
-	 									<p><em>'.$_POST['aotd_input_stats_impact_3'].'</em></p>
+		 									<h2 class="statistic_number">'.$_POST['aotd_input_stats_number_3'].'</h2>
+		 									<p>'.$_POST['aotd_input_stats_unit_3'].'</p>
+		 									<p><em>'.$_POST['aotd_input_stats_impact_3'].'</em></p>
 	 									</div>
 	 								</div>
-	 								<h2>. . . And that\'s just in the USA!</h2>
+	 								<h2>*. . . And that\'s just in the USA!</h2>
 	 							</div>
 	 							<div id="aotd_form_content">
 	 								<div id="aotd_content_text">
@@ -580,13 +589,17 @@ function createBlogPost($connection){
 	 					<?php
 	 						include "../footer.php";
 	 					 ?>
-	 					 <script src="scripts/scripts.js"></script>
-	 					 <script>
-	 					 //set background image of header div
+	 					<script src="../scripts/scripts.js"></script>
+						<script src="../scripts/blog_stats.js"></script>
+						<script>
+						 //store original statistic values in an array to not forget them when other values are calculated in
+						 var original_numbers = ['.$_POST['aotd_input_stats_number_1'].', '.$_POST['aotd_input_stats_number_2'].', '.$_POST['aotd_input_stats_number_3'].'];
+
+						 //set background image of header div
 	 					 aotd_page_header = document.getElementById("aotd_page_header_cont");
 	 					 aotd_page_image_path = document.getElementById("aotd_page_image_path");
 	 					 aotd_page_header.style.backgroundImage =  "url(" + aotd_page_image_path.innerHTML + ")";
-	 				</script>
+	 					</script>
 	 				</body>
 					</html>
 					';
@@ -606,7 +619,7 @@ function createBlogPost($connection){
 				//unset $_SESSION['created_preview'] so that users will be redirected from category form pages unless they make a new post
 				unset($_SESSION['created_preview']);
 				//redirect user to the blog post they just made
-				header('Location:'.$file_path);
+				header('Location:../blog.php');
 		}else{
 			$_SESSION['blog_post_error'] = "An input is still empty.";
 		}

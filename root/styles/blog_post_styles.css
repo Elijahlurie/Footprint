@@ -1,4 +1,4 @@
-/*----AOTD Post Page Styling----*/
+/*----AOTD Post Page Styling (also used for aotd category form)----*/
 #aotd_page_wrapper{
   padding-top: 100px;
 }
@@ -26,6 +26,32 @@
 #aotd_page_stats_cont{
   padding: 50px;
   box-sizing: border-box;
+}
+#stat_timespan_dropdown{
+  display:inline-block;
+  position:relative;
+}
+#stat_timespan{
+  text-decoration: underline;
+  cursor: pointer;
+}
+#stat_timespan_content{
+  display:none;
+  position:absolute;
+  padding-top: 5px;
+  width: 150px;
+}
+.stat_timespan_option{
+  padding: 5px;
+  box-sizing: border-box;
+  background-color:blue;
+  cursor:pointer;
+}
+.stat_timespan_option:hover{
+  background-color:green;
+}
+#stat_timespan_dropdown:hover #stat_timespan_content{
+  display:block;
 }
 #aotd_page_stats{
   display: flex;
