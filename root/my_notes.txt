@@ -7,24 +7,23 @@ Questions/issues:
 
 things to do:
 
-- have way of counting each time each action is completed
-- Style blog.php
-  - figure out parallax scrolling
-    - try to get middle preview to scroll at diff speed than side previews
-  - add category links to featured previews if possible
-- Style category_pages files
 - Style blog post pages
   - have back button link to specific spot on blog.php where they were looking
     - https://forum.squarespace.com/topic/154900-how-to-return-to-the-same-scroll-position-when-using-browsers-back-button/
   - for aotd posts:
-    - turn statistic numbers into words: https://marc.info/?l=php-general&m=99928281523866&w=2
+    - turn statistic numbers into words? https://marc.info/?l=php-general&m=99928281523866&w=2
     - include place for sources to be listed
+- Style category_pages files
+- Finish styling blog.php
+  - figure out parallax scrolling
+    - try to get middle preview to scroll at diff speed than side previews
+  - add category links to featured previews if possible
 - Add the if/else that checks if there is actually a file that corresponds to the preview to any function that generates previews minus featued preview function
+- Create Donate page
 - Finish Admin page
   - style the page
   - have max character counts for title and description, have a little number in the corner of the textbox counting down
   - lock page and footer link to anyone not an admin
-- Create Donate page
 - remove test.php from repository
 - make new pages mobile friendly
   - have logo as home link in nav?
@@ -85,6 +84,8 @@ styles/features to add at some point:
   - only reason not to would be if preview accidentally gets deleted so admin goes to form and makes new preview to be rerouted to category form in hpes that their progress is still there
   - but if trying to make a brand new post it will be annoying to have that there
 - in fucntions where i check if phone number or title is already used, use in_array() instead of a loop to streamline code
+- improve code for assigning actions and displaying actions because as of now if an action row in the middle of the table is deleted it messes things up
+
 
 cool extra features to add:
 - track most popular posts and have a section for viewing them

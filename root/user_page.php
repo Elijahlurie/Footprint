@@ -51,7 +51,7 @@ include "user_join.php";
 
         <hr>
         <?php
-          echo '<p id="users_action">'.$actions_array[$specific_user['curr_action']].'</p>';
+          echo '<p id="users_action">'.$actions_array[$specific_user['curr_action'] - 1].'</p>';
          ?>
        </div>
        <?php

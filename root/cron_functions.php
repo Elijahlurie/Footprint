@@ -16,7 +16,7 @@ function getGreetings($connection){
 };
 $greetings_array = getGreetings($conn);
 
-//puts all the possible actions from the database in an array and returns the array
+//put all the possible actions from the database in an array and return the array
 function getActions($connection){
   $actions_sql = "SELECT * FROM actions;";
   $actions_result = mysqli_query($connection, $actions_sql);
@@ -28,7 +28,6 @@ function getActions($connection){
   return $new_array;
 };
 $actions_array = getActions($conn);
-
 
 /*----all the stuff for twillio sending texts:-------*/
   /*  require __DIR__ . '/vendor/autoload.php';
@@ -68,14 +67,7 @@ $actions_array = getActions($conn);
     /*
       //if its past 11am and earlier than 8pm text them
         if($user_hours_today >= 11 && $hours_today < 20 && !$user['texted']):
-          $client->messages->create(
-              // Where to send a text message (your cell phone?)
-              $text_number,
-              array(
-                  'from' => $twilio_number,
-                  'body' => $greetings_array[$random_greeting_number].' '.$user['name'].'! Your eco action today is: '.$actions_array[$user["curr_action"]]
-              )
-          );
+          //**text the user**
           //update that the user has been texted
           $sql = "UPDATE users SET texted = ".time()." WHERE id=".$user['id'].";";
           $result = mysqli_query($conn, $sql);
@@ -155,9 +147,9 @@ function checkDay($connection, $actions_array){
         $array_past_actions[] = $array_past_actions_row[$column_name];
       }
 
-      //generate random numbers within length of $array_actions until the randum number isn't any of the ones they have had recetly (numbers listed in the $array_past_actions array)
+      //generate random numbers (to correspond with ids from actions table) within length of $array_actions until the randum number isn't any of the ones they have had recetly (numbers listed in the $array_past_actions array)
         do{
-          $rand = mt_rand(0,(count($actions_array)-1));
+          $rand = mt_rand(1,(count($actions_array)));
         }while(in_array($rand, $array_past_actions));
 
 

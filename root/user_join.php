@@ -325,35 +325,50 @@ function logOutDeletedUsers($connection){
 };
 logOutDeletedUsers($conn);
 
-//if user clicks check add 1 to their actions_completed in database and disable the completed action button
+//if user presses completed action button, update number of total actions completed by that user, and also completed_action and last_completed_action columns.
 function completedAction($connection){
-	//get the row in users table for the current user
-  $get_sql = "SELECT * FROM users WHERE id=".$_SESSION['id'].";";
-  $get_result = mysqli_query($connection, $get_sql);
-  $array_user = mysqli_fetch_all($get_result, MYSQLI_ASSOC);
-	//if user presses completed action button, update number of total actions completed by that user, and also completed_action and last_completed_action columns.
 	//also update total actions completed by community
-  if(isset($_POST['completed_action']) && !$array_user[0]['completed_action']){
-		$new_actions_completed = $array_user[0]['actions_completed'] + 1;
+  if(isset($_POST['completed_action'])){
+		//get the row in users table for the current user
+	  $get_sql = "SELECT * FROM users WHERE id=".$_SESSION['id'].";";
+	  $get_result = mysqli_query($connection, $get_sql);
+	  $array_user = mysqli_fetch_all($get_result, MYSQLI_ASSOC)[0];
 
-		//get current seconds since jan 1 1970 in the users time zone and convert to nearest whole days.
-		$user_curr_time = time() + 3600 * ($array_user[0]['timezone']/100);
-		$user_days = ($user_curr_time/86400) - ($user_curr_time%86400)/86400;
+		if(!$array_user['completed_action']){
+		//if the user hasn't already complteted the action
+			$new_actions_completed = $array_user['actions_completed'] + 1;
 
-    $sql = "UPDATE users SET actions_completed = $new_actions_completed, completed_action = TRUE, last_completed_action = $user_days WHERE id = ".$_SESSION['id'].";";
-    $result = mysqli_query($connection, $sql);
-    //update the main table total_actions of the whole community
-    $old_actions_sql = "SELECT * FROM main WHERE id=1;";
-    $old_actions_result = mysqli_query($connection, $old_actions_sql);
-    $array_main = mysqli_fetch_all($old_actions_result, MYSQLI_ASSOC);
-    $new_total_actions = $array_main[0]['total_actions'] + 1;
-    $total_actions_sql = "UPDATE main SET total_actions = $new_total_actions WHERE id = 1;";
-    $total_actions_result = mysqli_query($connection, $total_actions_sql);
+			//get current seconds since jan 1 1970 in the users time zone and convert to nearest whole days.
+			$user_curr_time = time() + 3600 * ($array_user['timezone']/100);
+			$user_days = ($user_curr_time/86400) - ($user_curr_time%86400)/86400;
 
-    header('Location: '.$_SERVER['REQUEST_URI']);
-  } else if(isset($_POST['completed_action']) && $array_user[0]['completed_action']){
-    echo "You already completed the action for today.";
-  }
+	    $sql = "UPDATE users SET actions_completed = $new_actions_completed, completed_action = TRUE, last_completed_action = $user_days WHERE id = ".$_SESSION['id'].";";
+	    $result = mysqli_query($connection, $sql);
+
+			//update the times_completed for the action that was assigned to the user
+			//get the value for the times_completed column of the row of the actions table belonging to the action currently asigned to the user
+			$assigned_action_sql = "SELECT * FROM actions WHERE id=".$array_user['curr_action'].";";
+			$assigned_action_result = mysqli_query($connection, $assigned_action_result);
+		  $old_times_completed = mysqli_fetch_all($assigned_action_result, MYSQLI_ASSOC)[0]['times_completed'];
+			$new_times_completed = $old_times_completed + 1;
+			//update the times_completed value in the database for the action
+			$times_completed_sql = "UPDATE actions SET times_completed=".$new_times_completed." WHERE id=".$array_user['curr_action'].";";
+			$times_completed_result = mysqli_query($connection, $times_completed_sql);
+
+	    //update the main table total_actions of the whole community
+
+	    $old_actions_sql = "SELECT * FROM main WHERE id=1;";
+	    $old_actions_result = mysqli_query($connection, $old_actions_sql);
+	    $array_main = mysqli_fetch_all($old_actions_result, MYSQLI_ASSOC);
+	    $new_total_actions = $array_main['total_actions'] + 1;
+	    $total_actions_sql = "UPDATE main SET total_actions = $new_total_actions WHERE id = 1;";
+	    $total_actions_result = mysqli_query($connection, $total_actions_sql);
+
+	    header('Location: '.$_SERVER['REQUEST_URI']);
+  	} else{
+    	echo "You already completed the action for today.";
+  	}
+	}
 };
 
 //Adds the actions of every user to see how many total the community has done
