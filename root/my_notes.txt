@@ -7,6 +7,7 @@ Questions/issues:
 
 things to do:
 
+- delete session variables for filling in blanks on category pages if a post is successfully created
 - Style blog post pages
   - have back button link to specific spot on blog.php where they were looking
     - https://forum.squarespace.com/topic/154900-how-to-return-to-the-same-scroll-position-when-using-browsers-back-button/
@@ -59,13 +60,14 @@ things to do:
 - at some point go through php and streamline code / fix logic errors
 
 bugs to fix:
-- error messes for empty inputs sometimes doesnt work on category form
+- error message on category form doesnt show up the first time
 - signup and login look weird on nates browser
 - blog page doesnt automatically reload if a preview is deleted bc the file doesnt exist
 - problems will arise if 2 ppl try to post at same time bc code just gets the most recent preview made to sub in values for the category form
 - if i make a preview and go to category post page and then go to blog page, preview gets deleted bc of check on blog page but the session variables save my progress for the category form.
   - give a warning if user tries to leave category page halfway through?
   - or just automatically delete preview and unset session variables if they leave halfway through?
+
 
 
 styles/features to add at some point:
@@ -79,9 +81,6 @@ styles/features to add at some point:
   - only once we have plenty of posts
 - have the top part of aotd posts generated automatically if we include more data on each action in the database
 - give a warning if admin tries to leave category page halfway through bc if they go to blog page the preview will be deleted and $_SESSION['created_preview'] will be unset so their progress will be lost
-- delete session variables for filling in blanks on category pages if the $_SESSION['created_preview'] is unset bc they wont be able to revisit that page anyway unless they create a new post?
-  - only reason not to would be if preview accidentally gets deleted so admin goes to form and makes new preview to be rerouted to category form in hpes that their progress is still there
-  - but if trying to make a brand new post it will be annoying to have that there
 - in fucntions where i check if phone number or title is already used, use in_array() instead of a loop to streamline code
 - improve code for assigning actions and displaying actions because as of now if an action row in the middle of the table is deleted it messes things up
 

@@ -4,7 +4,7 @@
 }
 #aotd_page_header_cont{
   background-size: cover;
-  height: 500px;
+  height: 600px;
   width: 100%;
   display:flex;
   align-items: center;
@@ -13,7 +13,10 @@
 }
 #aotd_page_header{
   height: 350px;
-  width: 50%;
+  width: 60%;
+  border-radius: 5px;
+  padding: 20px 40px 20px 20px;
+  box-sizing: border-box;
   background-color: #fff;
 }
 .inline{
@@ -77,6 +80,19 @@
 }
 #aotd_content_text textarea{
   height: 400px;
+}
+#blog_sources_cont{
+  background-color: #dbdbdb;
+  min-height: 300px;
+}
+#add_source_btn{
+  cursor:pointer;
+}
+#add_source_btn:hover{
+  text-decoration: underline;
+}
+#sources_count{
+  display:none;
 }
 #aotd_submit_post_cont{
   height: 150px;

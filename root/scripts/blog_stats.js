@@ -1,12 +1,12 @@
 //add event listeners to timespan dropdown to allow user to see statistics on different time scales
  //get the option divs in the timespan dropdown
-today_option = document.getElementById("today_option");
-week_option = document.getElementById("week_option");
-year_option = document.getElementById("year_option");
+var today_option = document.getElementById("today_option");
+var week_option = document.getElementById("week_option");
+var year_option = document.getElementById("year_option");
  //get array of the divs in the timespan dropdown
-stat_timespan_text = document.getElementById("stat_timespan");
+var stat_timespan_text = document.getElementById("stat_timespan");
  //get array of the divs displaying the statistics
-statistic_divs = document.getElementsByClassName("statistic_number");
+var statistic_divs = document.getElementsByClassName("statistic_number");
 
 //store original statistic values in an array to not forget them
 var original_numbers = [50000, 12000000, 70000000];

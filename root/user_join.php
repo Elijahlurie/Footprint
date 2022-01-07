@@ -500,8 +500,15 @@ function createBlogPost($connection){
 			if($input == ""){
 				$count += 1;
 			}
+			//save the value for that $_POST input in a uniquely named session variable
 			$_SESSION['blog_post_input_'.$i] = $input;
 			$i += 1;
+		}
+		//go through the entered values from the source inputs and subtract 1 from $count for each one that is blank because when page reloads due to error the inputs would dissappear anyway, so no point in alerting that an input is empty if one of the source inputs is the only reason why
+		for($n = 0; $n<$_POST['sources_count']; $n++){
+			if($_POST["source_input_".$n] == ""){
+				$count -= 1;
+			}
 		}
 		if($count == 1){
 			//if $count = 1, meaning every input (except for the submit button) has some value, continue
@@ -520,6 +527,15 @@ function createBlogPost($connection){
 				$row_contents = "Data from blog table: " . implode("; " , $list);
 				//create a variable to hold the whole html content of the new file for the blog post with the specifics for this post added in as variables, formatted based on category of post
 				if($new_result_row["category"] == "Action of the Day"){
+					//generate bullet list of sources
+					$source_ul_content = '';
+					for($n = 0; $n<$_POST['sources_count']; $n++){
+						$input_value = $_POST["source_input_".$n];
+						if($input_value != ""){
+							//make sure the input wasn't blank before adding the value as a list item
+							$source_ul_content = $source_ul_content . '<li>'.$input_value.'</li>';
+						}
+					}
 					$php_file_content = '
 					<!DOCTYPE html>
 					<?php
@@ -558,7 +574,7 @@ function createBlogPost($connection){
 	 									<div>
 	 										'.$_POST['aotd_input_header_impact'].'
 	 									</div>
-	 									<p><strong>Check the facts</strong></p>
+	 									<p><a href="#blog_sources_cont">Check the facts</a></p>
 	 								</div>
 	 								<p id="aotd_page_image_path">../images/preview_images/'.$new_result_row["preview_image"].'</p>
 	 							</div>
@@ -600,6 +616,13 @@ function createBlogPost($connection){
 	 								</div>
 	 							</div>
 	 						<p>By '.$new_result_row["author"].', '.$new_result_row["date"].'</p>
+							<div id="blog_sources_cont">
+				        <h1>Sources</h1>
+				        <hr>
+				        <ul id="blog_sources">
+								'.$source_ul_content.'
+				        </ul>
+				      </div>
 	 					</div>
 	 					<?php
 	 						include "../footer.php";

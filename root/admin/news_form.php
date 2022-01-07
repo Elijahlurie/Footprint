@@ -33,7 +33,7 @@ if(!$_SESSION['created_preview']){
   <?php
     include "../footer.php";
    ?>
-   <script src="scripts/scripts.js"></script>
+   <script src="../scripts/scripts.js"></script>
    <script>
    //code for initializing the rich text editor plugin
     tinymce.init({
