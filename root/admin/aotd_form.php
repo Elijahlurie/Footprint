@@ -41,17 +41,17 @@ if(!$_SESSION['created_preview']){
     //display form with subbed in user inputs if user made an error
     //session variables with user inputs were set in createBlogPost()
     if($_SESSION['blog_post_error']){
+      echo '<p>Error: '.$_SESSION['blog_post_error'].'</p>';
+    }
       echo '
-      <p>Error: '.$_SESSION['blog_post_error'].'</p>
       <form method="POST" action="'.createBlogPost($conn).'">
-
         <div id="aotd_page_header_cont">
           <div id="aotd_page_header">
             <div class="inline">
-              <h1>By </h1><input name="aotd_input_header_action" type="text" value="'.$_SESSION['blog_post_input_0'].'"><h1>. . .</h1>
+              <h1>By </h1><input name="aotd_input_header_action" type="text" value="'.$_SESSION['blog_post_input_0'].'" placeholder="[going vegan for one day]"><h1>. . .</h1>
             </div>
             <div>
-              <input name="aotd_input_header_impact" type="text" value="'.$_SESSION['blog_post_input_1'].'">
+              <input name="aotd_input_header_impact" type="text" value="'.$_SESSION['blog_post_input_1'].'" placeholder="[You\'ve saved an estimated 7 pounds of CO2, 14 pounds of grain, and 11 square feet of forestry. Keep reading to learn more!]">
             </div>
             <p><strong>Check the facts</strong></p>
           </div>
@@ -60,31 +60,31 @@ if(!$_SESSION['created_preview']){
         <div id="aotd_page_stats_cont">
           <div class="inline">
             <h2>If everyone </h2>
-            <input name="aotd_input_stats_action" type="text" value="'.$_SESSION['blog_post_input_2'].'">
+            <input name="aotd_input_stats_action" type="text" value="'.$_SESSION['blog_post_input_2'].'" placeholder="[ate vegan]">
             <h2> today, we\'d save . . .</h2>
           </div>
           <div id="aotd_page_stats">
             <div>
-              <input name="aotd_input_stats_number_1" type="number" value="'.$_SESSION['blog_post_input_3'].'">
-              <input name="aotd_input_stats_unit_1" type="text" value="'.$_SESSION['blog_post_input_4'].'">
-              <input name="aotd_input_stats_impact_1" type="text" value="'.$_SESSION['blog_post_input_5'].'">
+              <input name="aotd_input_stats_number_1" type="number" value="'.$_SESSION['blog_post_input_3'].'" placeholder="100000000000">
+              <input name="aotd_input_stats_unit_1" type="text" value="'.$_SESSION['blog_post_input_4'].'" placeholder="[Gallons of water]">
+              <input name="aotd_input_stats_impact_1" type="text" value="'.$_SESSION['blog_post_input_5'].'" placeholder="[Enough to supply all of New England for 4 months.]">
             </div>
             <div>
-              <input name="aotd_input_stats_number_2" type="number" value="'.$_SESSION['blog_post_input_5'].'">
-              <input name="aotd_input_stats_unit_2" type="text" value="'.$_SESSION['blog_post_input_6'].'">
-              <input name="aotd_input_stats_impact_2" type="text" value="'.$_SESSION['blog_post_input_7'].'">
+              <input name="aotd_input_stats_number_2" type="number" value="'.$_SESSION['blog_post_input_5'].'" placeholder="150000000000">
+              <input name="aotd_input_stats_unit_2" type="text" value="'.$_SESSION['blog_post_input_6'].'" placeholder="[Pounds of crops]">
+              <input name="aotd_input_stats_impact_2" type="text" value="'.$_SESSION['blog_post_input_7'].'" placeholder="[Otherwise fed to livestock.]">
             </div>
             <div>
-              <input name="aotd_input_stats_number_3" type="number" value="'.$_SESSION['blog_post_input_8'].'">
-              <input name="aotd_input_stats_unit_3" type="text" value="'.$_SESSION['blog_post_input_9'].'">
-              <input name="aotd_input_stats_impact_3" type="text" value="'.$_SESSION['blog_post_input_10'].'">
+              <input name="aotd_input_stats_number_3" type="number" value="'.$_SESSION['blog_post_input_8'].'" placeholder="70000000">
+              <input name="aotd_input_stats_unit_3" type="text" value="'.$_SESSION['blog_post_input_9'].'" placeholder="[Gallons of gas]">
+              <input name="aotd_input_stats_impact_3" type="text" value="'.$_SESSION['blog_post_input_10'].'" placeholder="[Enough to fuel all the cars in California and Mexico.]">
             </div>
           </div>
           <h2>. . . And that\'s just in the USA!</h2>
         </div>
         <div id="aotd_form_content">
           <div id="aotd_content_text">
-            <textarea name="aotd_input_content" type="text" value="'.$_SESSION['blog_post_input_11'].'"></textarea>
+            <textarea name="aotd_input_content" type="text" value="'.$_SESSION['blog_post_input_11'].'" placeholder="Eating vegan cuts out one of the most pollutive, environmentally-unfriendly products that exist today..."></textarea>
           </div>
         </div>
       <p>By '.$new_result_row["author"].', '.$new_result_row["date"].'</p>
@@ -93,60 +93,6 @@ if(!$_SESSION['created_preview']){
       </div>
     </form>
       ';
-    } else{
-      //if there has been no error, echo the normal form with the default placeholders for inputs
-      echo '
-      <form method="POST" action="'.createBlogPost($conn).'">
-
-        <div id="aotd_page_header_cont">
-          <div id="aotd_page_header">
-            <div class="inline">
-              <h1>By </h1><input name="aotd_input_header_action" type="text" placeholder="[going vegan for one day]"><h1>. . .</h1>
-            </div>
-            <div>
-              <input name="aotd_input_header_impact" type="text" placeholder="[You\'ve saved an estimated 7 pounds of CO2, 14 pounds of grain, and 11 square feet of forestry. Keep reading to learn more!]">
-            </div>
-            <p><strong>Check the facts</strong></p>
-          </div>
-          <p id="aotd_page_image_path">../images/preview_images/'.$new_result_row["preview_image"].'</p>
-        </div>
-        <div id="aotd_page_stats_cont">
-          <div class="inline">
-            <h2>If everyone </h2>
-            <input name="aotd_input_stats_action" type="text" placeholder="[ate vegan]">
-            <h2> today, we\'d save . . .</h2>
-          </div>
-          <div id="aotd_page_stats">
-            <div>
-              <input name="aotd_input_stats_number_1" type="number" placeholder="100,000,000,000">
-              <input name="aotd_input_stats_unit_1" type="text" placeholder="[Gallons of water]">
-              <input name="aotd_input_stats_impact_1" type="text" placeholder="[Enough to supply all of New England for 4 months.]">
-            </div>
-            <div>
-              <input name="aotd_input_stats_number_2" type="number" placeholder="150,000,000,000">
-              <input name="aotd_input_stats_unit_2" type="text" placeholder="[Pounds of crops]">
-              <input name="aotd_input_stats_impact_2" type="text" placeholder="[Otherwise fed to livestock.]">
-            </div>
-            <div>
-              <input name="aotd_input_stats_number_3" type="number" placeholder="70,000,000">
-              <input name="aotd_input_stats_unit_3" type="text" placeholder="[Gallons of gas]">
-              <input name="aotd_input_stats_impact_3" type="text" placeholder="[Enough to fuel all the cars in California and Mexico.]">
-            </div>
-          </div>
-          <h2>. . . And that\'s just in the USA!</h2>
-        </div>
-        <div id="aotd_form_content">
-          <div id="aotd_content_text">
-            <textarea name="aotd_input_content" type="text" placeholder="Eating vegan cuts out one of the most pollutive, environmentally-unfriendly products that exist today..."></textarea>
-          </div>
-        </div>
-      <p>By '.$new_result_row["author"].', '.$new_result_row["date"].'</p>
-      <div id="aotd_submit_post_cont">
-        <button name="submit_blog_post" type="submit">Create Post</button>
-      </div>
-    </form>
-    ';
-    }
 
     ?>
   </div>

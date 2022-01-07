@@ -75,7 +75,6 @@ styles/features to add at some point:
 - loading screen if users connection is bad
 - have a way to edit blog posts
 - have a nicer delete post ux
-- if errors on forms, only sub in the users' inputs for the boxes where they typed; for the empty ones leave in placeholders
 - prevent featured previews from being listed again below (use a while loop instead of for?)
   - only once we have plenty of posts
 - have the top part of aotd posts generated automatically if we include more data on each action in the database

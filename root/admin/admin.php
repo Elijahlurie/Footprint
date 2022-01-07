@@ -53,32 +53,20 @@ $path = "../";
             </select>
             <p>Image for Preview</p>
             <input name="blog_preview_image" type="file" accept="image/png, image/jpeg, image/jpg">
+            <p>Author Name</p>
+            <input name="blog_author" type="text" value="'.$_SESSION['blog_input_author'].'">
+            <p>Title</p>
+            <input name="blog_title" type="text" value="'.$_SESSION['blog_input_title'].'">
+            <p>Description</p>
+            <input name="blog_description" type="text" value="'.$_SESSION['blog_input_description'].'">
+            <button name="submit_blog_preview" type="submit">Post</button>
+          </form>
           ';
-          if(isset($_SESSION['blog_preview_error'])){
-            //fill in with session variable values from their previous input
-            echo '
-              <p>Author Name</p>
-              <input name="blog_author" type="text" value="'.$_SESSION['blog_input_author'].'">
-              <p>Title</p>
-              <input name="blog_title" type="text" value="'.$_SESSION['blog_input_title'].'">
-              <p>Description</p>
-              <input name="blog_description" type="text" value="'.$_SESSION['blog_input_description'].'">
-              <button name="submit_blog_preview" type="submit">Post</button>
-            </form>
 
+        if(isset($_SESSION['blog_preview_error'])){
+          echo '
             <p>Error: '.$_SESSION['blog_preview_error'].'</p>
-            ';
-          } else{
-            echo '
-                <p>Author Name</p>
-                <input name="blog_author" type="text">
-                <p>Title</p>
-                <input name="blog_title" type="text">
-                <p>Description</p>
-                <input name="blog_description" type="text">
-                <button name="submit_blog_preview" type="submit">Post</button>
-              </form>
-            ';
+          ';
           }
       ?>
 
