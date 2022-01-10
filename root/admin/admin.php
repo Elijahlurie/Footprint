@@ -31,6 +31,13 @@ $path = "../";
         unset($_SESSION["update_featured_error_time"]);
         header('Location: '.$_SERVER['REQUEST_URI']);
       }
+      //unset old error messages for updating featured news articles
+      if(isset($_SESSION["update_news_error_time"]) && time() - $_SESSION["update_news_error_time"] >10){
+        //if there is an error message set and it has been for over 10 seconds, unset the error message variables and reload the page
+        unset($_SESSION["update_news_error"]);
+        unset($_SESSION["update_news_error_time"]);
+        header('Location: '.$_SERVER['REQUEST_URI']);
+      }
       //unset old error messages for deleting posts
       if(isset($_SESSION['delete_post_message_time']) && time() - $_SESSION['delete_post_message_time'] >10){
         //if there is an error message set and it has been for over 10 seconds, unset the error message variables and reload the page
@@ -68,7 +75,6 @@ $path = "../";
           ';
           }
       ?>
-
       <h2>Update Featured Posts</h2>
       <?php
         $featured_posts_array = getFeaturedPosts($conn);
@@ -85,6 +91,24 @@ $path = "../";
             <button type="submit" name="update_featured_submit">Update</button>
           </form>
           <div id="update_featured_error">'.$_SESSION["update_featured_error"].'</div>
+        ';
+      ?>
+      <h2>Update Featured News Articles</h2>
+      <?php
+        $featured_news_array = getFeaturedNews($conn);
+
+        echo '
+          <form method="POST" action="'.updateFeaturedNews($conn, $featured_news_array).'">
+            <ol>
+          ';
+        for ($i = 0; $i < count($featured_news_array); $i++){
+          echo '<li><input name="update_news'.$i.'" type="text" value="'.$featured_news_array[$i]['url'].'"></li>';
+        }
+        echo '
+            </ol>
+            <button type="submit" name="update_news_submit">Update</button>
+          </form>
+          <div id="update_featured_error">'.$_SESSION["update_news_error"].'</div>
         ';
       ?>
       <h2>Delete Blog Post</h2>

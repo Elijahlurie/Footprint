@@ -718,6 +718,14 @@ function deletePost($connection){
   endif;
 };
 
+//get array of all posts whose ids are featured in featured_blog table by joining blog table on featured_blog table
+function getFeaturedPosts($connection){
+ $join_sql = "SELECT * FROM blog JOIN featured_blog ON blog.id = featured_blog.featured_id ORDER BY featured_blog.id;";
+ $join_result = mysqli_query($connection, $join_sql);
+ $featured_posts_array = mysqli_fetch_all($join_result, MYSQLI_ASSOC);
+ return $featured_posts_array;
+}
+
 //allows admin to change which blog posts are currently featured
 function updateFeaturedPosts($connection, $featured_posts_array){
 	if(isset($_POST['update_featured_submit'])):
@@ -784,10 +792,52 @@ function updateFeaturedPosts($connection, $featured_posts_array){
 	endif;
 };
 
-//get array of all posts whose ids are featured in featured_blog table by joining blog table on featured_blog table
-function getFeaturedPosts($connection){
- $join_sql = "SELECT * FROM blog JOIN featured_blog ON blog.id = featured_blog.featured_id ORDER BY featured_blog.id;";
- $join_result = mysqli_query($connection, $join_sql);
- $featured_posts_array = mysqli_fetch_all($join_result, MYSQLI_ASSOC);
- return $featured_posts_array;
+//get array of all urls of featured news articles in featured_news table
+function getFeaturedNews($connection){
+	$sql = "SELECT * FROM featured_news;";
+  $result = mysqli_query($connection, $sql);
+  $array_news = mysqli_fetch_all($result, MYSQLI_ASSOC);
+ return $array_news;
 }
+
+//allows admin to change which blog posts are currently featured
+function updateFeaturedNews($connection, $featured_news_array){
+	if(isset($_POST['update_news_submit'])):
+		//start a counter to see if no inputs are changed
+		$unchanged_input_counter = 0;
+		//check each input separately to see if user has changed something
+		for($i = 0; $i <5; $i++){
+			$news_input_name = 'update_news' . $i;
+			$requested_url = $_POST[$news_input_name];
+				//compare user input to the url of the currently featured news article that corresponds with that input to see if it has been changed
+			if($requested_url != $featured_news_array[$i]['url']){
+				// make an array of purely the urls of the featured news articles
+				$new_url_array = [];
+				foreach($featured_news_array as $featured_news){
+					$new_url_array[] = $featured_news['url'];
+				}
+				//make sure the requested url is not found in this array of currently featured urls, meaning it is not already featured
+					if(!in_array($requested_url, $new_url_array)){
+						//clear error message variables
+						unset($_SESSION['update_news_error']);
+						unset($_SESSION['update_news_error_time']);
+						//run sql to insert the id of the requested post into the correct row of the featured_blog table in the featured_id column, replacing the id that was previously there
+						$update_news_sql = "UPDATE featured_news SET url = '".$requested_url."' WHERE id = ($i + 1);";
+						$update_news_result = mysqli_query($connection, $update_news_sql);
+						//reload page
+						header('Location: '.$_SERVER['REQUEST_URI']);
+					} else{
+						$_SESSION["update_news_error"] = "The requested url is already featured.";
+						$_SESSION["update_news_error_time"] = time();
+					}
+			} else{
+				$unchanged_input_counter += 1;
+			}
+		}
+		if($unchanged_input_counter == 5){
+			//if no inputs have been changed but submit button was pressed, unset error message variable.
+			unset($_SESSION['update_news_error']);
+			unset($_SESSION['update_news_error_time']);
+		}
+	endif;
+};

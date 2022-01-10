@@ -6,9 +6,6 @@ Questions/issues:
 - where should category links fit in featured previews?
 
 things to do:
-- reconfigure blog page
-  - replace previews with a selection of 3-5 news links (maybe have little previews of the sites they link to?)
-    - have a similar system as updating featured posts
 - Style editorial blog post pages
   - have back button link to specific spot on blog.php where they were looking
     - https://forum.squarespace.com/topic/154900-how-to-return-to-the-same-scroll-position-when-using-browsers-back-button/

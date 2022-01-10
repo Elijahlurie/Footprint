@@ -87,7 +87,6 @@ include "blog_page_functions.php";
             ?>
           </div>
         </div>
-        <!--Editorial section, uses mostly same css classes as news section-->
         <div class="editorial_previews_container news_container">
           <div class="news_header">
             <h1>Climate News</h1>
@@ -95,10 +94,15 @@ include "blog_page_functions.php";
           </div>
           <div id="news_links">
             <ul>
-              <li>Link</li>
-              <li>Link</li>
-              <li>Link</li>
-              <li>Link</li>
+              <?php
+              //get all info on each of the featured news articles
+                $featured_news_array = getFeaturedNews($conn);
+                //echo a list item with each article
+                foreach($featured_news_array as $featured_article){
+                  echo '<li><a href="'.$featured_article['url'].'" target="_blank">'.$featured_article['url'].'</a></li>';
+                }
+
+               ?>
             </ul>
           </div>
         </div>
