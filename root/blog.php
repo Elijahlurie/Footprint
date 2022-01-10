@@ -55,7 +55,7 @@ include "blog_page_functions.php";
       <div class="parallax_group">
           <div id="aotd_previews_cont">
             <div id="aotd_header">
-              <div id="aotd_header_text">
+              <div class="vert_divide_header_text">
                 <h1>Action Deep Dives</h1>
                 <p>What's the real-world impact of the actions you complete?</p>
               </div>
@@ -89,8 +89,10 @@ include "blog_page_functions.php";
         </div>
         <div class="editorial_previews_container news_container">
           <div class="news_header">
-            <h1>Climate News</h1>
-            <hr id="news_hr">
+            <div class="vert_divide_header_text">
+              <h1>Climate News</h1>
+              <p>A curated list of news to keep you caught up.</p>
+            </div>
           </div>
           <div id="news_links">
             <ul>
@@ -99,9 +101,14 @@ include "blog_page_functions.php";
                 $featured_news_array = getFeaturedNews($conn);
                 //echo a list item with each article
                 foreach($featured_news_array as $featured_article){
-                  echo '<li><a href="'.$featured_article['url'].'" target="_blank">'.$featured_article['url'].'</a></li>';
+                  echo '
+                  <li>
+                    <h2>'.$featured_article['title'].'</h2>
+                    <a href="'.$featured_article['url'].'" target="_blank">'.$featured_article['url'].'</a>
+                  </li>
+                  <br><br>
+                  ';
                 }
-
                ?>
             </ul>
           </div>

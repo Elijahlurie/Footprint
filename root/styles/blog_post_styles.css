@@ -119,7 +119,6 @@
   box-sizing: border-box;
   cursor:pointer;
   font-size: 1.1em;
-
 }
 .stat_timespan_option:hover{
   background-color:#2ba3ff;
@@ -159,6 +158,11 @@
   align-items: center;
   margin-bottom: 75px;
 }
+.blog_page_category_link{
+  float:right;
+  margin: 50px 50px 0px 0px;
+  font-size: 1.2em;
+}
 #aotd_content_text{
   width: 70%;
   padding: 50px 0px;
@@ -172,8 +176,11 @@
   min-height: 300px;
   padding: 0px 200px 100px 50px;
 }
+#blog_sources_cont h1{
+  font-size: 2.5em;
+}
 #blog_sources_cont hr{
-  border-top: 4px solid #000;
+  border-top: 3px solid #000;
 }
 #blog_sources{
   padding: 30px 0px 0px 20px;
@@ -197,6 +204,62 @@
 }
 
 
-/*----Editorial Post Page Styling----*/
-
-/*----Climate News Post Page Styling----*/
+/*----Editorial Post Page Styling (also used for editorial category form)----*/
+#editorial_page_wrapper{
+  padding-top: 100px;
+  scroll-behavior: smooth;
+}
+#editorial_page_header_cont{
+  height: 600px;
+  width: 100%;
+  background-size: cover;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+#editorial_page_header{
+  width: 35%;
+  height: 75%;
+  background-color: rgba(0,0,0,0.8);
+  color: #fff;
+  border-radius: 5px;
+  margin-right: 60px;
+  box-sizing: border-box;
+  padding: 30px 50px;
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+}
+#editorial_page_image_path{
+  display:none;
+}
+#editorial_page_content{
+  display:flex;
+  clear: both;
+  padding: 50px 40px 150px 40px;
+}
+#editorial_page_tags{
+  width: 15%;
+}
+.editorial_page_tag{
+  color: #a8a8a8;
+  margin-bottom: 0.8em;
+}
+.editorial_page_tag_content{
+  color: #3d3d3d;
+  margin-bottom: 1.6em;
+}
+#editorial_content_text{
+  width: 65%;
+  font-size: 1.2em;
+  line-height: 2em;
+}
+#editorial_content_text textarea{
+  height: 400px;
+}
+#editorial_submit_post_cont{
+  height: 150px;
+  display:flex;
+  justify-content: center;
+  background-color:yellow;
+}

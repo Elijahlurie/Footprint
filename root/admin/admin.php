@@ -99,13 +99,17 @@ $path = "../";
 
         echo '
           <form method="POST" action="'.updateFeaturedNews($conn, $featured_news_array).'">
-            <ol>
+            <ul>
           ';
         for ($i = 0; $i < count($featured_news_array); $i++){
-          echo '<li><input name="update_news'.$i.'" type="text" value="'.$featured_news_array[$i]['url'].'"></li>';
+          echo '
+          <li><input name="update_news_title'.$i.'" type="text" value="'.$featured_news_array[$i]['title'].'" placeholder="Title"></li>
+          <li><input name="update_news_url'.$i.'" type="text" value="'.$featured_news_array[$i]['url'].'" placeholder="URL"></li>
+          <br>
+          ';
         }
         echo '
-            </ol>
+            </ul>
             <button type="submit" name="update_news_submit">Update</button>
           </form>
           <div id="update_featured_error">'.$_SESSION["update_news_error"].'</div>

@@ -3,20 +3,17 @@ Questions/issues:
   - make a credits page?
 - what should we call action of the day posts
 - when one of us changes one of the table structures, make sure to tell the other so we can have same databases
-- where should category links fit in featured previews?
+- how do we still maintain the security of having pages reload on pageback but still make it convenient so if theyre on blog page they dont lose their place
 
 things to do:
-- Style editorial blog post pages
-  - have back button link to specific spot on blog.php where they were looking
-    - https://forum.squarespace.com/topic/154900-how-to-return-to-the-same-scroll-position-when-using-browsers-back-button/
 - finish styling category form pages
+- change blog form system to session variables instead of looking at most recent preview in table
 - Style category_pages files
 - Add the if/else that checks if there is actually a file that corresponds to the preview to any function that generates previews minus featued preview function
-- Create Donate page
-- Finish Admin page
-  - style the page
+- Style Admin page
   - have max character counts for title and description, have a little number in the corner of the textbox counting down
   - lock page and footer link to anyone not an admin
+- Create Donate page
 - make new pages mobile friendly
   - have logo as home link in nav?
   - make nav tag into dropdown?
@@ -46,7 +43,6 @@ things to do:
 - Launch site!!
 - post social media content, build up hype, link accounts in footer
   - get Blair Conklin to shout it out on insta/youtube?
-- look into copyright, terms and conditions
 - start developing some of the 'cool features to add'
 - start a newsletter?
 - at some point go through php and streamline code / fix logic errors
@@ -55,7 +51,6 @@ bugs to fix:
 - error message on category form doesnt show up the first time
 - signup and login look weird on nates browser
 - blog page doesnt automatically reload if a preview is deleted so there is a blank where a new preview should appear
-- problems will arise if 2 ppl try to post at same time bc code just gets the most recent preview made to sub in values for the category form
 - if i make a preview and go to category post page and then go to blog page, preview gets deleted bc of check on blog page but the session variables save my progress for the category form.
   - give a warning if user tries to leave category page halfway through?
   - or just automatically delete preview and unset session variables if they leave halfway through?

@@ -27,3 +27,8 @@ TABLES
     - stores the id's of posts that are currently featured on blog.php
     - 3 rows, one for each featured post, featured posts are listed in this order
     - id INTEGER PRIMARY KEY AUTO_INCREMENT, featured_id INTEGER [stores the id of the featured blog post]
+
+  Featured_news
+    - stores urls and titles of featured news articles
+    - 5 rows, one for each news article, articles listed in that order
+    - id INTEGER PRIMARY KEY AUTO_INCREMENT, title TEXT, url TEXT

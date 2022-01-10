@@ -24,17 +24,66 @@ if(!$_SESSION['created_preview']){
 </head>
 
 <body>
-  <div id="pageWrapper">
-    <?php
-      include "../nav_tag.php";
-     ?>
-  <h1>editorial form page</h1>
-  </div>
+<?php
+  include "../nav_tag.php";
+ ?>
+ <div id="editorial_page_wrapper">
+   <h1>Create an Editorial Post</h1>
+   <h3>--Just fill in the blanks--</h3>
+   <?php
+   //get an array of all blog posts from the database
+   $new_sql = "SELECT * FROM blog;";
+   $new_result = mysqli_query($conn, $new_sql);
+   $new_result_array = mysqli_fetch_all($new_result, MYSQLI_ASSOC);
+   //get the last item of that array, the information for the newest blog post
+   $new_result_row = end($new_result_array);
+
+   //display form with subbed in user inputs if user made an error
+   //session variables with user inputs were set in createBlogPost()
+   if($_SESSION['blog_post_error']){
+     echo '<p>Error: '.$_SESSION['blog_post_error'].'</p>';
+   }
+     echo '
+     <form method="POST" action="'.createBlogPost($conn).'">
+       <div id="editorial_page_header_cont">
+         <div id="editorial_page_header">
+            <h1>'.$new_result_row["title"].'</h1>
+            <br><input type="text" name="editorial_input_subtitle" value="'.$_SESSION['blog_post_input_0'].'" placeholder="Type subtitle here . . .">
+         </div>
+         <p id="editorial_page_image_path">../images/preview_images/'.$new_result_row["preview_image"].'</p>
+       </div>
+       <h2 class="blog_page_category_link">Editorial</h2>
+       <div id="editorial_page_content">
+        <div id="editorial_page_tags">
+          <p class="editorial_page_tag">Written By</p>
+          <p class="editorial_page_tag_content">'.$new_result_row["author"].'</p>
+          <p class="editorial_page_tag">Published</p>
+          <p class="editorial_page_tag_content">'.$new_result_row["date"].'</p>
+          <p class="editorial_page_tag">Category</p>
+          <p class="editorial_page_tag_content">'.$new_result_row["category"].'</p>
+        </div>
+        <div id="editorial_content_text">
+          <textarea name="editorial_input_content" type="text" placeholder="Type editorial content here . . .">'.$_SESSION['blog_post_input_1'].'</textarea>
+        </div>
+       </div>
+     <div id="editorial_submit_post_cont">
+       <button name="submit_blog_post" type="submit">Create Post</button>
+     </div>
+   </form>
+     ';
+
+   ?>
+ </div>
   <?php
     include "../footer.php";
    ?>
    <script src="../scripts/scripts.js"></script>
    <script>
+   //set background image of header div
+   var editorial_page_header = document.getElementById('editorial_page_header_cont');
+   var editorial_page_image_path = document.getElementById('editorial_page_image_path');
+   editorial_page_header.style.backgroundImage =  "url(" + editorial_page_image_path.innerHTML + ")";
+
    //code for initializing the rich text editor plugin
     tinymce.init({
       selector: 'textarea',

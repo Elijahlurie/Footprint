@@ -84,6 +84,7 @@ if(!$_SESSION['created_preview']){
           </div>
           <h2>. . . And that\'s just in the USA!</h2>
         </div>
+        <h2 class="blog_page_category_link">Action Description Posts</h2>
         <div id="aotd_form_content">
           <div id="aotd_content_text">
             <textarea name="aotd_input_content" type="text" placeholder="Eating vegan cuts out one of the most pollutive, environmentally-unfriendly products that exist today...">'.$_SESSION['blog_post_input_12'].'</textarea>

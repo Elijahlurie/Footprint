@@ -610,6 +610,7 @@ function createBlogPost($connection){
 	 								</div>
 	 								<h2>*. . . And that\'s just in the USA!</h2>
 	 							</div>
+								<h2 class="blog_page_category_link"><a href="../category_pages/aotd.php">Action Description Posts</a></h2>
 	 							<div id="aotd_form_content">
 	 								<div id="aotd_content_text">
 	 									'.$_POST['aotd_input_content'].'
@@ -643,8 +644,70 @@ function createBlogPost($connection){
 					';
 				} else if($new_result_row["category"] == "Editorial"){
 					$php_file_content = '
+					<!DOCTYPE html>
+					<?php
+					$time = date_default_timezone_set("America/Los_Angeles");
+					include "../connection.php";
+					include "../user_join.php";
 
-					';
+					//call findPreview to check if this post has been deleted and redierct user if it has
+					findPreview($conn);
+
+					//define $path variable so links inside nav tag and footer still point to the right page even though this file is in a folder
+					$path = "../";
+					?>
+					<html>
+					<head>
+						<meta charset="utf-8">
+						<?php echo "<title>'.$new_result_row["title"].'</title>";?>
+						<meta name="viewport" content="width=device-width,initial-scale=1"/>
+						<link rel="stylesheet" href="../styles/styles.css">
+						<link rel="stylesheet" href="../styles/blog_post_styles.css">
+					</head>
+					<body>
+						<!--Preview information from database in case row in table is deleted
+						<div id="blog_data_meta">
+							'.$row_contents.'
+						</div>-->
+						<?php
+					    include "../nav_tag.php";
+					   ?>
+						<div id="editorial_page_wrapper">
+			        <div id="editorial_page_header_cont">
+			          <div id="editorial_page_header">
+			             <h1>'.$new_result_row["title"].'</h1>
+			             <br><p>'.$_POST["editorial_input_subtitle"].'</p>
+			          </div>
+			          <p id="editorial_page_image_path">../images/preview_images/'.$new_result_row["preview_image"].'</p>
+			        </div>
+			        <h2 class="blog_page_category_link"><a href="../category_pages/editorial.php">Editorial</a></h2>
+			        <div id="editorial_page_content">
+			         <div id="editorial_page_tags">
+			           <p class="editorial_page_tag">Written By</p>
+			           <p class="editorial_page_tag_content">'.$new_result_row["author"].'</p>
+			           <p class="editorial_page_tag">Published</p>
+			           <p class="editorial_page_tag_content">'.$new_result_row["date"].'</p>
+			           <p class="editorial_page_tag">Category</p>
+			           <p class="editorial_page_tag_content">'.$new_result_row["category"].'</p>
+			         </div>
+			         <div id="editorial_content_text">
+			           '.$_POST["editorial_input_content"].'
+			         </div>
+			        </div>
+						</div>
+						<?php
+							include "../footer.php";
+						 ?>
+						<script src="../scripts/scripts.js"></script>
+						<script>
+				    //set background image of header div
+				    var editorial_page_header = document.getElementById("editorial_page_header_cont");
+				    var editorial_page_image_path = document.getElementById("editorial_page_image_path");
+				    editorial_page_header.style.backgroundImage =  "url(" + editorial_page_image_path.innerHTML + ")";
+				 </script>
+				 </body>
+				 </html>
+		      ';
 				}
 				//create a new file in the blog_posts folder of the directory with this php file content
 				$file_path = "../blog_posts/" . $new_result_row["file_name"];
@@ -805,24 +868,26 @@ function updateFeaturedNews($connection, $featured_news_array){
 	if(isset($_POST['update_news_submit'])):
 		//start a counter to see if no inputs are changed
 		$unchanged_input_counter = 0;
-		//check each input separately to see if user has changed something
+		//check each group of inputs separately to see if user has changed something
 		for($i = 0; $i <5; $i++){
-			$news_input_name = 'update_news' . $i;
-			$requested_url = $_POST[$news_input_name];
-				//compare user input to the url of the currently featured news article that corresponds with that input to see if it has been changed
-			if($requested_url != $featured_news_array[$i]['url']){
+			$news_title_input_name = 'update_news_title' . $i;
+			$requested_title = $_POST[$news_title_input_name];
+			$news_url_input_name = 'update_news_url' . $i;
+			$requested_url = $_POST[$news_url_input_name];
+				//compare user url input to the url of the currently featured news article that corresponds with that input,  to see if either it or the title has been changed
+			if($requested_url != $featured_news_array[$i]['url'] || $requested_title != $featured_news_array[$i]['title']){
 				// make an array of purely the urls of the featured news articles
 				$new_url_array = [];
 				foreach($featured_news_array as $featured_news){
 					$new_url_array[] = $featured_news['url'];
 				}
-				//make sure the requested url is not found in this array of currently featured urls, meaning it is not already featured
-					if(!in_array($requested_url, $new_url_array)){
+				//make sure either the requested url is not found in this array of currently featured urls, meaning it is not already featured, or the title is being changed but the url is not
+					if(!in_array($requested_url, $new_url_array) || ($requested_title != $featured_news_array[$i]['title'] && $requested_url == $featured_news_array[$i]['url'])){
 						//clear error message variables
 						unset($_SESSION['update_news_error']);
 						unset($_SESSION['update_news_error_time']);
 						//run sql to insert the id of the requested post into the correct row of the featured_blog table in the featured_id column, replacing the id that was previously there
-						$update_news_sql = "UPDATE featured_news SET url = '".$requested_url."' WHERE id = ($i + 1);";
+						$update_news_sql = "UPDATE featured_news SET title = '".$requested_title."', url = '".$requested_url."' WHERE id = ($i + 1);";
 						$update_news_result = mysqli_query($connection, $update_news_sql);
 						//reload page
 						header('Location: '.$_SERVER['REQUEST_URI']);
