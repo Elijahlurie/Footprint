@@ -6,30 +6,25 @@ Questions/issues:
 - where should category links fit in featured previews?
 
 things to do:
-
-- delete session variables for filling in blanks on category pages if a post is successfully created
-- Style blog post pages
+- reconfigure blog page
+  - replace previews with a selection of 3-5 news links (maybe have little previews of the sites they link to?)
+    - have a similar system as updating featured posts
+- Style editorial blog post pages
   - have back button link to specific spot on blog.php where they were looking
     - https://forum.squarespace.com/topic/154900-how-to-return-to-the-same-scroll-position-when-using-browsers-back-button/
-  - for aotd posts:
-    - turn statistic numbers into words? https://marc.info/?l=php-general&m=99928281523866&w=2
-    - include place for sources to be listed
+- finish styling category form pages
 - Style category_pages files
-- Finish styling blog.php
-  - figure out parallax scrolling
-    - try to get middle preview to scroll at diff speed than side previews
-  - add category links to featured previews if possible
 - Add the if/else that checks if there is actually a file that corresponds to the preview to any function that generates previews minus featued preview function
 - Create Donate page
 - Finish Admin page
   - style the page
   - have max character counts for title and description, have a little number in the corner of the textbox counting down
   - lock page and footer link to anyone not an admin
-- remove test.php from repository
 - make new pages mobile friendly
   - have logo as home link in nav?
   - make nav tag into dropdown?
   - make signup form get smaller smoothly, zipcode explanation div gets opened in weird places
+- remove test.php from repository
 - Set up socials
   - register email
   - create youtube account
@@ -62,12 +57,13 @@ things to do:
 bugs to fix:
 - error message on category form doesnt show up the first time
 - signup and login look weird on nates browser
-- blog page doesnt automatically reload if a preview is deleted bc the file doesnt exist
+- blog page doesnt automatically reload if a preview is deleted so there is a blank where a new preview should appear
 - problems will arise if 2 ppl try to post at same time bc code just gets the most recent preview made to sub in values for the category form
 - if i make a preview and go to category post page and then go to blog page, preview gets deleted bc of check on blog page but the session variables save my progress for the category form.
   - give a warning if user tries to leave category page halfway through?
   - or just automatically delete preview and unset session variables if they leave halfway through?
-
+- if there is an error on a category form all the source inputs are erased
+- css html scroll-behavior:smooth isnt working
 
 
 styles/features to add at some point:
@@ -86,6 +82,8 @@ styles/features to add at some point:
 
 
 cool extra features to add:
+- turn statistic numbers into words https://marc.info/?l=php-general&m=99928281523866&w=2
+- use css transitions to make cool hover design features on elements
 - track most popular posts and have a section for viewing them
 - make sharing posts easy https://wordpress.org/plugins/shared-counts/
 - a tool for billionairs to find environmental charities that will use their money most effectively

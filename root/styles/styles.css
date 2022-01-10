@@ -5,7 +5,9 @@
   margin: 0;
   padding:0;
 }
-
+html{
+  scroll-behavior: smooth;
+}
 body{
   font-family: 'Roboto', sans-serif;
   color: #050609;
@@ -528,140 +530,90 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
 .aotd_preview_content:hover{
   color:#ededed;
 }
-  /*climate news posts div*/
-.news_previews_container{
+  /*editorial posts div*/
+.editorial_previews_container{
   padding-bottom: 100px;
   padding-top: 40px;
 }
-.news_header{
+.editorial_header{
   display: flex;
   flex-direction:column;
   justify-content: center;
   padding: 40px 80px 0px 30px;
 }
-.news_header hr{
-  border: 2px solid black;
+.editorial_header hr{
+  border: 2px solid #000;
   margin-top: 20px;
 }
-.news_category_link{
+#editorial_category_link{
   font-size: 1.5em;
   text-align: right;
   padding: 30px 70px 15px 0px;
   font-family: 'Open Sans', sans-serif;
   font-weight: 600;
 }
-#news_category_link a{
+#editorial_category_link a{
   text-decoration: none;
 }
 #news_category_link a:hover{
   text-decoration: underline;
 }
-#news_previews{
+#editorial_previews{
   padding: 10px 100px 0px 60px;
 }
-    /*climate news previews*/
-.news_post_preview{
+    /*editorial previews*/
+.editorial_post_preview{
   display:flex;
   height: 200px;
   width:100%;
   border-bottom: 1px solid #d9d9d9;
   align-items: center;
 }
-.news_post_preview:nth-of-type(1){
+.editorial_post_preview:nth-of-type(1){
   border-top: 1px solid #d9d9d9;
 }
-.news_preview_image_cont{
+.editorial_preview_image_cont{
   width: 30%;
   height: 90%;
   background-size: cover;
   background-color: #fff;
 }
-.news_preview_image_cont:hover{
+.editorial_preview_image_cont:hover{
   opacity:0.95;
-}
-.news_image_path{
-  display:none;
-}
-.news_preview_content{
-  width:60%;
-  padding: 10px 25px;
-}
-.news_preview_title_cont{
-  font-size: 1.05em;
-  margin-bottom: 0.5em;
-}
-.news_preview_title_cont a{
-  text-decoration: none;
-}
-.news_preview_title_cont a:hover{
-  color: #212121
-}
-.news_preview_author_date_cont{
-  font-size: 0.8em;
-}
-  /*editorial posts div*/
-.editorial_previews_container{
-  background-color: #21D4FD;
-  background-image: linear-gradient(#21D4FD 0%, #dee5ff 65%);
-}
-#editorial_previews{
-  display:flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 80px 25% 0px 80px;
-}
-
-  /*Editorial Previews*/
-.editorial_post_preview{
-  color: #fff;
-  width: 43%;
-  box-sizing: border-box;
-  border-radius: 5px;
-  margin-bottom: 70px;
-}
-.editorial_post_preview:hover{
-  box-shadow:1px 3px 20px 1px rgba(0,0, 0,0.3);
-  cursor:pointer;
-}
-.editorial_preview_image_cont{
-  height: 180px;
-  background-size:cover;
-  border-radius: 5px 5px 0px 0px;
 }
 .editorial_image_path{
   display:none;
 }
 .editorial_preview_content{
-  text-align: center;
-  padding: 15px 20px 20px 20px;
-  box-sizing: border-box;
-  color: #000;
-  background-color: #fff;
-  border-radius: 0px 0px 5px 5px;
-  position: relative;
-  height: 150px;
+  width:60%;
+  padding: 10px 25px;
 }
-.editorial_author_date_cont{
-  display:flex;
-  justify-content: space-between;
+.editorial_preview_title_cont{
+  font-size: 1.05em;
+  margin-bottom: 0.5em;
 }
-.editorial_title_cont{
-  text-align:left;
-  font-size: 0.9em;
-  overflow:hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+.editorial_preview_title_cont a{
+  text-decoration: none;
 }
-.editorial_desc_cont{
-  text-align:left;
-  position: absolute;
-  width: calc(100% - 60px);
-  overflow:hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
+.editorial_preview_title_cont a:hover{
+  color: #212121
 }
+.editorial_preview_author_date_cont{
+  font-size: 0.8em;
+}
+  /*climate news div*/
+.news_container{
+  background-color: #21D4FD;
+  background-image: linear-gradient(164deg, #4c21ff 0%, #21D4FD 100%);
+  color: #fff;
+}
+#news_hr{
+  border: 2px solid #fff;
+}
+#news_links{
+
+}
+
 /*------ Blog Post Pages--------*/
 #blog_post_page{
   padding: 200px 0px 100px 200px;

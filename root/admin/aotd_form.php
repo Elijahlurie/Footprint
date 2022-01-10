@@ -47,13 +47,15 @@ if(!$_SESSION['created_preview']){
       <form method="POST" action="'.createBlogPost($conn).'">
         <div id="aotd_page_header_cont">
           <div id="aotd_page_header">
-            <div class="inline">
+            <div id="aotd_page_header_h1">
               <h1>By </h1><input name="aotd_input_header_action" type="text" value="'.$_SESSION['blog_post_input_0'].'" placeholder="[going vegan for one day]"><h1>. . .</h1>
             </div>
-            <div>
+            <div id="aotd_page_header_subtext">
               <input name="aotd_input_header_impact" type="text" value="'.$_SESSION['blog_post_input_1'].'" placeholder="[You\'ve saved an estimated 7 pounds of CO2, 14 pounds of grain, and 11 square feet of forestry. Keep reading to learn more!]">
             </div>
-            <p><strong>Check the facts</strong></p>
+            <div id="aotd_check_facts_btn_cont">
+              <strong>Check the facts</strong>
+            </div>
           </div>
           <p id="aotd_page_image_path">../images/preview_images/'.$new_result_row["preview_image"].'</p>
         </div>

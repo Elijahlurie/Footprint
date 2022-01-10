@@ -14,7 +14,5 @@ var setBackgroundImage = function(container_class, image_path){
 setBackgroundImage("preview_image_cont", "image_path");
 //call for action deep dive previews
 setBackgroundImage("aotd_preview_image_cont", "aotd_image_path");
-//call for climate news previews
-setBackgroundImage("news_preview_image_cont", "news_image_path");
 //call for editorial previews
 setBackgroundImage("editorial_preview_image_cont", "editorial_image_path");

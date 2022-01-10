@@ -48,7 +48,6 @@ $path = "../";
             <p>Category</p>
             <select name="blog_category">
               <option value="Action of the Day">Action of the Day</option>
-              <option value="Global Climate News">Global Climate News</option>
               <option value="Editorial">Editorial</option>
             </select>
             <p>Image for Preview</p>

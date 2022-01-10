@@ -20,7 +20,7 @@
           $delete_post_result = mysqli_query($connection, $delete_post_sql);
           //in case it was set, unset $_SESSION['created_preview'] so that users will be redirected from category form pages unless they make a new post
           unset($_SESSION['created_preview']);
-          
+
           header("Location: blog.php");
         }
       endif;
@@ -85,47 +85,25 @@
    				</a>
    			</div>
    	';
-  } else if($category == "Global Climate News"){
+  } else if($category == "Editorial"){
     $preview= '
-   			<div class="news_post_preview">
-          <a class="news_preview_image_cont"href="blog_posts/'.$blog_post_row['file_name'].'">
-   					<p class="news_image_path">images/preview_images/'.$blog_post_row['preview_image'].'</p>
+   			<div class="editorial_post_preview">
+          <a class="editorial_preview_image_cont"href="blog_posts/'.$blog_post_row['file_name'].'">
+   					<p class="editorial_image_path">images/preview_images/'.$blog_post_row['preview_image'].'</p>
           </a>
-   				<div class="news_preview_content">
-   					<div class="news_preview_title_cont">
+   				<div class="editorial_preview_content">
+   					<div class="editorial_preview_title_cont">
               <a href="blog_posts/'.$blog_post_row['file_name'].'">
 							  <h2>'.$blog_post_row['title'].'</h2>
               </a>
    					</div>
-   					<div class="news_preview_desc_cont">
+   					<div class="editorial_preview_desc_cont">
    						<p>'.$blog_post_row['description'].'</p>
    					</div><br>
-            <div class="news_preview_author_date_cont">
+            <div class="editorial_preview_author_date_cont">
    						<p>'.$blog_post_row['author'].', '.$blog_post_row['date'].'</p>
    					</div>
    				</div>
-   			</div>
-   	';
-  } else if($category == "Editorial"){
-    $preview= '
-   			<div class="editorial_post_preview">
-   				<a href="blog_posts/'.$blog_post_row['file_name'].'">
-   					<div class="editorial_preview_image_cont">
-   						<p class="editorial_image_path">images/preview_images/'.$blog_post_row['preview_image'].'</p>
-   					</div>
-   					<div class="editorial_preview_content">
-              <div class="editorial_author_date_cont">
-   							<p>'.$blog_post_row['author'].'</p>
-   							<p>'.$blog_post_row['date'].'</p>
-              </div>
-   						<div class="editorial_title_cont">
-   							<h2>'.$blog_post_row['title'].'</h2>
-   						</div>
-   						<div class="editorial_desc_cont">
-   							<p>'.$blog_post_row['description'].'</p>
-   						</div>
-   					</div>
-   				</a>
    			</div>
    	';
   } else{

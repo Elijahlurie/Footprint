@@ -71,37 +71,35 @@ include "blog_page_functions.php";
               <p><a href="category_pages/aotd.php">See More</a></p>
             </div>
           </div>
-        <div class="news_previews_container">
-          <div class="news_header">
-            <h1>Climate News</h1>
-            <hr>
-            <div class="news_category_link">
-              <a href="category_pages/news.php">See More >></a>
-            </div>
-          </div>
-          <div id="news_previews">
-            <?php
-              foreach(getPostsByCategory($conn, 'Global Climate News', 3) as $blog_post){
-                echo $blog_post;
-              };
-            ?>
-          </div>
-        </div>
-        <!--Editorial section, uses same css classes as news section-->
-        <div class="editorial_previews_container news_previews_container">
-          <div class="news_header">
+        <div class="editorial_previews_container">
+          <div class="editorial_header">
             <h1>Editorial</h1>
             <hr>
-            <div class="news_category_link">
+            <div id="editorial_category_link">
               <a href="category_pages/editorial.php">See More >></a>
             </div>
           </div>
           <div id="editorial_previews">
             <?php
-              foreach(getPostsByCategory($conn, 'Editorial', 4) as $blog_post){
+              foreach(getPostsByCategory($conn, 'Editorial', 3) as $blog_post){
                 echo $blog_post;
               };
             ?>
+          </div>
+        </div>
+        <!--Editorial section, uses mostly same css classes as news section-->
+        <div class="editorial_previews_container news_container">
+          <div class="news_header">
+            <h1>Climate News</h1>
+            <hr id="news_hr">
+          </div>
+          <div id="news_links">
+            <ul>
+              <li>Link</li>
+              <li>Link</li>
+              <li>Link</li>
+              <li>Link</li>
+            </ul>
           </div>
         </div>
       <?php

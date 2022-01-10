@@ -19,7 +19,9 @@ var timespan_words = ['today','this week','this year'];
 //simillarly, since each itm in the timespans array correponds with a string in the timespan_words array, the same index value is used
 var changeTimespan = function(stat_div_index, timespans_index){
   //change the number inside the statistic number div
-  statistic_divs[stat_div_index].innerHTML = original_numbers[stat_div_index] * timespans[timespans_index];
+  var new_number = original_numbers[stat_div_index] * timespans[timespans_index];
+  //format by adding commas
+  statistic_divs[stat_div_index].innerHTML = new_number.toLocaleString("en-US");
   //change the text between 'today', 'this week', and 'this year'
   stat_timespan_text.innerHTML = timespan_words[timespans_index];
 };

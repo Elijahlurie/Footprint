@@ -468,8 +468,6 @@ function createBlogPreview($connection){
 				//redirect user to the appropriate form page for the requested category to finish creating the content of the blog post
 					if($category == "Action of the Day"){
 						header("Location: aotd_form.php");
-					} else if($category == "Global Climate News"){
-						header("Location: news_form.php");
 					} else if($category == "Editorial"){
 						header("Location: editorial_form.php");
 					}
@@ -533,7 +531,7 @@ function createBlogPost($connection){
 						$input_value = $_POST["source_input_".$n];
 						if($input_value != ""){
 							//make sure the input wasn't blank before adding the value as a list item
-							$source_ul_content = $source_ul_content . '<li>'.$input_value.'</li>';
+							$source_ul_content = $source_ul_content . '<li><a href="'.$input_value.'" target="_blank">'.$input_value.'</a></li>';
 						}
 					}
 					$php_file_content = '
@@ -568,13 +566,15 @@ function createBlogPost($connection){
 						 <div id="aotd_page_wrapper">
 	 							<div id="aotd_page_header_cont">
 	 								<div id="aotd_page_header">
-	 									<div class="inline">
+	 									<div id="aotd_page_header_h1">
 	 										<h1>By '.$_POST['aotd_input_header_action'].'. . .</h1>
 	 									</div>
-	 									<div>
+	 									<div id="aotd_page_header_subtext">
 	 										'.$_POST['aotd_input_header_impact'].'
 	 									</div>
-	 									<p><a href="#blog_sources_cont">Check the facts</a></p>
+	 									<div id="aotd_check_facts_btn_cont">
+											<a id="aotd_check_facts_btn" href="#blog_sources_cont">Check the facts</a>
+										</div>
 	 								</div>
 	 								<p id="aotd_page_image_path">../images/preview_images/'.$new_result_row["preview_image"].'</p>
 	 							</div>
@@ -593,18 +593,18 @@ function createBlogPost($connection){
 	 								</div>
 	 								<div id="aotd_page_stats">
 	 									<div>
-	 										<h2 class="statistic_number">'.$_POST['aotd_input_stats_number_1'].'</h2>
-	 										<p>'.$_POST['aotd_input_stats_unit_1'].'</p>
+	 										<h2 class="statistic_number">'.number_format($_POST['aotd_input_stats_number_1']).'</h2>
+	 										<p class="statistic_unit">'.$_POST['aotd_input_stats_unit_1'].'</p>
 	 										<p><em>'.$_POST['aotd_input_stats_impact_1'].'</em></p>
 	 									</div>
 	 									<div>
-		 									<h2 class="statistic_number">'.$_POST['aotd_input_stats_number_2'].'</h2>
-		 									<p>'.$_POST['aotd_input_stats_unit_2'].'</p>
+		 									<h2 class="statistic_number">'.number_format($_POST['aotd_input_stats_number_2']).'</h2>
+		 									<p class="statistic_unit">'.$_POST['aotd_input_stats_unit_2'].'</p>
 		 									<p><em>'.$_POST['aotd_input_stats_impact_2'].'</em></p>
 	 									</div>
 	 									<div>
-		 									<h2 class="statistic_number">'.$_POST['aotd_input_stats_number_3'].'</h2>
-		 									<p>'.$_POST['aotd_input_stats_unit_3'].'</p>
+		 									<h2 class="statistic_number">'.number_format($_POST['aotd_input_stats_number_3']).'</h2>
+		 									<p class="statistic_unit">'.$_POST['aotd_input_stats_unit_3'].'</p>
 		 									<p><em>'.$_POST['aotd_input_stats_impact_3'].'</em></p>
 	 									</div>
 	 								</div>
@@ -613,9 +613,9 @@ function createBlogPost($connection){
 	 							<div id="aotd_form_content">
 	 								<div id="aotd_content_text">
 	 									'.$_POST['aotd_input_content'].'
+										<br><em>&nbsp&nbsp&nbsp&nbsp&nbsp- '.$new_result_row["author"].', '.$new_result_row["date"].'</em>
 	 								</div>
 	 							</div>
-	 						<p>By '.$new_result_row["author"].', '.$new_result_row["date"].'</p>
 							<div id="blog_sources_cont">
 				        <h1>Sources</h1>
 				        <hr>
@@ -641,10 +641,6 @@ function createBlogPost($connection){
 	 				</body>
 					</html>
 					';
-				} else if($new_result_row["category"] == "Global Climate News"){
-					$php_file_content = '
-
-					';
 				} else if($new_result_row["category"] == "Editorial"){
 					$php_file_content = '
 
@@ -656,6 +652,15 @@ function createBlogPost($connection){
 				fwrite($newfile, $php_file_content);
 				//unset $_SESSION['created_preview'] so that users will be redirected from category form pages unless they make a new post
 				unset($_SESSION['created_preview']);
+				//unset all the session variables that fill in the blanks with users previous inputs
+				//get an array of all the keys of session variables that are currently set
+				$array_keys = array_keys($_SESSION);
+				foreach ($array_keys as $key) {
+					//for each of the keys, check if the first 16 characters of the key are blog_post_input_, and unset the session variable if that is true
+    			if (substr($key, 0, 16) == 'blog_post_input_') {
+        		unset($_SESSION[$key]);
+    			}
+				}
 				//redirect user to the blog post they just made
 				header('Location:../blog.php');
 		}else{
