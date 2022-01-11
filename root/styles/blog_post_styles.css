@@ -1,4 +1,11 @@
 /*----AOTD Post Page Styling (also used for aotd category form)----*/
+input{
+  border-radius: 0;
+  padding-left:15px;
+  padding-right:10px;
+  border-radius: 5px;
+  border: auto;
+}
 #aotd_page_wrapper{
   padding-top: 100px;
   scroll-behavior: smooth;
@@ -30,11 +37,21 @@
   align-items: flex-end;
   padding: 10px 0px;
 }
+#aotd_page_header_h1 input{
+  height: 2em;
+  width: 300px;
+  margin: 0em 1em;
+  font-size: 1.5em;
+}
 #aotd_page_header_subtext{
   box-sizing: border-box;
   height: 23%;
   padding-top: 15px;
   font-size: 1.3em;
+}
+#aotd_page_header_subtext input{
+  font-size: 0.6em;
+  width: 400px;
 }
 #aotd_check_facts_btn_cont{
   box-sizing: border-box;
@@ -64,6 +81,9 @@
 .inline{
   display: flex;
   flex-wrap:wrap;
+}
+.inline input{
+  margin: 0em 1em;
 }
 #aotd_page_stats_cont{
   padding: 50px;
@@ -139,6 +159,9 @@
   flex-direction: column;
   align-items: center;
 }
+#aotd_page_stats div input{
+  margin-bottom: 0.8em;
+}
 .statistic_number{
   font-size: 3em;
   margin-bottom: 0.2em;
@@ -171,6 +194,9 @@
 }
 #aotd_content_text textarea{
   height: 400px;
+}
+#aotd_form_author{
+  margin-left: -40%;
 }
 #blog_sources_cont{
   min-height: 300px;
@@ -229,6 +255,9 @@
   display:flex;
   flex-direction:column;
   justify-content: center;
+}
+#editorial_page_header input{
+  width: 85%;
 }
 #editorial_page_image_path{
   display:none;

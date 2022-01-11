@@ -60,11 +60,11 @@ $path = "../";
             <p>Image for Preview</p>
             <input name="blog_preview_image" type="file" accept="image/png, image/jpeg, image/jpg">
             <p>Author Name</p>
-            <input name="blog_author" type="text" value="'.$_SESSION['blog_input_author'].'">
+            <input name="blog_author" type="text" value="'.$_SESSION['blog_input_author'].'" placeholder="Author name">
             <p>Title</p>
-            <input name="blog_title" type="text" value="'.$_SESSION['blog_input_title'].'">
-            <p>Description</p>
-            <input name="blog_description" type="text" value="'.$_SESSION['blog_input_description'].'">
+            <input name="blog_title" type="text" value="'.$_SESSION['blog_input_title'].'" placeholder="Title">
+            <p>Preview Description</p>
+            <input name="blog_description" type="text" value="'.$_SESSION['blog_input_description'].'" placeholder="Preview description">
             <button name="submit_blog_preview" type="submit">Post</button>
           </form>
           ';
@@ -84,7 +84,7 @@ $path = "../";
             <ol>
           ';
         for ($i = 0; $i < count($featured_posts_array); $i++){
-          echo '<li><input name="update_featured'.$i.'" type="text" value="'.$featured_posts_array[$i]['title'].'"></li>';
+          echo '<li><input name="update_featured'.$i.'" type="text" value="'.$featured_posts_array[$i]['title'].'" placeholder="Blog post title"></li>';
         }
         echo '
             </ol>
@@ -103,8 +103,10 @@ $path = "../";
           ';
         for ($i = 0; $i < count($featured_news_array); $i++){
           echo '
-          <li><input name="update_news_title'.$i.'" type="text" value="'.$featured_news_array[$i]['title'].'" placeholder="Title"></li>
-          <li><input name="update_news_url'.$i.'" type="text" value="'.$featured_news_array[$i]['url'].'" placeholder="URL"></li>
+          <li>
+            <input name="update_news_title'.$i.'" type="text" value="'.$featured_news_array[$i]['title'].'" placeholder="Title">
+            <input name="update_news_url'.$i.'" type="text" value="'.$featured_news_array[$i]['url'].'" placeholder="URL">
+          </li>
           <br>
           ';
         }

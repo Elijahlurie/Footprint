@@ -89,8 +89,8 @@ if(!$_SESSION['created_preview']){
           <div id="aotd_content_text">
             <textarea name="aotd_input_content" type="text" placeholder="Eating vegan cuts out one of the most pollutive, environmentally-unfriendly products that exist today...">'.$_SESSION['blog_post_input_12'].'</textarea>
           </div>
+          <em id="aotd_form_author">&nbsp&nbsp&nbsp&nbsp&nbsp- '.$new_result_row["author"].', '.$new_result_row["date"].'</em>
         </div>
-      <p>By '.$new_result_row["author"].', '.$new_result_row["date"].'</p>
       <div id="blog_sources_cont">
         <h1>Sources</h1>
         <hr>

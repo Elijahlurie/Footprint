@@ -6,7 +6,6 @@ Questions/issues:
 - how do we still maintain the security of having pages reload on pageback but still make it convenient so if theyre on blog page they dont lose their place
 
 things to do:
-- finish styling category form pages
 - change blog form system to session variables instead of looking at most recent preview in table
 - Style category_pages files
 - Add the if/else that checks if there is actually a file that corresponds to the preview to any function that generates previews minus featued preview function
