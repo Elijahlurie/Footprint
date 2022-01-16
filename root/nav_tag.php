@@ -8,12 +8,23 @@
     }
     echo '
       <h2 id="footprint_title"><a href="'.$path.'index.php">Footprint</a></h2>
-
+      <a id="logo_nav_link" href="'.$path.'index.php">
+        <img id="nav_logo" src="'.$path.'images/footprint_logo.png" alt="Footprint logo">
+      </a>
       <div id="main_links">
         <h4><a href="'.$path.'index.php">Home</a></h4>
         <h4><a href="'.$path.'about_us.php">About</a></h4>
         <h4><a href="'.$path.'blog.php">Blog</a></h4>
         <h4><a href="'.$path.'donate.php">Donate</a></h4>
+      </div>
+      <div id="nav_tag_menu_dropdown">
+        <h4>Menu &#9660</h4>
+        <div id="dropdown_main_links">
+          <h4><a href="'.$path.'index.php">Home</a></h4>
+          <h4><a href="'.$path.'about_us.php">About</a></h4>
+          <h4><a href="'.$path.'blog.php">Blog</a></h4>
+          <h4><a href="'.$path.'donate.php">Donate</a></h4>
+        </div>
       </div>
     ';
 

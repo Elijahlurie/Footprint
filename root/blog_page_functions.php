@@ -5,6 +5,8 @@
     $result = mysqli_query($connection, $sql);
     $posts_array = mysqli_fetch_all($result, MYSQLI_ASSOC);
     $newarray = [];
+    //start a counter to see if any previews are deleted from database
+    $delete_counter = 0;
     for($i = 0; $i<$number; $i++){
       //if there is a blog post in the array (maybe there arent enough posts in this category yet)
       if($posts_array[$i]):
@@ -20,10 +22,14 @@
           $delete_post_result = mysqli_query($connection, $delete_post_sql);
           //in case it was set, unset $_SESSION['created_preview'] so that users will be redirected from category form pages unless they make a new post
           unset($_SESSION['created_preview']);
-
-          header("Location: blog.php");
+          //add one to counter
+          $delete_counter += 1;
         }
       endif;
+    }
+    if($delete_counter > 0){
+      //if any previews were deleted, reload page so a full set of previews can be displayed
+      header("Location: blog.php");
     }
     return $newarray;
   };
@@ -36,6 +42,8 @@
      $category_posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
      //create an array to store all the previews created in this function
      $newarray = [];
+     //start a counter to see if any previews are deleted from database
+     $delete_counter = 0;
      //for the specified number of times
      for($i = 0; $i<$number; $i++){
        //if there is a blog post in the array (maybe there arent enough posts in this category yet)
@@ -52,10 +60,14 @@
            $delete_post_result = mysqli_query($connection, $delete_post_sql);
            //in case it was set, unset $_SESSION['created_preview'] so that users will be redirected from category form pages unless they make a new post
    				 unset($_SESSION['created_preview']);
-
-           header("Location: blog.php");
+           //add one to counter
+           $delete_counter += 1;
          }
        endif;
+     }
+     if($delete_counter > 0){
+       //if any previews were deleted, reload page so a full set of previews can be displayed
+       header("Location: blog.php");
      }
      return $newarray;
  };

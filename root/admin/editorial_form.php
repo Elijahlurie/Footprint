@@ -7,8 +7,8 @@ include "../user_join.php";
 //define $path variable so links inside nav tag and footer still point to the right page even though this file is in a folder
 $path = "../";
 
-//check if $_SESSION['created_preview'] variable was set by the createBlogPreview function; if it wasn't, redirect user from this page to admin page
-if(!$_SESSION['created_preview']){
+//check if $_SESSION["new_post_data"] variable was set by the createBlogPreview function; if it wasn't, redirect user from this page to admin page
+if(!$_SESSION["new_post_data"]){
   header('Location:admin.php');
 }
  ?>
@@ -31,13 +31,6 @@ if(!$_SESSION['created_preview']){
    <h1>Create an Editorial Post</h1>
    <h3>--Just fill in the blanks--</h3>
    <?php
-   //get an array of all blog posts from the database
-   $new_sql = "SELECT * FROM blog;";
-   $new_result = mysqli_query($conn, $new_sql);
-   $new_result_array = mysqli_fetch_all($new_result, MYSQLI_ASSOC);
-   //get the last item of that array, the information for the newest blog post
-   $new_result_row = end($new_result_array);
-
    //display form with subbed in user inputs if user made an error
    //session variables with user inputs were set in createBlogPost()
    if($_SESSION['blog_post_error']){
@@ -47,20 +40,20 @@ if(!$_SESSION['created_preview']){
      <form method="POST" action="'.createBlogPost($conn).'">
        <div id="editorial_page_header_cont">
          <div id="editorial_page_header">
-            <h1>'.$new_result_row["title"].'</h1>
+            <h1>'.$_SESSION["new_post_data"]["title"].'</h1>
             <br><input type="text" name="editorial_input_subtitle" value="'.$_SESSION['blog_post_input_0'].'" placeholder="Type subtitle here . . .">
          </div>
-         <p id="editorial_page_image_path">../images/preview_images/'.$new_result_row["preview_image"].'</p>
+         <p id="editorial_page_image_path">../images/preview_images/'.$_SESSION["new_post_data"]["preview_image"].'</p>
        </div>
        <h2 class="blog_page_category_link">Editorial</h2>
        <div id="editorial_page_content">
         <div id="editorial_page_tags">
           <p class="editorial_page_tag">Written By</p>
-          <p class="editorial_page_tag_content">'.$new_result_row["author"].'</p>
+          <p class="editorial_page_tag_content">'.$_SESSION["new_post_data"]["author"].'</p>
           <p class="editorial_page_tag">Published</p>
-          <p class="editorial_page_tag_content">'.$new_result_row["date"].'</p>
+          <p class="editorial_page_tag_content">'.$_SESSION["new_post_data"]["date"].'</p>
           <p class="editorial_page_tag">Category</p>
-          <p class="editorial_page_tag_content">'.$new_result_row["category"].'</p>
+          <p class="editorial_page_tag_content">'.$_SESSION["new_post_data"]["category"].'</p>
         </div>
         <div id="editorial_content_text">
           <textarea name="editorial_input_content" type="text" placeholder="Type editorial content here . . .">'.$_SESSION['blog_post_input_1'].'</textarea>

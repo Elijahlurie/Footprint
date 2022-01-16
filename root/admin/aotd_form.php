@@ -7,8 +7,8 @@ include "../user_join.php";
 //define $path variable so links inside nav tag and footer still point to the right page even though this file is in a folder
 $path = "../";
 
-//check if $_SESSION['created_preview'] variable was set by the createBlogPreview function; if it wasn't, redirect user from this page to admin page
-if(!$_SESSION['created_preview']){
+//check if $_SESSION["new_post_data"] variable was set by the createBlogPreview function; if it wasn't, redirect user from this page to admin page
+if(!$_SESSION["new_post_data"]){
   header('Location:admin.php');
 }
  ?>
@@ -31,13 +31,6 @@ if(!$_SESSION['created_preview']){
     <h1>Create an Action Description Post</h1>
     <h3>--Just fill in the blanks--</h3>
     <?php
-    //get an array of all blog posts from the database
-    $new_sql = "SELECT * FROM blog;";
-    $new_result = mysqli_query($conn, $new_sql);
-    $new_result_array = mysqli_fetch_all($new_result, MYSQLI_ASSOC);
-    //get the last item of that array, the information for the newest blog post
-    $new_result_row = end($new_result_array);
-
     //display form with subbed in user inputs if user made an error
     //session variables with user inputs were set in createBlogPost()
     if($_SESSION['blog_post_error']){
@@ -57,7 +50,7 @@ if(!$_SESSION['created_preview']){
               <strong>Check the facts</strong>
             </div>
           </div>
-          <p id="aotd_page_image_path">../images/preview_images/'.$new_result_row["preview_image"].'</p>
+          <p id="aotd_page_image_path">../images/preview_images/'.$_SESSION["new_post_data"]["preview_image"].'</p>
         </div>
         <div id="aotd_page_stats_cont">
           <div class="inline">
@@ -89,7 +82,7 @@ if(!$_SESSION['created_preview']){
           <div id="aotd_content_text">
             <textarea name="aotd_input_content" type="text" placeholder="Eating vegan cuts out one of the most pollutive, environmentally-unfriendly products that exist today...">'.$_SESSION['blog_post_input_12'].'</textarea>
           </div>
-          <em id="aotd_form_author">&nbsp&nbsp&nbsp&nbsp&nbsp- '.$new_result_row["author"].', '.$new_result_row["date"].'</em>
+          <em id="aotd_form_author">&nbsp&nbsp&nbsp&nbsp&nbsp- '.$_SESSION["new_post_data"]["author"].', '.$_SESSION["new_post_data"]["date"].'</em>
         </div>
       <div id="blog_sources_cont">
         <h1>Sources</h1>

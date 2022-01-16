@@ -453,18 +453,27 @@ function createBlogPreview($connection){
 				//enter information needed for preview into database
 					$blog_sql = "INSERT INTO blog (time, date, category, author, title, description, preview_image, file_name) VALUES ('$time', '$date', '$category', '$author', '$title', '$description', '$preview_img_name', '$file_name');";
 					$blog_result = mysqli_query($connection, $blog_sql);
-					//if it is not already in directory, upload image to directory in the images/preview_images folder
+					//if image is not already in directory, upload image to directory in the images/preview_images folder
 					$image_file_path = '../images/preview_images/'.$preview_img_name;
 					if(!file_exists($image_file_path)){
 						move_uploaded_file($_FILES['blog_preview_image']["tmp_name"], $image_file_path);
 					}
+				//set a session variable to store preview information to be used on the category form and in the createBlogPost function
+					$_SESSION['new_post_data'] = array(
+						'time' => $time,
+						'date' => $date,
+						'category' => $category,
+						'author' => $author,
+						'title' => $title,
+						'description' => $description,
+						'preview_image' => $preview_img_name,
+						'file_name' => $file_name
+					);
 				//unset the session variables for the things they've entered because they are no longer needed
 					unset($_SESSION['blog_input_title']);
 					unset($_SESSION['blog_input_author']);
 					unset($_SESSION['blog_input_description']);
 					unset($_SESSION['blog_input_timestamp']);
-				//set a session variable showing a preview has just been made so user isnt redirected from category form page
-					$_SESSION['created_preview'] = time();
 				//redirect user to the appropriate form page for the requested category to finish creating the content of the blog post
 					if($category == "Action of the Day"){
 						header("Location: aotd_form.php");
@@ -511,20 +520,14 @@ function createBlogPost($connection){
 		if($count == 1){
 			//if $count = 1, meaning every input (except for the submit button) has some value, continue
 			//Create new blog post file
-				//get an array of all blog posts from the database
-				$new_sql = "SELECT * FROM blog;";
-				$new_result = mysqli_query($connection, $new_sql);
-				$new_result_array = mysqli_fetch_all($new_result, MYSQLI_ASSOC);
-				//get the last item of that array, the information for the newest blog post
-				$new_result_row = end($new_result_array);
 				//generate a string with the column names and values and store that string in a variable so the information can be held in an html comment on the blog file in case the row in the table is deleted
 				$list = [];
-				foreach($new_result_row as $key => $value){
+				foreach($_SESSION['new_post_data'] as $key => $value){
 					$list[] = $key." (".$value.")";
 				}
 				$row_contents = "Data from blog table: " . implode("; " , $list);
 				//create a variable to hold the whole html content of the new file for the blog post with the specifics for this post added in as variables, formatted based on category of post
-				if($new_result_row["category"] == "Action of the Day"){
+				if($_SESSION['new_post_data']["category"] == "Action of the Day"){
 					//generate bullet list of sources
 					$source_ul_content = '';
 					for($n = 0; $n<$_POST['sources_count']; $n++){
@@ -550,7 +553,7 @@ function createBlogPost($connection){
 					<html>
 					<head>
 						<meta charset="utf-8">
-						<?php echo "<title>'.$new_result_row["title"].'</title>";?>
+						<?php echo "<title>'.$_SESSION["new_post_data"]["title"].'</title>";?>
 						<meta name="viewport" content="width=device-width,initial-scale=1"/>
 						<link rel="stylesheet" href="../styles/styles.css">
 						<link rel="stylesheet" href="../styles/blog_post_styles.css">
@@ -576,7 +579,7 @@ function createBlogPost($connection){
 											<a id="aotd_check_facts_btn" href="#blog_sources_cont">Check the facts</a>
 										</div>
 	 								</div>
-	 								<p id="aotd_page_image_path">../images/preview_images/'.$new_result_row["preview_image"].'</p>
+	 								<p id="aotd_page_image_path">../images/preview_images/'.$_SESSION["new_post_data"]["preview_image"].'</p>
 	 							</div>
 	 							<div id="aotd_page_stats_cont">
 	 								<div class="inline">
@@ -614,7 +617,7 @@ function createBlogPost($connection){
 	 							<div id="aotd_form_content">
 	 								<div id="aotd_content_text">
 	 									'.$_POST['aotd_input_content'].'
-										<br><em>&nbsp&nbsp&nbsp&nbsp&nbsp- '.$new_result_row["author"].', '.$new_result_row["date"].'</em>
+										<br><em>&nbsp&nbsp&nbsp&nbsp&nbsp- '.$_SESSION["new_post_data"]["author"].', '.$_SESSION["new_post_data"]["date"].'</em>
 	 								</div>
 	 							</div>
 							<div id="blog_sources_cont">
@@ -642,7 +645,7 @@ function createBlogPost($connection){
 	 				</body>
 					</html>
 					';
-				} else if($new_result_row["category"] == "Editorial"){
+				} else if($_SESSION["new_post_data"]["category"] == "Editorial"){
 					$php_file_content = '
 					<!DOCTYPE html>
 					<?php
@@ -659,7 +662,7 @@ function createBlogPost($connection){
 					<html>
 					<head>
 						<meta charset="utf-8">
-						<?php echo "<title>'.$new_result_row["title"].'</title>";?>
+						<?php echo "<title>'.$_SESSION["new_post_data"]["title"].'</title>";?>
 						<meta name="viewport" content="width=device-width,initial-scale=1"/>
 						<link rel="stylesheet" href="../styles/styles.css">
 						<link rel="stylesheet" href="../styles/blog_post_styles.css">
@@ -675,20 +678,20 @@ function createBlogPost($connection){
 						<div id="editorial_page_wrapper">
 			        <div id="editorial_page_header_cont">
 			          <div id="editorial_page_header">
-			             <h1>'.$new_result_row["title"].'</h1>
+			             <h1>'.$_SESSION["new_post_data"]["title"].'</h1>
 			             <br><p>'.$_POST["editorial_input_subtitle"].'</p>
 			          </div>
-			          <p id="editorial_page_image_path">../images/preview_images/'.$new_result_row["preview_image"].'</p>
+			          <p id="editorial_page_image_path">../images/preview_images/'.$_SESSION["new_post_data"]["preview_image"].'</p>
 			        </div>
 			        <h2 class="blog_page_category_link"><a href="../category_pages/editorial.php">Editorial</a></h2>
 			        <div id="editorial_page_content">
 			         <div id="editorial_page_tags">
 			           <p class="editorial_page_tag">Written By</p>
-			           <p class="editorial_page_tag_content">'.$new_result_row["author"].'</p>
+			           <p class="editorial_page_tag_content">'.$_SESSION["new_post_data"]["author"].'</p>
 			           <p class="editorial_page_tag">Published</p>
-			           <p class="editorial_page_tag_content">'.$new_result_row["date"].'</p>
+			           <p class="editorial_page_tag_content">'.$_SESSION["new_post_data"]["date"].'</p>
 			           <p class="editorial_page_tag">Category</p>
-			           <p class="editorial_page_tag_content">'.$new_result_row["category"].'</p>
+			           <p class="editorial_page_tag_content">'.$_SESSION["new_post_data"]["category"].'</p>
 			         </div>
 			         <div id="editorial_content_text">
 			           '.$_POST["editorial_input_content"].'
@@ -710,11 +713,11 @@ function createBlogPost($connection){
 		      ';
 				}
 				//create a new file in the blog_posts folder of the directory with this php file content
-				$file_path = "../blog_posts/" . $new_result_row["file_name"];
+				$file_path = "../blog_posts/" . $_SESSION["new_post_data"]["file_name"];
 				$newfile = fopen($file_path, "w") or die("Unable to open file!");
 				fwrite($newfile, $php_file_content);
-				//unset $_SESSION['created_preview'] so that users will be redirected from category form pages unless they make a new post
-				unset($_SESSION['created_preview']);
+				//unset $_SESSION['new_post_data'] because it is no longer needed
+				unset($_SESSION['new_post_data']);
 				//unset all the session variables that fill in the blanks with users previous inputs
 				//get an array of all the keys of session variables that are currently set
 				$array_keys = array_keys($_SESSION);

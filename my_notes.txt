@@ -2,21 +2,22 @@ Questions/issues:
 - where should i give credit to the illustrator of the doodles and to the sources for the actions?
   - make a credits page?
 - what should we call action of the day posts
-- when one of us changes one of the table structures, make sure to tell the other so we can have same databases
 - how do we still maintain the security of having pages reload on pageback but still make it convenient so if theyre on blog page they dont lose their place
 
 things to do:
-- change blog form system to session variables instead of looking at most recent preview in table
 - Style category_pages files
 - Add the if/else that checks if there is actually a file that corresponds to the preview to any function that generates previews minus featued preview function
-- Style Admin page
-  - have max character counts for title and description, have a little number in the corner of the textbox counting down
-  - lock page and footer link to anyone not an admin
-- Create Donate page
-- make new pages mobile friendly
-  - have logo as home link in nav?
-  - make nav tag into dropdown?
+- Finish donate page
+  - write content
+  - style
+  - set up paypal for Footprint? or Stripe? https://www.customdonations.com/support/pricing/
+- review content of about us page
+- make new pages mobile friendly, tablet friendly, and when command -
+  - category forms, blog posts, admin page, donate page, category pages
   - make signup form get smaller smoothly, zipcode explanation div gets opened in weird places
+  - anything that requires user to hover (ex. timespan dropdown, nav tag dropdown) needs to be switched to click for mobile
+    - but if they click menu dropdown and then make page wider it should go away no matter what
+- lock admin page and footer link to anyone not an admin
 - remove test.php from repository
 - Set up socials
   - register email
@@ -47,18 +48,20 @@ things to do:
 - at some point go through php and streamline code / fix logic errors
 
 bugs to fix:
-- error message on category form doesnt show up the first time
-- signup and login look weird on nates browser
-- blog page doesnt automatically reload if a preview is deleted so there is a blank where a new preview should appear
-- if i make a preview and go to category post page and then go to blog page, preview gets deleted bc of check on blog page but the session variables save my progress for the category form.
-  - give a warning if user tries to leave category page halfway through?
-  - or just automatically delete preview and unset session variables if they leave halfway through?
-- if there is an error on a category form all the source inputs are erased
-- css html scroll-behavior:smooth isnt working
+- login look weird on firefox, other browsers
+- css html scroll-behavior:smooth on blog page isnt working
+- category form logic:
+  - if i make a preview and go to category post page and then go to blog page, preview gets deleted bc of check on blog page
+    - give a warning if user tries to leave category page halfway through?
+    - or just automatically delete preview and unset session variables if they leave halfway through?
+  - if there is an error on a category form all the source inputs are erased
+  - if admin makes a preview, leaves category form page, and makes another preview, both category forms will be creating a file for the newest preview created on that computer bc its one session variable being shared
+  - error message on category form doesnt show up the first time
 
 
 styles/features to add at some point:
 - make input boxes border red when errors inputting
+- have max character counts for title and description inputs in admin page, have a little number in the corner of the textbox counting down
 - unset session variables for category form inputs if post is successfully created?
   - doesnt rly matter bc they are only shown if a new error session variable is set but to clear up clutter of session variables
 - loading screen if users connection is bad
@@ -73,6 +76,7 @@ styles/features to add at some point:
 
 
 cool extra features to add:
+- have nav tag link of current page be a lighter color or be underlined
 - turn statistic numbers into words https://marc.info/?l=php-general&m=99928281523866&w=2
 - use css transitions to make cool hover design features on elements
 - track most popular posts and have a section for viewing them
@@ -110,3 +114,4 @@ Expenses:
 - web hosting
   - look into managed wordpress hosting
   siteground.com start up plan: 3.99 per month
+- paypal donation fee: $0.49 + 2.89%

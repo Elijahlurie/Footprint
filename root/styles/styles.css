@@ -43,8 +43,8 @@ a:visited{
 input{
   height:30px;
   width: 160px;
-  padding-left:15px;
-  padding-right:10px;
+  padding-left: 15px;
+  padding-right: 10px;
   border-radius: 15px;
   border: none;
   color: #454545;
@@ -138,11 +138,17 @@ select{
   font-size: 1.7em;
   margin-left: 20px;
 }
+#logo_nav_link{
+  display: none;
+}
+#nav_tag_menu_dropdown{
+  display:none;
+}
 #main_links{
   display: inline-flex;
   justify-content: space-around;
   font-size: 1.05em;
-  margin-left: -150px;
+  margin-left: -100px;
 }
 #main_links h4{
   margin: 0px 50px;
@@ -310,13 +316,20 @@ select{
 
 /*---------Admin Page--------*/
 #admin_page_container{
-  padding: 200px 0px 100px 200px;
+  padding: 200px 0px 100px 150px;
+  background: #FF8008;
+  background: -webkit-linear-gradient(45deg, #FFC837, #FF8008);
+  background: linear-gradient(45deg, #FFC837, #FF8008);
 }
-
+.admin_form_cont{
+  background-color: rgba(255, 255, 255, 0.35);
+  margin: 30px;
+  border-radius: 5px;
+  padding: 40px;
+  width: 40%;
+  line-height: 1.5em;
+}
 /*---------Central Blog.php Page----------*/
-/* Explanation for parallax scrolling effect:
-https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
-
 #blog_header_container{
   height: 700px;
   background-color: #21D4FD;
@@ -351,14 +364,21 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
 }
   /*featured posts section*/
 .featured_previews_container{
-  height: 600px;
-  padding: 30px;
-  background-color: #FBAB7E;
-  background-image: linear-gradient(50deg, #FBAB7E 0%, #F7CE68 100%);
+  height: 680px;
+  background-image: url('../images/ocean.jpg');
+  background-size: cover;
 }
-.featured_previews_container hr{
-  margin-bottom: 30px;
-  border: 2px solid black;
+.featured_previews_cont{
+  background-color: rgba(255, 255, 255, 0.3);
+  padding: 30px;
+  padding-top: 55px;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+.featured_previews_cont hr{
+  border: none;
+  border-top: 4px solid black;
   margin: 20px 0px 30px 0px;
 }
 #featured_previews{
@@ -368,6 +388,7 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
 }
     /*styling for featured blog previews*/
 .blog_post_preview{
+  min-width: 200px;
   color: #fff;
   width: 28%;
   box-sizing: border-box;
@@ -406,7 +427,7 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
 }
 .preview_title_cont{
   text-align:left;
-  height: 52px;
+  height: 50px;
   margin-top: 25px;
   font-size: 0.9em;
   line-height: 1.7em;
@@ -417,10 +438,10 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
 }
 .preview_desc_cont{
   text-align:left;
-  height: 60px;
+  height: 30%;
   position: absolute;
   bottom: 15px;
-  width: calc(100% - 60px);
+  padding-right: 50px;
   overflow:hidden;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -467,7 +488,6 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
   display:flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  max-height: 1200px;
   padding: 0px 20px;
 }
 #aotd_category_link{
@@ -527,8 +547,7 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
 }
   /*editorial posts div*/
 .editorial_previews_container{
-  padding-bottom: 100px;
-  padding-top: 40px;
+  padding: 40px 0px 100px 0px;
 }
 .editorial_header{
   display: flex;
@@ -537,7 +556,8 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
   padding: 40px 80px 0px 30px;
 }
 .editorial_header hr{
-  border: 2px solid #000;
+  border: none;
+  border-top: 4px solid #000;
   margin-top: 20px;
 }
 #editorial_category_link{
@@ -616,13 +636,6 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
   padding: 90px 150px;
 }
 
-/*------ Blog Post Pages--------*/
-#blog_post_page{
-  padding: 200px 0px 100px 200px;
-}
-#blog_data_meta{
-  display:none;
-}
 /*-------User Page-------*/
 /*for some reason, whole_usersPage styling only work with this extra div surrounding it*/
 #userPage_container{
@@ -1059,6 +1072,32 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
   margin-top: -450px;
   margin-right: 180px;
 }
+/*-------Donate Page----------*/
+#donation_page_wrapper{
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+}
+#donation_page_wrapper input{
+  all: inherit;
+}
+#donation_header_cont{
+  height: 650px;
+  display:flex;
+  padding: 200px 150px 100px 150px;
+  box-sizing: border-box;
+  justify-content: center;
+  background-color: yellow;
+}
+#donation_header_text{
+  width: 50%;
+}
+#donation_header_btn_cont{
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 /*--------404 Error Page---------*/
 #page_wrapper_404{
   width: 100%;
@@ -1081,7 +1120,7 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
 
 
 
-/*****************************STYLING FOR MOBILE PHONE SIZE DIMENSIONS***************************************/
+/*****************************STYLING FOR MOBILE / TABLET PHONE SIZE DIMENSIONS***************************************/
 @media only screen and (max-width: 900px) {
 /*---Footer---*/
 #footer{
@@ -1102,11 +1141,11 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
   line-height: 1.5em;
 }
 /*---Nav Tag---*/
-#nav_tag{
-  position: absolute;
-}
-#footprint_title{
+#main_links h4:nth-of-type(1){
   display: none;
+}
+#main_links h4:nth-of-type(2){
+  margin-left: -50px;
 }
 #main_links{
   margin:0;
@@ -1114,10 +1153,7 @@ https://keithclark.co.uk/articles/pure-css-parallax-websites/*/
 #main_links h4{
   margin: 0px 40px;
 }
-#main_links h4:nth-of-type(2){
-  margin-left:0px;
-  margin-right:50px;
-}
+
 #delete_div_content{
   width: 76%;
   left: 12%;
@@ -1368,6 +1404,166 @@ align-items: center;
   display:none;
 }
 
+/*-Blog.php Page-*/
+#blog_header_container{
+  height: 450px;
+  justify-content: center;
+}
+#blog_header_text{
+  text-align: center;
+  align-items: center;
+  padding-left: 0;
+  font-size: 0.7em;
+}
+#blog_header_text h1{
+  margin-bottom: 1em;
+}
+#blog_header_text h3{
+  font-size: 1.5em;
+}
+#blog_header_image{
+  display:none;
+}
+  /*featured posts section*/
+.featured_previews_container{
+  height: 52vw;
+  min-height: 350px;
+  font-size: 0.7em;
+}
+.featured_previews_cont{
+  padding: 6vw 3vw;
+}
+#featured_blog_header{
+  font-size: 4vw;
+}
+.featured_previews_cont hr{
+  border-top: 2px solid black;
+  margin: 8px 30px 15px 0px;
+}
+#featured_previews{
+  padding-top: 15px;
+  overflow-x: scroll;
+  justify-content: left;
+}
+    /*styling for featured blog previews*/
+.blog_post_preview{
+  min-height: 200px;
+  height: 28vw;
+  margin: 0px 8px;
+  width: 40%;
+  min-width: 180px;
+}
+.preview_image_cont{
+  height: 120px;
+}
+.preview_content{
+  height: calc(100% - 120px);
+}
+.preview_author_date_cont{
+
+}
+.preview_title_cont{
+  font-size: 0.8em;
+  margin-top: 4px;
+  line-height: 1.4em;
+}
+.preview_desc_cont{
+  bottom: 4px;
+  padding-right: 8px;
+  -webkit-line-clamp: 2;
+  font-size: 0.7em;
+  line-height: 1em;
+}
+  /*action of the day posts div*/
+#aotd_header{
+  padding: 7vw 0px 35px 0px;
+}
+.vert_divide_header_text{
+  font-size: 1.7vw;
+}
+.vert_divide_header_text h1{
+  border-right: 3px solid #fff;
+  padding: 10px 20px 10px 50px;
+  font-size: 2.2em;
+  text-align: center;
+}
+.vert_divide_header_text p{
+  padding: 10px 40px 10px 20px;
+}
+#aotd_previews{
+  padding: 0px 10px;
+}
+#aotd_category_link{
+  padding-bottom: 20px;
+  font-size: 1em;
+}
+    /*styling for action deep dive previews*/
+.aotd_post_preview{
+  min-width: 52%;
+  margin: 0px 10px 5.5vw 10px;
+}
+.aotd_preview_image_cont{
+  height: 23vw;
+}
+.aotd_preview_content{
+  font-size: 1.4vw;
+  padding: 20px 20px 5px 20px;
+  height: auto;
+  max-height: 70px;
+  margin-bottom: 15px;
+}
+  /*editorial posts div*/
+.editorial_previews_container{
+  padding: 10px 0px 40px 0px;
+}
+.editorial_header{
+  padding: 10px 40px 0px 10px;
+}
+.editorial_header h1{
+  font-size: 4vw;
+}
+.editorial_header hr{
+  border-top: 3px solid #000;
+}
+#editorial_category_link{
+  font-size: 1em;
+  padding: 10px 10px 10px 0px;
+}
+#editorial_previews{
+  padding: 15px 45px 0px 15px;
+}
+    /*editorial previews*/
+.editorial_post_preview{
+  min-height: 100px;
+  height: 15vw;
+}
+.editorial_preview_image_cont{
+  width: 37%;
+}
+.editorial_preview_content{
+  width: 55%;
+  padding: 10px 3vw;
+  font-size:calc(7px + 1vw);
+  line-height: 1.2em;
+}
+.editorial_preview_title_cont{
+  font-size: 0.8em;
+  margin-bottom: 1em;
+  line-height: 1.9em;
+}
+.editorial_preview_author_date_cont{
+  font-size: 0.8em;
+}
+  /*climate news div*/
+.news_header{
+  padding-top: 20px;
+  margin-bottom: 5vw;
+}
+#news_links{
+  padding: 30px 15vw;
+  font-size:calc(7px + 1vw);
+}
+
 /*---404 Error Page---*/
 #page_wrapper_404{
   flex-direction: column-reverse;
@@ -1380,4 +1576,83 @@ align-items: center;
 }
 #image_404{
 width:80%;
+}
+}
+
+/****************STYLING FOR ONLY MOBILE SIZE DIMENSIONS*************************/
+@media only screen and (max-width: 700px) {
+/*---Nav Tag (turn main links into a dropdown instead*)---*/
+#footprint_title{
+  display: none;
+}
+#logo_nav_link{
+  display: block;
+}
+#nav_logo{
+  width: 50px;
+  margin-left: 20px;
+}
+#nav_tag_menu_dropdown{
+  cursor: pointer;
+  display:block;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+#main_links{
+  display: none;
+}
+#dropdown_main_links{
+  display: none;
+  background-color: rgba(26, 155, 255, 0.95);
+  font-size: calc(9px + 1vw);
+  border-radius: 0px 0px 5px 5px;
+  height: 35vw;
+  min-height: 200px;
+  width: 40%;
+  min-width: 150px;
+  position:absolute;
+  top: 70px;
+  left: 30%;
+  box-shadow: -1px 10px 10px 1px rgba(0, 0, 0, 0.2),
+              1px 10px 10px 1px rgba(0, 0, 0, 0.2);
+}
+#nav_tag_menu_dropdown:hover #dropdown_main_links{
+  display: block;
+}
+#dropdown_main_links h4{
+  margin: 0;
+  height: 24%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#dropdown_main_links h4:hover{
+  background-color: rgba(43, 163, 255, 0.6);
+
+}
+#dropdown_main_links h4 a:hover{
+  text-decoration: underline;
+}
+#dropdown_main_links h4:active{
+  background-color:rgba(43, 163, 255, 0.6);
+}
+#dropdown_main_links h4 a:hover{
+  text-decoration: underline;
+}
+#dropdown_main_links h4:nth-of-type(1){
+  display: flex;
+}
+#dropdown_main_links h4:nth-of-type(2){
+  margin-left: 0;
+}
+#login_link{
+
+}
+#hello_user{
+
+}
+
+
 }

@@ -1,3 +1,6 @@
+#blog_data_meta{
+  display:none;
+}
 /*----AOTD Post Page Styling (also used for aotd category form)----*/
 input{
   border-radius: 0;
