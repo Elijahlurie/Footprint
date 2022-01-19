@@ -28,8 +28,10 @@ if(!$_SESSION["new_post_data"]){
   include "../nav_tag.php";
  ?>
  <div id="editorial_page_wrapper">
-   <h1>Create an Editorial Post</h1>
-   <h3>--Just fill in the blanks--</h3>
+   <div id="editorial_form_instructions">
+     <h1>Create an Editorial Post</h1>
+     <h3>--Just fill in the blanks--</h3>
+  </div>
    <?php
    //display form with subbed in user inputs if user made an error
    //session variables with user inputs were set in createBlogPost()
