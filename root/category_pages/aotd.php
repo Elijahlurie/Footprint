@@ -3,7 +3,7 @@
 $time = date_default_timezone_set('America/Los_Angeles');
 include "../connection.php";
 include "../user_join.php";
-
+include "../blog_page_functions.php";
 //define $path variable so links inside nav tag and footer still point to the right page even though this file is in a folder
 $path = "../";
  ?>
@@ -20,12 +20,20 @@ $path = "../";
   <?php
     include "../nav_tag.php";
   ?>
-  <div id="pageWrapper">
+  <div id="cat_page_category">Action of the Day</div>
+  <div id="cat_page_wrapper">
     <h1>Action deep dives</h1>
+    <div id="all_previews_cont">
+    </div>
+    <div id="ajax_loader">
+      <h4>Loading Blog Posts . . .</h4>
+    </div>
   </div>
-  <?php
-    include "../footer.php";
-   ?>
+
    <script src="../scripts/scripts.js"></script>
+   <script src="../scripts/background_image.js"></script>
+   <!--jquery cdn-->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+   <script src="../scripts/infinite_scroll.js"></script>
 </body>
 </html>

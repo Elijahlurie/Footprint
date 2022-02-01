@@ -113,5 +113,14 @@ include "blog_page_functions.php";
   </div>
    <script src="scripts/scripts.js"></script>
    <script src="scripts/background_image.js"></script>
+   <script>
+   //call for featured previews
+   setBackgroundImage("preview_image_cont", "image_path");
+   //call for action deep dive previews
+   setBackgroundImage("aotd_preview_image_cont", "aotd_image_path");
+   //call for editorial previews
+   setBackgroundImage("editorial_preview_image_cont", "editorial_image_path");
+
+   </script>
 </body>
 </html>

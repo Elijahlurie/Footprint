@@ -76,12 +76,6 @@
  //Separate function for formatting previews into html so I dont't have to have separate functions for each category
  //a single row from blog table is inputted, function outputs a formatted html preview for the row
  function formatPreview($blog_post_row, $category){
- 	if($blog_post_row['preview_image']){
- 	//if post has an image file for its preview, include the image in the preview
- 		$image_html = '<img class = "preview_image" src="images/preview_images/'.$blog_post_row['preview_image'].'" alt="Preview image">';
- 	} else{
- 		$image_html = "";
- 	}
 
 //format the preview html depending on what section of the blog.php page it will be displayed on
   if($category == "Action of the Day"){

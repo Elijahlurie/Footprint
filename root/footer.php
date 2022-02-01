@@ -1,3 +1,9 @@
+<?php
+//for category pages, if a post variable has been set with a path variable, set $path to it so that footer links work
+if($_POST['cat_page_path']){
+  $path = $_POST['cat_page_path'];
+}
+ ?>
 <div id="footer">
   <div id="footer_logo_container">
     <?php

@@ -5,6 +5,7 @@ Questions/issues:
 - how do we still maintain the security of having pages reload on pageback but still make it convenient so if theyre on blog page they dont lose their place
 
 things to do:
+- add sources section for editorial posts
 - Style category_pages files
 - Add the if/else that checks if there is actually a file that corresponds to the preview to any function that generates previews minus featued preview function
 - review content of about us page
@@ -74,9 +75,11 @@ styles/features to add at some point:
 - give a warning if admin tries to leave category page halfway through bc if they go to blog page the preview will be deleted and $_SESSION['created_preview'] will be unset so their progress will be lost
 - in fucntions where i check if phone number or title is already used, use in_array() instead of a loop to streamline code
 - improve code for assigning actions and displaying actions because as of now if an action row in the middle of the table is deleted it messes things up
+- alot of code can be simplified by using jquery/ajax i think to access server w/out reloading page,  no need for hidden inputs?
 
 
 cool extra features to add:
+- on dashoard show how many others have completed it and regions where most poeple are completing the action
 - have nav tag link of current page be a lighter color or be underlined
 - turn statistic numbers into words https://marc.info/?l=php-general&m=99928281523866&w=2
 - use css transitions to make cool hover design features on elements

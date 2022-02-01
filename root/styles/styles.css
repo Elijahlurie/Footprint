@@ -430,7 +430,7 @@ select{
   height: 50px;
   margin-top: 25px;
   font-size: 0.9em;
-  line-height: 1.7em;
+  line-height: 1.8em;
   overflow:hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -635,7 +635,53 @@ select{
   align-items: center;
   padding: 90px 150px;
 }
-
+/*-------Category Blog post pages--------*/
+.ajax-loader{
+  display: none;
+  border: 1px solid red;
+}
+#cat_page_category{
+  display:none;
+}
+#cat_page_wrapper{
+  padding: 15vw 4% 200px 4%;
+  box-sizing: border-box;
+}
+#all_previews_cont{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 100px;
+}
+.category_page_preview{
+  height: 50vh;
+  width: 31%;
+  margin: 0px 5px;
+}
+.category_page_preview a{
+  text-decoration: none;
+}
+.cat_preview_image_cont{
+  height: 150px;
+  width: 100%;
+  background-size: cover;
+}
+.cat_preview_desc{
+  height: 100%;
+  width: 100%;
+  color: rgba(0,0,0,0);
+  text-decoration: none;
+}
+.cat_preview_desc:hover{
+  background-color: rgba(0,0,0,0.6);
+  color: #fff;
+}
+.cat_image_path{
+  display: none;
+}
+#cat_footer_cont{
+  padding-top: 100px;
+}
 /*-------User Page-------*/
 /*for some reason, whole_usersPage styling only work with this extra div surrounding it*/
 #userPage_container{
@@ -1426,7 +1472,7 @@ align-items: center;
 }
   /*featured posts section*/
 .featured_previews_container{
-  height: 52vw;
+  height: 70vw;
   min-height: 350px;
   font-size: 0.7em;
 }
@@ -1448,7 +1494,7 @@ align-items: center;
     /*styling for featured blog previews*/
 .blog_post_preview{
   min-height: 200px;
-  height: 28vw;
+  height: 75%;
   margin: 0px 8px;
   width: 40%;
   min-width: 180px;
@@ -1460,18 +1506,18 @@ align-items: center;
   height: calc(100% - 120px);
 }
 .preview_author_date_cont{
-
+  margin-bottom: 2vw;
 }
 .preview_title_cont{
-  font-size: 0.8em;
+  font-size: 1.7vw;
   margin-top: 4px;
-  line-height: 1.4em;
+  height: calc(2*1.6vw + 1.7em);
 }
 .preview_desc_cont{
   bottom: 4px;
   padding-right: 8px;
   -webkit-line-clamp: 2;
-  font-size: 0.7em;
+  font-size: calc(5px + 1vw);
   line-height: 1em;
 }
   /*action of the day posts div*/
