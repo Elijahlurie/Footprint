@@ -61,6 +61,14 @@ if(!$_SESSION["new_post_data"]){
           <textarea name="editorial_input_content" type="text" placeholder="Type editorial content here . . .">'.$_SESSION['blog_post_input_1'].'</textarea>
         </div>
        </div>
+       <div id="blog_sources_cont">
+         <h1>Sources</h1>
+         <hr>
+         <ul id="blog_sources">
+         </ul>
+         <p id="add_source_btn">Add a Source</p>
+         <input name="sources_count" id="sources_count" value="0">
+       </div>
      <div id="editorial_submit_post_cont">
        <button name="submit_blog_post" type="submit">Create Post</button>
      </div>
@@ -78,6 +86,10 @@ if(!$_SESSION["new_post_data"]){
    var editorial_page_header = document.getElementById('editorial_page_header_cont');
    var editorial_page_image_path = document.getElementById('editorial_page_image_path');
    editorial_page_header.style.backgroundImage =  "url(" + editorial_page_image_path.innerHTML + ")";
+
+   //allow user to add source inputs by pressing add source button
+   var add_source_btn = document.getElementById('add_source_btn');
+   add_source_btn.addEventListener('click', addSourceInput);
 
    //code for initializing the rich text editor plugin
     tinymce.init({

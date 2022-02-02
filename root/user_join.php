@@ -646,6 +646,30 @@ function createBlogPost($connection){
 					</html>
 					';
 				} else if($_SESSION["new_post_data"]["category"] == "Editorial"){
+					//if sources were entered, generate a bullet list of the sources
+					$source_ul_content = '';
+					if($_POST['sources_count'] > 0){
+						//include start of sources div
+						$source_ul_content = $source_ul_content . '
+						<div id="blog_sources_cont">
+							<h1>Sources</h1>
+							<hr>
+							<ul id="blog_sources">
+						';
+						//iterate through all entered sources and add list items for each one
+						for($n = 0; $n<$_POST['sources_count']; $n++){
+							$input_value = $_POST["source_input_".$n];
+							if($input_value != ""){
+								//make sure the input wasn't blank before adding the value as a list item
+								$source_ul_content = $source_ul_content . '<li><a href="'.$input_value.'" target="_blank">'.$input_value.'</a></li>';
+							}
+						}
+						//close the sources div
+						$source_ul_content = $source_ul_content . '
+							</ul>
+						</div>
+						';
+					}
 					$php_file_content = '
 					<!DOCTYPE html>
 					<?php
@@ -697,6 +721,7 @@ function createBlogPost($connection){
 			           '.$_POST["editorial_input_content"].'
 			         </div>
 			        </div>
+							'.$source_ul_content.'
 						</div>
 						<?php
 							include "../footer.php";

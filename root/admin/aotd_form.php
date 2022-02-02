@@ -112,27 +112,8 @@ if(!$_SESSION["new_post_data"]){
    var aotd_page_image_path = document.getElementById('aotd_page_image_path');
    aotd_page_header.style.backgroundImage =  "url(" + aotd_page_image_path.innerHTML + ")";
 
-   //code for add sources button
-   var blog_sources = document.getElementById('blog_sources');
+   //allow user to add source inputs by pressing add source button
    var add_source_btn = document.getElementById('add_source_btn');
-   var sources_count = document.getElementById('sources_count');
-   //start counter variable to give each input a unique name
-   var counter  = 0;
-   var addSourceInput = function(){
-     //get an array of the current source inputs
-     source_input = document.getElementsByClassName('source_input');
-     //go through each of the current source inputs to properly recreate the current html of the blog_sources <ul> so that the new input html can be appended
-     //use loop instead of simply using .innerHTML because we need to preserve the value attributes for each input so the links users haveinputted so far are not lost
-     var blog_sources_html = "";
-     for(var i = 0; i<source_input.length; i++){
-      blog_sources_html += '<li><input class="source_input" name="source_input_' + i + '" type="text" value="' + source_input[i].value + '" placeholder="Paste link here"></li>';
-     }
-     blog_sources.innerHTML = blog_sources_html + '<li><input class="source_input" name="source_input_' + counter + '" type="text" placeholder="Paste link here"></li>';
-     counter ++;
-     //set innerhtml of hidden sources_count input to the current number of sources so php createPost function knows how many source inputs to process
-     sources_count.value = counter;
-   };
-
    add_source_btn.addEventListener('click', addSourceInput);
 
    //code for initializing the rich text editor plugin

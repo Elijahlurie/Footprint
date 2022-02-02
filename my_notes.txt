@@ -5,7 +5,6 @@ Questions/issues:
 - how do we still maintain the security of having pages reload on pageback but still make it convenient so if theyre on blog page they dont lose their place
 
 things to do:
-- add sources section for editorial posts
 - Style category_pages files
 - Add the if/else that checks if there is actually a file that corresponds to the preview to any function that generates previews minus featued preview function
 - review content of about us page
@@ -68,6 +67,7 @@ styles/features to add at some point:
   - doesnt rly matter bc they are only shown if a new error session variable is set but to clear up clutter of session variables
 - loading screen if users connection is bad
 - have a way to edit blog posts
+- error message if admin doesnt add any sources for aotd posts
 - have a nicer delete post ux
 - prevent featured previews from being listed again below (use a while loop instead of for?)
   - only once we have plenty of posts

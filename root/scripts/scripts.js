@@ -55,7 +55,7 @@ if(hello_user){
 }
 
 //opendivs didnt work perfectly in this case so had to add some code here
-function cancelDelete(){
+var cancelDelete = function(){
   delete_div_container.style.display = "none";
   //call the same openDivs function again so delete div will open right away if delete link is clicked again
   openDivs(delete_link, delete_div_container, 'block', true, delete_div_content);
@@ -63,3 +63,23 @@ function cancelDelete(){
 if(hello_user){
   cancel_delete.addEventListener("click", cancelDelete);
 }
+
+//code for add sources button on blog post form pages
+var addSourceInput = function(){
+  var blog_sources = document.getElementById('blog_sources');
+  var sources_count = document.getElementById('sources_count');
+  //start counter variable to give each input a unique name
+  var counter  = 0;
+  //get an array of the current source inputs
+  source_input = document.getElementsByClassName('source_input');
+  //go through each of the current source inputs to properly recreate the current html of the blog_sources <ul> so that the new input html can be appended
+  //use loop instead of simply using .innerHTML because we need to preserve the value attributes for each input so the links users haveinputted so far are not lost
+  var blog_sources_html = "";
+  for(var i = 0; i<source_input.length; i++){
+   blog_sources_html += '<li><input class="source_input" name="source_input_' + i + '" type="text" value="' + source_input[i].value + '" placeholder="Paste link here"></li>';
+  }
+  blog_sources.innerHTML = blog_sources_html + '<li><input class="source_input" name="source_input_' + counter + '" type="text" placeholder="Paste link here"></li>';
+  counter ++;
+  //set innerhtml of hidden sources_count input to the current number of sources so php createPost function knows how many source inputs to process
+  sources_count.value = counter;
+};
