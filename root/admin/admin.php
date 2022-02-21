@@ -19,9 +19,9 @@ $path = "../";
   <div id="pageWrapper">
     <?php
       include "../nav_tag.php";
-  /*    if($specific_user['admin'] != 1){
+      if($specific_user['admin'] != 1){
         header("Location: index.php");
-      }*/
+      }
       //unset old error messages for updating featured posts
       if(isset($_SESSION["update_featured_error_time"]) && time() - $_SESSION["update_featured_error_time"] >10){
         //if there is an error message set and it has been for over 10 seconds, unset the error message variables and reload the page
@@ -54,7 +54,7 @@ $path = "../";
             <form id="blog_form" method="POST" action="'.createBlogPreview($conn).'" enctype="multipart/form-data">
               <p>Category</p>
               <select name="blog_category">
-                <option value="Action of the Day">Action of the Day</option>
+                <option value="Action Deep Dives">Action Deep Dives</option>
                 <option value="Editorial">Editorial</option>
               </select>
               <p>Image for Preview</p>
@@ -143,6 +143,6 @@ $path = "../";
   <?php
     include "../footer.php";
    ?>
-   <script src="scripts/scripts.js"></script>
+   <script src="../scripts/scripts.js"></script>
 </body>
 </html>

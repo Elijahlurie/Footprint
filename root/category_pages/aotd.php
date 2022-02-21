@@ -20,9 +20,9 @@ $path = "../";
   <?php
     include "../nav_tag.php";
   ?>
-  <div id="cat_page_category">Action of the Day</div>
+  <div id="cat_page_category">Action Deep Dives</div>
   <div id="cat_page_wrapper">
-    <h1>Action deep dives</h1>
+    <h1 id="cat_page_header">Action Deep Dives</h1>
     <div id="all_previews_cont">
     </div>
     <div id="ajax_loader">

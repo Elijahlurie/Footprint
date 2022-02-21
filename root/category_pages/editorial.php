@@ -23,7 +23,7 @@ $path = "../";
   ?>
   <div id="cat_page_category">Editorial</div>
   <div id="cat_page_wrapper">
-    <h1>Editorial Blog Posts</h1>
+    <h1 id="cat_page_header">Editorial Blog Posts</h1>
     <div id="all_previews_cont">
     </div>
     <div id="ajax_loader">

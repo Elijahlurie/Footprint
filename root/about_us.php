@@ -31,9 +31,9 @@ include "user_join.php";
         </div>
         <div class="about_page_text_container">
           <ul>
-            <li>Give every person who cares about the environment the chance to make a real difference.</li><br>
-            <li>Teach people how to lessen their environmental footprint with easy actions backed by science.</li><br>
-            <li>Develop a large community so together we can make a positive impact!</li>
+            <li><strong>Give</strong> every person who cares about the environment the chance to make a real difference.</li><br>
+            <li><strong>Teach</strong> people how to lessen their environmental footprint with easy actions backed by science.</li><br>
+            <li><strong>Develop</strong> a large community so together we can make a positive impact!</li>
           </ul>
         </div>
       </div>

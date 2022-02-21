@@ -56,7 +56,7 @@ include "blog_page_functions.php";
         </div>
         <div id="aotd_previews">
           <?php
-            foreach(getPostsByCategory($conn, 'Action of the Day', 4) as $blog_post){
+            foreach(getPostsByCategory($conn, 'Action Deep Dives', 4) as $blog_post){
               echo $blog_post;
             };
           ?>

@@ -5,30 +5,19 @@ Questions/issues:
 - how do we still maintain the security of having pages reload on pageback but still make it convenient so if theyre on blog page they dont lose their place
 
 things to do:
-- Style category_pages files
-- Add the if/else that checks if there is actually a file that corresponds to the preview to any function that generates previews minus featued preview function
-- review content of about us page
-- make new pages mobile friendly, tablet friendly, and when command -
-  - category forms, blog posts, admin page, donate page, category pages
-  - make sure statistic numbers dont bump into each other
-  - make signup form get smaller smoothly, zipcode explanation div gets opened in weird places
-  - anything that requires user to hover (ex. timespan dropdown, nav tag dropdown) needs to be switched to click for mobile
-    - but if they click menu dropdown and then make page wider it should go away no matter what
-- lock admin page and footer link to anyone not an admin
-- remove test.php from repository
+- change all action of the day to action deep dives
 - Set up socials
   - register email
-  - create youtube account
   - create instagram account
 - research legals abt texting
   - https://www.textedly.com/sms-compliance-guide/sms-opt-in-rules/
   - https://blog.textedly.com/text-messaging-laws-every-business-has-to-know-about
 - when ready to upload site activate the texting function
   - buy sms api
-  - add an opening text when people sign up
+  - add an opening text when people sign up - reply with yes to join, if no text or they say no then remove them
   - add text stop to opt out
-  - add a clear opt in form on sign up (look up legal stuff)
   - remove user if they dont respond or complete an action 5 or 10 days after check in text
+    - in the meanwhile just automatically delete them if they havent completed action in like 20 days
   - let users change password by getting texted a onetime code
 - delete all files in blog_posts folder, delete my_notes.txt
 - make sure 404 page works

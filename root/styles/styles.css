@@ -635,7 +635,7 @@ select{
   align-items: center;
   padding: 90px 150px;
 }
-/*-------Category Blog post pages--------*/
+/*-------Category Blog posts pages--------*/
 .ajax-loader{
   display: none;
   border: 1px solid red;
@@ -644,31 +644,46 @@ select{
   display:none;
 }
 #cat_page_wrapper{
-  padding: 15vw 4% 200px 4%;
+  background-color: #00BCF5;
+  background-image: linear-gradient(164deg, #00BCF5 0%, #0700E0 100%);
+  padding: 120px 4vw 200px 4vw;
+  padding-top: calc(120px + 5vw);
   box-sizing: border-box;
+  color: #fff;
 }
 #all_previews_cont{
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  padding: 0 2vw 0 2vw;
   margin-top: 100px;
 }
 .category_page_preview{
-  height: 50vh;
-  width: 31%;
-  margin: 0px 5px;
+  height: 25vw;
+  min-height: 220px;
+  width: 24vw;
+  min-width: 180px;
+  margin: 0 2vw 60px 2vw;
+  box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.11);
 }
 .category_page_preview a{
   text-decoration: none;
 }
 .cat_preview_image_cont{
-  height: 150px;
+  height: 55%;
   width: 100%;
   background-size: cover;
 }
 .cat_preview_desc{
   height: 100%;
   width: 100%;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10%;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: calc(8px + 0.5vw);
   color: rgba(0,0,0,0);
   text-decoration: none;
 }
@@ -679,8 +694,23 @@ select{
 .cat_image_path{
   display: none;
 }
-#cat_footer_cont{
-  padding-top: 100px;
+.cat_preview_content{
+  background-color: #fff;
+  text-align: center;
+  padding: 15px 20px 20px 20px;
+  box-sizing: border-box;
+  color: #000;
+  height: 45%;
+  position: relative;
+  font-size: calc(8px + 0.5vw);
+}
+.cat_preview_title{
+  margin-top: 1.5vw;
+  line-height: 2em;
+  overflow:hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 /*-------User Page-------*/
 /*for some reason, whole_usersPage styling only work with this extra div surrounding it*/
@@ -974,7 +1004,7 @@ select{
 }
 #user_join_form{
   margin-left: 35%;
-  min-width: 260px;
+  min-width: 350px;
   color: white;
   width: 30%;
   float:left;
@@ -1041,13 +1071,13 @@ select{
   margin-bottom: 5px;
 }
 #zipcode_explanation{
+  position:absolute;
   display: none;
   background-color: #EBFAFF;
-  width: 30%;
+  width: 27vw;
   height: 300px;
-  float:right;
-  margin-left: 50px;
-  margin-top: 100px;
+  top: 650px;
+  right: 2vw;
   box-sizing: border-box;
   padding: 50px;
   line-height: 1.5em;
@@ -1217,6 +1247,9 @@ select{
 #open_sign_up{
   display:none;
 }
+#home_zipcode_explanation{
+  filter:opacity(0);
+}
 #mobile_open_sign_up{
   margin-top: 20px;
   width: auto;
@@ -1249,7 +1282,6 @@ select{
   height: 300px;
   display:table;
   text-align: center;
-
 }
 #statistic{
   display:table-cell;
@@ -1273,14 +1305,14 @@ select{
   margin-left:0;
 }
 #user_join_form{
-  max-width: 380px;
+  max-width: 350px;
+  min-width: 280px;
   width: 90vw;
   margin:0;
 }
 #zipcode_explanation{
-  margin-left: 0;
-  margin-top: 20px;
-  width: 80%;
+  width: 60vw;
+  max-width: 300px;
 }
 #have_account_link_container{
   margin-top: 20px;
@@ -1623,7 +1655,15 @@ align-items: center;
 #image_404{
 width:80%;
 }
+
+/*Category Blog posts pages*/
+.category_page_preview{
+  width: 40vw;
 }
+
+
+}
+
 
 /****************STYLING FOR ONLY MOBILE SIZE DIMENSIONS*************************/
 @media only screen and (max-width: 700px) {
@@ -1653,8 +1693,8 @@ width:80%;
   background-color: rgba(26, 155, 255, 0.95);
   font-size: calc(9px + 1vw);
   border-radius: 0px 0px 7px 7px;
-  height: 35vw;
-  min-height: 200px;
+  height: 30vw;
+  min-height:150px;
   width: 40%;
   min-width: 150px;
   position:absolute;
@@ -1663,12 +1703,9 @@ width:80%;
   box-shadow: -1px 10px 10px 1px rgba(0, 0, 0, 0.2),
               1px 10px 10px 1px rgba(0, 0, 0, 0.2);
 }
-#nav_tag_menu_dropdown:hover #dropdown_main_links{
-  display: block;
-}
 #dropdown_main_links h4{
   margin: 0;
-  height: 24%;
+  height: 32%;
   width: 100%;
   display: flex;
   align-items: center;
@@ -1684,7 +1721,7 @@ width:80%;
 #dropdown_main_links h4:active{
   background-color:rgba(43, 163, 255, 0.6);
 }
-#dropdown_main_links h4 a:hover{
+#dropdown_main_links a h4:hover{
   text-decoration: underline;
 }
 #dropdown_main_links h4:nth-of-type(1){

@@ -191,12 +191,12 @@ function loginUsers($connection){
   }
 };
 
-//when logout button is pressed end the session and reload the page
-function logOut(){
+//when logout button is pressed end the session and take user to home page
+function logOut($path){
   if(isset($_POST['logout'])){
     session_unset();
     session_destroy();
-    header('Location: index.php');
+    header('Location: '.$path.'index.php');
   }
 };
 
@@ -475,7 +475,7 @@ function createBlogPreview($connection){
 					unset($_SESSION['blog_input_description']);
 					unset($_SESSION['blog_input_timestamp']);
 				//redirect user to the appropriate form page for the requested category to finish creating the content of the blog post
-					if($category == "Action of the Day"){
+					if($category == "Action Deep Dives"){
 						header("Location: aotd_form.php");
 					} else if($category == "Editorial"){
 						header("Location: editorial_form.php");
@@ -527,7 +527,7 @@ function createBlogPost($connection){
 				}
 				$row_contents = "Data from blog table: " . implode("; " , $list);
 				//create a variable to hold the whole html content of the new file for the blog post with the specifics for this post added in as variables, formatted based on category of post
-				if($_SESSION['new_post_data']["category"] == "Action of the Day"){
+				if($_SESSION['new_post_data']["category"] == "Action Deep Dives"){
 					//generate bullet list of sources
 					$source_ul_content = '';
 					for($n = 0; $n<$_POST['sources_count']; $n++){

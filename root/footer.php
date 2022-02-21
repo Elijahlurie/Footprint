@@ -9,6 +9,13 @@ if($_POST['cat_page_path']){
     <?php
     //$path variable adds "../" before link paths for pages inside folders, or "" for pages not in any folder (variable defined on top of each page or in nav tag)
 
+    //if there is a user logged in and that user is an admin, include another link in footer to the admin page
+    if($specific_user['admin']){
+      $admin_page_link = '<li><a href="'.$path.'admin/admin.php">Admin</a></li>';
+    } else{
+      $admin_page_link = '';
+    }
+
       echo '
         <img id="footer_logo" src="'.$path.'images/footprint_logo.png" alt="Footprint logo">
       </div>
@@ -22,7 +29,7 @@ if($_POST['cat_page_path']){
             <li><a href="'.$path.'sign_up_page.php">Sign Up</a></li>
             <li><a href="'.$path.'about_us.php">About Footprint</a></li>
             <li><a href="mailto: elijahlurie@berkeley.edu?subject=Footprint Question/Comment">Contact us</a></li>
-            <li><a href="'.$path.'admin/admin.php">Admin</a></li>
+            '.$admin_page_link.'
           </ul>
       ';
     ?>

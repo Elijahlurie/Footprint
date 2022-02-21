@@ -39,3 +39,9 @@ var changeTimespan = function(stat_div_index, timespans_index){
  year_option.addEventListener("click", function(){changeTimespan(0, 2)});
  year_option.addEventListener("click", function(){changeTimespan(1, 2)});
  year_option.addEventListener("click", function(){changeTimespan(2, 2)});
+
+
+
+ //open the timespan dropdown on click in case hover doesn't work
+ var stat_timespan_content = document.getElementById('stat_timespan_content');
+ openDivs(stat_timespan_text, stat_timespan_content, 'block', true)

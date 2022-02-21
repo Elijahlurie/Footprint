@@ -64,6 +64,11 @@ if(hello_user){
   cancel_delete.addEventListener("click", cancelDelete);
 }
 
+//call for menu dropdown for mobile dimensions
+var nav_tag_menu_dropdown = document.getElementById('nav_tag_menu_dropdown_h4');
+var dropdown_main_links = document.getElementById('dropdown_main_links');
+openDivs(nav_tag_menu_dropdown, dropdown_main_links, 'block', true);
+
 //code for add sources button on blog post form pages
 var addSourceInput = function(){
   var blog_sources = document.getElementById('blog_sources');

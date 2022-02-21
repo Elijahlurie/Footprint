@@ -78,7 +78,7 @@
  function formatPreview($blog_post_row, $category){
 
 //format the preview html depending on what section of the blog.php page it will be displayed on
-  if($category == "Action of the Day"){
+  if($category == "Action Deep Dives"){
     $preview= '
    			<div class="aotd_post_preview">
    				<a href="blog_posts/'.$blog_post_row['file_name'].'">

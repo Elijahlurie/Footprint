@@ -7,6 +7,10 @@ include "../user_join.php";
 //define $path variable so links inside nav tag and footer still point to the right page even though this file is in a folder
 $path = "../";
 
+if($specific_user['admin'] != 1){
+  header("Location: index.php");
+}
+
 //check if $_SESSION["new_post_data"] variable was set by the createBlogPreview function; if it wasn't, redirect user from this page to admin page
 if(!$_SESSION["new_post_data"]){
   header('Location:admin.php');

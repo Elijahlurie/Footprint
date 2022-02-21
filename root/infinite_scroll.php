@@ -23,33 +23,46 @@ function getPagePreviews($connection, $page_num, $per_page, $requested_category)
     $page_previews = getPagePreviews($conn, $_POST['page_num'], $per_page, $requested_category);
     $formatted_previews = [];
     $footer_exists = 0;
-    foreach($page_previews as $preview){
-      //append the next preview to the formated_previews array
-      $formatted_previews[] =
-          '
-         			<div class="category_page_preview">
-         				<a href="../blog_posts/'.$preview['file_name'].'">
-         					<div class="cat_preview_image_cont">
-                    <div class="cat_preview_desc">
-                      <p>'.$preview['description'].'</p>
-                    </div>
-         						<p class="cat_image_path">../images/preview_images/'.$preview['preview_image'].'</p>
-         					</div>
-         					<div class="preview_content">
-         						<div>
-         							<p>'.$preview['author'].'</p>
-         							<p class>'.$preview['date'].'</p>
-         						</div>
-         						<div>
-         							<h2>'.$preview['title'].'</h2>
-         						</div>
-         					</div>
-         				</a>
-         			</div>
-         	';
-        //set $footer_exists to 0 because footer is not being echoed here
-          $footer_exists = 0;
-    }
+
+    foreach($page_previews as $preview):
+
+      //check if the corresponding file exists
+      $file_path = 'blog_posts/'.$preview['file_name'];
+      if(file_exists($file_path)){
+        //append the next preview to the formated_previews array
+        $formatted_previews[] =
+            '
+           			<div class="category_page_preview">
+           				<a href="../blog_posts/'.$preview['file_name'].'">
+           					<div class="cat_preview_image_cont">
+                      <div class="cat_preview_desc">
+                        <p>'.$preview['description'].'</p>
+                      </div>
+           						<p class="cat_image_path">../images/preview_images/'.$preview['preview_image'].'</p>
+           					</div>
+           					<div class="cat_preview_content">
+           						<div class="preview_author_date_cont">
+           							<p>'.$preview['author'].'</p>
+           							<p class>'.$preview['date'].'</p>
+           						</div>
+           						<div class="cat_preview_title">
+           							<h2>'.$preview['title'].'</h2>
+           						</div>
+           					</div>
+           				</a>
+           			</div>
+           	';
+          //set $footer_exists to 0 because footer is not being echoed here
+            $footer_exists = 0;
+      } else{
+        //if the corresponding file does not exist, delete the row from the database
+        $file_name = $preview['file_name'];
+        $delete_post_sql = "DELETE FROM blog WHERE file_name = '$file_name';";
+        $delete_post_result = mysqli_query($connection, $delete_post_sql);
+        //in case it was set, unset $_SESSION['created_preview'] so that users will be redirected from category form pages unless they make a new post
+        unset($_SESSION['created_preview']);
+      }
+    endforeach;
     //get an array of all blog posts in database for requested category
 
     $all_cat_posts_sql = "SELECT * FROM blog WHERE category = '".$requested_category."' ORDER BY time DESC;";

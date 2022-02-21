@@ -147,9 +147,6 @@ input{
 .stat_timespan_option:hover{
   background-color:#2ba3ff;
 }
-#stat_timespan_dropdown:hover #stat_timespan_content{
-  display:block;
-}
 #aotd_page_stats{
   display: flex;
   width: 100%;

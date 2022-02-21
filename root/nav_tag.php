@@ -15,15 +15,13 @@
         <h4><a href="'.$path.'index.php">Home</a></h4>
         <h4><a href="'.$path.'about_us.php">About</a></h4>
         <h4><a href="'.$path.'blog.php">Blog</a></h4>
-        <h4><a href="'.$path.'donate.php">Donate</a></h4>
       </div>
       <div id="nav_tag_menu_dropdown">
-        <h4>Menu &#9660</h4>
+        <h4 id="nav_tag_menu_dropdown_h4">Menu &#9660</h4>
         <div id="dropdown_main_links">
-          <h4><a href="'.$path.'index.php">Home</a></h4>
-          <h4><a href="'.$path.'about_us.php">About</a></h4>
-          <h4><a href="'.$path.'blog.php">Blog</a></h4>
-          <h4><a href="'.$path.'donate.php">Donate</a></h4>
+          <a href="'.$path.'index.php"><h4>Home</h4></a>
+          <a href="'.$path.'about_us.php"><h4>About</h4></a>
+          <a href="'.$path.'blog.php"><h4>Blog</h4></a>
         </div>
       </div>
     ';
@@ -45,7 +43,7 @@
                 <a href="'.$path.'edit_profile.php">Edit Profile</a>
               </li>
               <li>
-                <form method="POST" action="'.logOut().'">
+                <form method="POST" action="'.logOut($path).'">
                   <button type="submit" name="logout">Log Out</button>
                 </form>
               </li>
