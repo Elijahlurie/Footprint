@@ -39,6 +39,7 @@ include "user_join.php";
           <div class="login_input_container">
             <h4>Password</h4>
             <input class="form_input" type="text" name="login_password" placeholder="Password">
+            <p><a href="password_recover.php">Forgot your password?</a></p>
           </div>
           <button id="login_submit" type="submit" name="login_submit">Enter</button>
         </form>

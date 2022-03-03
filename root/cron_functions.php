@@ -29,22 +29,21 @@ function getActions($connection){
 };
 $actions_array = getActions($conn);
 
-/*----all the stuff for twillio sending texts:-------*/
-  /*  require __DIR__ . '/vendor/autoload.php';
-    use Twilio\Rest\Client;
+/*----Setup for twillio sending texts:-------*/
+require __DIR__ . '/vendor/autoload.php';
+use Twilio\Rest\Client;
 
-    // Your Account SID and Auth Token from twilio.com/console
-    $account_sid = 'AC15958a42c66183337af70a7c09160f62';
-    $auth_token = 'bbf9c688813d6dcc5981e34649357741';
-    // In production, these should be environment variables. E.g.:
-    // $auth_token = $_ENV["TWILIO_AUTH_TOKEN"]
+// Your Account SID and Auth Token from twilio.com/console
+$account_sid = 'AC2150fab45e4eb3042573fdf41874bddc';
+$auth_token = 'c910fe65623cd040666afc198e3e6159';
+// In production, these should be environment variables. E.g.:
+// $auth_token = $_ENV["TWILIO_AUTH_TOKEN"]
 
+// A Twilio number you own with SMS capabilities
+$twilio_number = "+19107734145";
 
-    // A Twilio number you own with SMS capabilities
-    $twilio_number = "+15082528841";
-
-    $client = new Client($account_sid, $auth_token);
-*/
+$client = new Client($account_sid, $auth_token);
+/*end of twilio setup*/
 
 //get array of users from database
   $users_sql = "SELECT * FROM users;";
@@ -52,28 +51,43 @@ $actions_array = getActions($conn);
   $array_users = mysqli_fetch_all($users_result, MYSQLI_ASSOC);
 
     foreach($array_users as $user):
-        $text_number = $user['phone'];
-
-        $random_greeting_number = mt_rand(0,count($greetings_array)-1);
-
         //add/subtract seconds from time(), seconds since midnight jan 1 1970 GMT, based on users timezone
-        //$user['timezone']/100 because I wanted to avoid decimal in the database
+        //$user['timezone']/100 because I wanted to avoid decimals in the database values
         $user_seconds = time() + (($user['timezone']/100)*3600);
         //get the seconds left over when converting user seconds to days (seconds passed so far today)
         $user_seconds_today = $user_seconds % 86400;
         //convert $user_seconds_today to hours (not sure why i need to subtract 1 for it to be right)
         $user_hours_today = ($user_seconds_today / 3600);
 
-    /*
       //if its past 11am and earlier than 8pm text them
         if($user_hours_today >= 11 && $hours_today < 20 && !$user['texted']):
-          //**text the user**
+          $text_number = $user['phone'];
+          $random_greeting_number = mt_rand(0,count($greetings_array)-1);
+          //get current days since jan 11 1970
+          $days_today = (time()/86400) - (time()%86400)/86400;
+
+          $message = $greetings_array[$random_greeting_number] . " " . $user['name'] . "! Your eco action today is: " . $actions_array[$user['curr_action']] . ". Log in to footprint.com to complete it!";
+          //if it has been 14 days or more since the user last completed an action, append to their message a warning that another week of inactivity will result in them being removed
+          if($days_today - $user['last_completed_action'] >= 14){
+            $message = $message . " You've been inactive for a while - if you don't log in and complete an action in the next week, your account will be deleted.";
+          }
+
+          //text the user:
+        /*  $client->messages->create(
+              // Where to send the text message
+              $text_number,
+              array(
+                  'from' => $twilio_number,
+                  'body' => $message
+              )
+          );*/
+
           //update that the user has been texted
           $sql = "UPDATE users SET texted = ".time()." WHERE id=".$user['id'].";";
           $result = mysqli_query($conn, $sql);
         endif;
 
-        */
+
         //get current days since jan 1 1970 in the users time zone
   	    $user_days = ($user_seconds/86400) - ($user_seconds%86400)/86400;
         //if it's an appropriate time to text and the user has not completed an action in 15+ days, send the user a check-in text
@@ -188,8 +202,17 @@ function checkDay($connection, $actions_array){
           $edit_timezone_sql = "UPDATE users SET timezone = ".$timezone_stored." WHERE id = ".$user['id'].";";
           $edit_timezone_result = mysqli_query($connection, $edit_timezone_sql);
         }
+
+        //if it has been 21 days or more since the user last completed an action, remove the user
+        if($user_days - $user['last_completed_action'] >= 21){
+          $delete_user_sql = "DELETE FROM users WHERE id = ".$user_id.";";
+      		$delete_past_actions_sql = "DELETE FROM past_actions WHERE user_id = ".$user_id.";";
+          $delete_user_ = mysqli_query($connection, $delete_user_sql);
+      		$delete_past_actions_result = mysqli_query($connection, $delete_past_actions_sql);
+        }
+
       endif;
     endforeach;
 };
-checkDay($conn, $actions_array);
+//checkDay($conn, $actions_array);
 ?>

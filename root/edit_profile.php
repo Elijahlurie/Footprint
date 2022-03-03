@@ -45,6 +45,10 @@ include "user_join.php";
               <h3>Postal Code</h3>
               <input class="form_input" name="edit_zipcode" type="text" value="'.$specific_user['zipcode'].'">
             </li>
+            <li>
+              <h3>Change Password</h3>
+              <input class="form_input" name="edit_password" type="text" placeholder="Min. 8 Characters">
+            </li>
             <li id="edit_profile_error">
               '.$_SESSION['edit_profile_error'].'
             </li>

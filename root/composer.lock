@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9e6506f9e131b30743028d05c2bc483e",
+    "content-hash": "98b23028e9ca429099c3c4c564f9047d",
     "packages": [
         {
             "name": "twilio/sdk",
-            "version": "6.21.0",
+            "version": "6.35.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twilio/twilio-php.git",
-                "reference": "bccca0cf5d853c29cbc8b676558e249b0132404f"
+                "reference": "9cfb888bdb2555365ef0b48a81c140394e53ab83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/bccca0cf5d853c29cbc8b676558e249b0132404f",
-                "reference": "bccca0cf5d853c29cbc8b676558e249b0132404f",
+                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/9cfb888bdb2555365ef0b48a81c140394e53ab83",
+                "reference": "9cfb888bdb2555365ef0b48a81c140394e53ab83",
                 "shasum": ""
             },
             "require": {
@@ -25,8 +25,7 @@
             },
             "require-dev": {
                 "guzzlehttp/guzzle": "^6.3 || ^7.0",
-                "phpunit/phpunit": ">=4.5",
-                "theseer/phpdox": "^0.12.0"
+                "phpunit/phpunit": ">=7.0"
             },
             "suggest": {
                 "guzzlehttp/guzzle": "An HTTP client to execute the API requests"
@@ -48,7 +47,7 @@
                 }
             ],
             "description": "A PHP wrapper for Twilio's API",
-            "homepage": "http://github.com/twilio/twilio-php",
+            "homepage": "https://github.com/twilio/twilio-php",
             "keywords": [
                 "api",
                 "sms",
@@ -56,9 +55,9 @@
             ],
             "support": {
                 "issues": "https://github.com/twilio/twilio-php/issues",
-                "source": "https://github.com/twilio/twilio-php/tree/6.21.0"
+                "source": "https://github.com/twilio/twilio-php/tree/6.35.0"
             },
-            "time": "2021-04-07T19:07:34+00:00"
+            "time": "2022-02-23T21:11:20+00:00"
         }
     ],
     "packages-dev": [],

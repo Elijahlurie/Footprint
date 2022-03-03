@@ -1,3 +1,5 @@
+**dont end actions with punctuation
+
 have a vegan meal
 have a vegetarian meal
 Go the whole day vegetarian

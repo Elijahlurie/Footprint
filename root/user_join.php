@@ -11,8 +11,7 @@
 </script>
 
 <?php
-//include 'cron_functions.php';
-
+include 'cron_functions.php';
 
 $sql = "SELECT * FROM users;";
 $result = mysqli_query($conn, $sql);
@@ -199,6 +198,91 @@ function logOut($path){
     header('Location: '.$path.'index.php');
   }
 };
+//when user who forgot their password enters their phone number, text them a one time code to enter
+function sendRecoveryCode($connection, $client, $twilio_number){
+	if(isset($_POST['recover_login_submit_phone'])):
+	//in case they were set, unset session variables with recovery code, recovery code timestamp, and entered phone number
+	unset($_SESSION['recovery_phone']);
+	unset($_SESSION['recovery_id']);
+	unset($_SESSION['recovery_code']);
+	unset($_SESSION['recovery_code_timestamp']);
+	//sanitize user input phone number
+	$no_space_phone = str_replace(" ", "", $_POST['recover_login_phone']);
+	$phone = preg_replace("/[^0-9,.]/", "", $no_space_phone);
+	$phone = '+1' . $phone;
+	//try to get the row for this phone number from database
+	$sql = "SELECT * FROM users WHERE phone=".$phone.";";
+	$result = mysqli_query($connection, $sql);
+	$array_user = mysqli_fetch_all($result, MYSQLI_ASSOC)[0];
+	if($array_user){
+		//randomly generate a 6 digit number
+		$recovery_code = random_int(100000, 999999);
+		//save the phone number entered, the code sent, the time() the code was sent, and the id associated with the entered phone number as session variables
+		$_SESSION['recovery_phone'] = $phone;
+		$_SESSION['recovery_id'] = $array_user['id'];
+		$_SESSION['recovery_code'] = $recovery_code;
+		$_SESSION['recovery_code_timestamp'] = time();
+
+		//text the number to the entered phone number
+		$client->messages->create(
+					// Where to send the text message
+					$phone,
+					array(
+							'from' => $twilio_number,
+							'body' => 'Footprint: Your one-time code is: ' . $recovery_code . '. Code valid for 3 minutes.'
+					)
+			);
+
+			//unset any error
+			unset($_SESSION['recovery_code_error']);
+
+		//close this form and open the next one (if value is 0 then show form to enter phone number, if 1 show form to enter code)
+		$_SESSION['recovery_code_sent'] = 1;
+		//reload page to display the right form
+		header('Location: '.$_SERVER['REQUEST_URI']);
+
+
+	} else{
+		$_SESSION['recovery_code_error'] = "There is no account under this phone number.";
+	}
+
+endif;
+};
+
+//once user enters their one time code, log them in if the code is correct ad was sent recently
+function enterRecoveryCode($connection){
+	//if a code has been sent out and user has pressed the submit button
+	if(isset($_SESSION['recovery_code']) && isset($_POST['recover_login_submit_code'])):
+		//unset any previous error
+		unset($_SESSION['recovery_code_error']);
+		//if the code was sent less than 3 minutes ago
+		if(time() - $_SESSION['recovery_code_timestamp'] < 180){
+			if($_POST['recover_login_code'] == $_SESSION['recovery_code']){
+				//log in this user
+				$_SESSION['id'] = $_SESSION['recovery_id'];
+				$_SESSION['timestamp'] = time();
+
+				//unset session variables with recovery code, recovery code timestamp, and entered phone number
+				unset($_SESSION['recovery_phone']);
+				unset($_SESSION['recovery_id']);
+				unset($_SESSION['recovery_code']);
+				unset($_SESSION['recovery_code_timestamp']);
+
+				//send user to edit profile page
+				header("Location: edit_profile.php");
+
+			} else{
+				//if entered incorrectly, display error message
+				$_SESSION['recovery_code_error'] = "Incorrect code entered.";
+			}
+		} else{
+			//close this form and go back to phone input form (if value is 0 then show form to enter phone number, if 1 show form to enter code)
+			$_SESSION['recovery_code_sent'] = 0;
+			//reload page to display the right form
+			header('Location: '.$_SERVER['REQUEST_URI']);
+		}
+	endif;
+};
 
 //lets users change their profiles
 function editProfile($connection){
@@ -213,57 +297,67 @@ function editProfile($connection){
 			//remove all special characters other than numbers from zip code
 			$no_space_zipcode = str_replace(" ", "", $_POST['edit_zipcode']);
 			$zipcode = preg_replace("/[^0-9,.]/", "", $no_space_zipcode);
-
+			//turn the inputted new password into a hash
+			$password_hash = password_hash($_POST['edit_password'], PASSWORD_DEFAULT);
       //check if phone number is the right length
       if(strlen($phone)== 11){
 				if(strlen($zipcode)== 5){
-          //check if there is a duplicate phone number
+					if(strlen($_POST['edit_password']) >= 8){
+	          //check if there is a duplicate phone number
 
-          //get an array of the current list of users
-          $users_sql = "SELECT * FROM users;";
-          $users_result = mysqli_query($connection, $users_sql);
-          $users_array = mysqli_fetch_all($users_result, MYSQLI_ASSOC);
+	          //get an array of the current list of users
+	          $users_sql = "SELECT * FROM users;";
+	          $users_result = mysqli_query($connection, $users_sql);
+	          $users_array = mysqli_fetch_all($users_result, MYSQLI_ASSOC);
 
-          $i = 0;
-          foreach($users_array as $user):
-            //add one to the counter if the number entered matches another user's number who isn't the logged in user
-          if($phone == $user['phone'] && $user['id'] != $_SESSION['id']){
-              $i+=1;
-            }
-          endforeach;
-          if($i == 0){
-            if($name != $specific_user['name']){
-							//if name has changed update name column for that user
-              $edit_name_sql = "UPDATE users SET name = '".$name."' WHERE id = ".$_SESSION['id'].";";
-              $edit_name_result = mysqli_query($connection, $edit_name_sql);
-            }
-            if($phone != $specific_user['phone']){
-							//if phone number has changed update phone column for that user
-              $edit_phone_sql = "UPDATE users SET phone = '".$stored_phone."' WHERE id = ".$_SESSION['id'].";";
-              $edit_phone_result = mysqli_query($connection, $edit_phone_sql);
-            }
-            if($zipcode != $specific_user['zipcode']){
-							//if zipcode has changed update zipcode column for that user
-              $edit_zipcode_sql = "UPDATE users SET zipcode = ".$zipcode." WHERE id = ".$_SESSION['id'].";";
-              $edit_zipcode_result = mysqli_query($connection, $edit_zipcode_sql);
+	          $i = 0;
+	          foreach($users_array as $user):
+	            //add one to the counter if the number entered matches another user's number who isn't the logged in user
+	          if($phone == $user['phone'] && $user['id'] != $_SESSION['id']){
+	              $i+=1;
+	            }
+	          endforeach;
+	          if($i == 0){
+	            if($name != $specific_user['name']){
+								//if name has changed update name column for that user
+	              $edit_name_sql = "UPDATE users SET name = '".$name."' WHERE id = ".$_SESSION['id'].";";
+	              $edit_name_result = mysqli_query($connection, $edit_name_sql);
+	            }
+	            if($phone != $specific_user['phone']){
+								//if phone number has changed update phone column for that user
+	              $edit_phone_sql = "UPDATE users SET phone = '".$stored_phone."' WHERE id = ".$_SESSION['id'].";";
+	              $edit_phone_result = mysqli_query($connection, $edit_phone_sql);
+	            }
+	            if($zipcode != $specific_user['zipcode']){
+								//if zipcode has changed update zipcode column for that user
+	              $edit_zipcode_sql = "UPDATE users SET zipcode = ".$zipcode." WHERE id = ".$_SESSION['id'].";";
+	              $edit_zipcode_result = mysqli_query($connection, $edit_zipcode_sql);
 
-							//we need to update their timezone too if zipcode was changed
-							//call getCoordinates() function to get latitude and longitude from zipcode
-							$location = getCoordinates($zipcode);
-							$timestamp = time();
-							//call getTimezone() function to get time zone from the coordinates we just got
-						  $timezone = getTimezone($timestamp,$location);
-							//multiply by 100 for storage convenience if there is a timezone offset that isn't a whole number
-							$timezone_stored = $timezone * 100;
+								//we need to update their timezone too if zipcode was changed
+								//call getCoordinates() function to get latitude and longitude from zipcode
+								$location = getCoordinates($zipcode);
+								$timestamp = time();
+								//call getTimezone() function to get time zone from the coordinates we just got
+							  $timezone = getTimezone($timestamp,$location);
+								//multiply by 100 for storage convenience if there is a timezone offset that isn't a whole number
+								$timezone_stored = $timezone * 100;
 
-							$edit_timezone_sql = "UPDATE users SET timezone = ".$timezone_stored." WHERE id = ".$_SESSION['id'].";";
-              $edit_timezone_result = mysqli_query($connection, $edit_timezone_sql);
-            }
-
-            header('Location: '.$_SERVER['REQUEST_URI']);
-          } else{
-            $_SESSION['edit_profile_error'] = "Another user with this phone number already exists.";
-          }
+								$edit_timezone_sql = "UPDATE users SET timezone = ".$timezone_stored." WHERE id = ".$_SESSION['id'].";";
+	              $edit_timezone_result = mysqli_query($connection, $edit_timezone_sql);
+	            }
+							if($password_hash != $specific_user['password_hash']){
+								//if phone number has changed update phone column for that user
+	              $edit_password_sql = "UPDATE users SET password_hash = '".$password_hash."' WHERE id = ".$_SESSION['id'].";";
+	              $edit_password_result = mysqli_query($connection, $edit_password_sql);
+	            }
+							//reload the page
+	            header('Location: '.$_SERVER['REQUEST_URI']);
+	          } else{
+	            $_SESSION['edit_profile_error'] = "Another user with this phone number already exists.";
+	          }
+					} else{
+						$_SESSION['signup_error'] = "Password must be at least 8 characters long.";
+					}
 				} else{
 					$_SESSION['edit_profile_error'] = "Postal code must be 5 digits.";
 				}
