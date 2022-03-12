@@ -10,6 +10,8 @@ include "user_join.php";
   <title>Login</title>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <link rel="stylesheet" href="styles/styles.css">
+
+
 </head>
 
 <body>
@@ -39,7 +41,7 @@ include "user_join.php";
           <div class="login_input_container">
             <h4>Password</h4>
             <input class="form_input" type="text" name="login_password" placeholder="Password">
-            <p><a href="password_recover.php">Forgot your password?</a></p>
+            <p id="forgot_password_link"><a href="password_recover.php">Forgot your password?</a></p>
           </div>
           <button id="login_submit" type="submit" name="login_submit">Enter</button>
         </form>

@@ -4,31 +4,22 @@ Questions/issues:
 - how do we still maintain the security of having pages reload on pageback but still make it convenient so if theyre on blog page they dont lose their place
 
 things to do:
-- Add in input to edit profile to change password and reroute there after recovering account
-  - add the min password length constraint
-- when ready to upload site activate the texting function
-  - add an opening text when people sign up - say that they can reply with STOP to opt out
-  - add text stop to opt out function
-  - upgrade twilio account
-  - change $twilio_number to the number i buy
-- style new additions to login page / recovery page, mobile friendly too
-- uncomment checkDay function call
-- once i have url for site adjust sms message accordingly
-- Set up socials
-  - register email
-  - create instagram account
-- research legals abt texting
-  - https://www.textedly.com/sms-compliance-guide/sms-opt-in-rules/
-  - https://blog.textedly.com/text-messaging-laws-every-business-has-to-know-about
-- move all un useful files (files in blog_posts folder, my_notes.txt) either to trash or outside root folder
-- make sure 404 page works
+
 - add cron job in hosting platform so that cron_functions gets run every 5 minutes
-  - remove 'include cron_functions.php' from top of user_join.php
-  - uncomment checkDay function call
-  - add $actions_array function from cron functions to user page as well
   - https://www.dummies.com/web-design-development/web-hosting/how-to-automate-functions-on-your-website-with-cron-jobs/
-- change connection.php to connect to new database
-- change email in footer
+- when ready to upload site activate the texting function
+  - upgrade twilio account
+  - change $twilio_number to the number i buy (in adduser and cron functions)
+  - do the webhook thing
+- buy google api
+- once hosting is set up:
+  - register email
+  - change connection.php to connect to new database
+  - change url in reply_sms.php to new website url
+  - adjust sms action message to new url (in adduser and cron functions)
+  - adjust text friend link action
+  - change email in footer
+  - make sure 404 page works
 - Launch site!!
 - Maybe remove learn abt maximizing battery after like 10 days bc it would be bad for ppl to get that one more than once
 - post social media content, build up hype, link accounts in footer
@@ -42,9 +33,6 @@ things to do:
 - at some point go through php and streamline code / fix logic errors
 
 bugs to fix:
-- hello,user link not working from user page and helpful links dont show up
-
-- login look weird on firefox, other browsers
 - css html scroll-behavior:smooth on blog page isnt working
 - category form logic:
   - if i make a preview and go to category post page and then go to blog page, preview gets deleted bc of check on blog page

@@ -41,32 +41,36 @@ include "user_join.php";
   <div id="pageWrapper">
     <div id="login_page_container">
       <h2 id="login_title">Footprint Login</h2>
-      <div id="user_login_form">
+
       <?php
       //if no code has been sent, display form to enter phone number
       if(!$_SESSION['recovery_code_sent']){
         echo '
-          <h3>Forgot your password? Request a one-time code.</h3>
-          <form method="POST" action="'.sendRecoveryCode($conn, $client, $twilio_number).'">
-            <div class="login_input_container">
-              <h4>Phone Number</h4>
-              <input  id="login_phone_input" class="form_input" type="text" name="recover_login_phone" placeholder="(xxx) xxx-xxxx">
-              <p id="country_code">+1</p>
-            </div>
-            <button id="login_submit" type="submit" name="recover_login_submit_phone">Send Code</button>
-          </form>
+          <h3 id="recovery_title">Forgot your password? Request a one-time code.</h3>
+          <div id="user_login_form">
+            <form method="POST" action="'.sendRecoveryCode($conn, $client, $twilio_number).'">
+              <div class="login_input_container">
+                <h4>Phone Number</h4>
+                <input  id="login_phone_input" class="form_input" type="text" name="recover_login_phone" placeholder="(xxx) xxx-xxxx">
+                <p id="country_code">+1</p>
+              </div>
+              <button id="login_submit" type="submit" name="recover_login_submit_phone">Send Code</button>
+            </form>
+          </div>
           ';
       } else if($_SESSION['recovery_code_sent'] ==1){
         //if a code has been sent, display form to enter the code
         echo '
-          <h3>Enter the code texted to you below.</h3>
-          <form method="POST" action="'.enterRecoveryCode($conn).'">
-            <div class="login_input_container">
-              <h4>6 digit code texted to you</h4>
-              <input class="form_input" type="text" name="recover_login_code" placeholder="6 digit code">
-            </div>
-            <button id="login_submit" type="submit" name="recover_login_submit_code">Enter</button>
-          </form>
+          <h3 id="recovery_title">Enter the code texted to you below.</h3>
+          <div id="user_login_form">
+            <form method="POST" action="'.enterRecoveryCode($conn).'">
+              <div class="login_input_container">
+                <h4>6 digit code texted to you</h4>
+                <input class="form_input" type="text" name="recover_login_code" placeholder="6 digit code">
+              </div>
+              <button id="login_submit" type="submit" name="recover_login_submit_code">Enter</button>
+            </form>
+          </div>
         ';
       }
 
@@ -74,7 +78,7 @@ include "user_join.php";
       //reset login error message to be blank so it doesn't remain when user reloads the page again
       $_SESSION['recovery_code_error'] = "";
       ?>
-      </div>
+
       <p id="no_account_link"><a href="sign_up_page.php">Don't have an account?</a></p>
     </div>
   </div>

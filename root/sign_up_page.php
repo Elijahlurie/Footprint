@@ -51,7 +51,7 @@ include "user_join.php";
    <script>
       //code for opening the explanation for why we ask for users' postal codes
       var zipcode_explanation = document.getElementById('zipcode_explanation');
-      openDivs(why_zipcode_link, zipcode_explanation, 'block', true, user_join_form);
+      openDivs(why_zipcode_link, zipcode_explanation, 'block', true);
 
    </script>
 

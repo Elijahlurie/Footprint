@@ -942,7 +942,7 @@ select{
   align-items: center;
 }
 #login_title{
-  font-size: 1.8em;
+  font-size: 2em;
   margin-bottom: 25px;
 }
 #user_login_form{
@@ -953,6 +953,7 @@ select{
 #user_login_form form{
   display: flex;
   flex-direction: column;
+  justify-content:center;
   align-items: center;
 }
 .login_input_container{
@@ -965,6 +966,9 @@ select{
 #login_phone_input{
   padding-left: 40px;
   display: inline-block;
+}
+#forgot_password_link{
+  font-size: 0.8em;
 }
 #login_submit {background-image: linear-gradient(to right, #1FA2FF 0%, #12D8FA  51%, #1FA2FF  100%)}
 #login_submit {
@@ -984,6 +988,10 @@ select{
 }
 #no_account_link{
   margin-top: 40px;
+}
+/*------ Password Recovery Page -----*/
+#recovery_title{
+  margin: 2vw 10vw;
 }
 /*------Sign Up Page------------*/
 #sign_up_page{
@@ -1057,9 +1065,10 @@ select{
   display:inline-block;
 }
 #country_code{
+  position:absolute;
   font-size: 0.9em;
   margin-left: -190px;
-  margin-bottom: -6px;
+  margin-top: 12px;
   display:inline-block;
   color: #4a4a4a;
 }

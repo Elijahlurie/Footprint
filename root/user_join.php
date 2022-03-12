@@ -11,7 +11,22 @@
 </script>
 
 <?php
-include 'cron_functions.php';
+
+/*----Setup for twillio sending texts:-------*/
+require __DIR__ . '/vendor/autoload.php';
+use Twilio\Rest\Client;
+
+// Your Account SID and Auth Token from twilio.com/console
+$account_sid = 'AC2150fab45e4eb3042573fdf41874bddc';
+$auth_token = 'c910fe65623cd040666afc198e3e6159';
+// In production, these should be environment variables. E.g.:
+// $auth_token = $_ENV["TWILIO_AUTH_TOKEN"]
+
+// A Twilio number SMS capabilities, saved as $_ENV to mae it a superglobal var
+$_ENV['twilio_number'] = "+19107734145";
+
+$_ENV['twilio_client'] = new Client($account_sid, $auth_token);
+/*end of twilio setup*/
 
 $sql = "SELECT * FROM users;";
 $result = mysqli_query($conn, $sql);
@@ -38,6 +53,19 @@ function getTimezone($timestamp, $coordinates){
 	$offset = ($timezone_result['rawOffset'] + $timezone_result['dstOffset']) / 3600;
 	return $offset;
 };
+
+//put all the possible actions from the database in an array and return the array
+function getActions($connection){
+  $actions_sql = "SELECT * FROM actions;";
+  $actions_result = mysqli_query($connection, $actions_sql);
+  $array_actions = mysqli_fetch_all($actions_result, MYSQLI_ASSOC);
+  $new_array = [];
+  foreach($array_actions as $action){
+    $new_array[] = $action["action"];
+  }
+  return $new_array;
+};
+$actions_array = getActions($conn);
 
 //sends user info from user join form to the users table in database
 function addUsers($connection){
@@ -127,6 +155,18 @@ function addUsers($connection){
 							//log in user
 							$_SESSION['id'] = $new_session_id;
 							$_SESSION['timestamp'] = time();
+
+							//send opening text to user
+							$message = "Welcome to Footprint! We'll text you one environmental action to do each day. Text STOP to opt out of sms, or log in at footprint.com to delete account.";
+							$_ENV['twilio_client']->messages->create(
+			              // Where to send the text message
+			              $phone_stored,
+			              array(
+			                  'from' => $_ENV['twilio_number'],
+			                  'body' => $message
+			              )
+			         );
+
 		         //redirect user to user page
 						 header("Location: user_page.php");
 						//store errors in session variables to be used in signup_error <p> in user join form
@@ -356,7 +396,7 @@ function editProfile($connection){
 	            $_SESSION['edit_profile_error'] = "Another user with this phone number already exists.";
 	          }
 					} else{
-						$_SESSION['signup_error'] = "Password must be at least 8 characters long.";
+						$_SESSION['edit_profile_error'] = "Password must be at least 8 characters long.";
 					}
 				} else{
 					$_SESSION['edit_profile_error'] = "Postal code must be 5 digits.";

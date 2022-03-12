@@ -16,6 +16,8 @@ include "user_join.php";
 </head>
 <body>
   <?php
+  $path = "";
+  
   include "nav_tag.php";
 
 //if user not logged in, send them to login page
@@ -110,7 +112,7 @@ include "user_join.php";
             echo '
               <p><a href="index.php">Home</a></p>
               <p><a href="edit_profile.php">Edit Profile</a></p>
-              <form method="POST" action="'.logOut().'">
+              <form method="POST" action="'.logOut($path).'">
                 <p><button id="additional_log_out_button" type="submit" name="logout">Log Out</button></p>
               </form>
               <p class="delete_link">Delete Account<p>

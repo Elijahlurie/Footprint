@@ -214,5 +214,5 @@ function checkDay($connection, $actions_array){
       endif;
     endforeach;
 };
-//checkDay($conn, $actions_array);
+checkDay($conn, $actions_array);
 ?>
