@@ -5,12 +5,12 @@ Questions/issues:
 
 things to do:
 
-- add cron job in hosting platform so that cron_functions gets run every 5 minutes
-  - https://www.dummies.com/web-design-development/web-hosting/how-to-automate-functions-on-your-website-with-cron-jobs/
+- make sure cron job works
 - when ready to upload site activate the texting function
   - upgrade twilio account
   - change $twilio_number to the number i buy (in adduser and cron functions)
   - do the webhook thing
+  - update new twilio auth token (in adduser and cron functions) (but dont push this to github)
 - buy google api
 - once hosting is set up:
   - register email
@@ -33,6 +33,7 @@ things to do:
 - at some point go through php and streamline code / fix logic errors
 
 bugs to fix:
+- id autoincrrement not workig
 - css html scroll-behavior:smooth on blog page isnt working
 - category form logic:
   - if i make a preview and go to category post page and then go to blog page, preview gets deleted bc of check on blog page
