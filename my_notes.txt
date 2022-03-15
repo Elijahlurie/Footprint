@@ -2,24 +2,22 @@ Questions/issues:
 - where should i give credit to the illustrator of the doodles and to the sources for the actions?
   - make a credits page?
 - how do we still maintain the security of having pages reload on pageback but still make it convenient so if theyre on blog page they dont lose their place
+- should i user .htaccess files to keep ppl from seeing styles/scripts files?
 
 things to do:
-
-- make sure cron job works
+- figure out session var problem
+  - https://programmierfrage.com/items/php-session-start-returns-false-session-variables-are-not-persistent
+- remake actions, blog posts tables starting at 0 id
 - when ready to upload site activate the texting function
   - upgrade twilio account
+  - uncomment text user part in cron_functions
   - change $twilio_number to the number i buy (in adduser and cron functions)
-  - do the webhook thing
+  - do the webhook thing, change message in reply_sms.php
   - update new twilio auth token (in adduser and cron functions) (but dont push this to github)
+  - make sure cron job sends out the texts, make cron job interval good
 - buy google api
 - once hosting is set up:
-  - register email
-  - change connection.php to connect to new database
   - change url in reply_sms.php to new website url
-  - adjust sms action message to new url (in adduser and cron functions)
-  - adjust text friend link action
-  - change email in footer
-  - make sure 404 page works
 - Launch site!!
 - Maybe remove learn abt maximizing battery after like 10 days bc it would be bad for ppl to get that one more than once
 - post social media content, build up hype, link accounts in footer

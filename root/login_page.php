@@ -17,7 +17,6 @@ include "user_join.php";
 <body>
   <?php
 
-
   //if user is already logged in, send them to user page
     if(isset($_SESSION['id'])){
       header("Location:user_page.php");
