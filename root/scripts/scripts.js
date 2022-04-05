@@ -44,7 +44,30 @@ var openDivs = function(clicked, div, display, closes_itself, optional_third, op
   document.addEventListener("click", close);
 };
 
+//code for add sources button on blog post form pages
+var addSourceInput = function(){
+  var blog_sources = document.getElementById('blog_sources');
+  var sources_count = document.getElementById('sources_count');
+  //start counter variable to give each input a unique name
+  var counter = 0;
+  //if the counter has already been started, get the current value of the counter so it doesnt start back at 0
+  if(sources_count.value){
+    counter = sources_count.value;
+  }
 
+  //get an array of the current source inputs
+  source_input = document.getElementsByClassName('source_input');
+  //go through each of the current source inputs to properly recreate the current html of the blog_sources <ul> so that the new input html can be appended
+  //use loop instead of simply using .innerHTML because we need to preserve the value attributes for each input so the links users haveinputted so far are not lost
+  var blog_sources_html = "";
+  for(var i = 0; i<source_input.length; i++){
+   blog_sources_html += '<li><input class="source_input" name="source_input_' + i + '" type="text" value="' + source_input[i].value + '" placeholder="Paste link here"></li>';
+  }
+  blog_sources.innerHTML = blog_sources_html + '<li><input class="source_input" name="source_input_' + counter + '" type="text" placeholder="Paste link here"></li>';
+  counter ++;
+  //set innerhtml of hidden sources_count input to the current number of sources so php createPost function knows how many source inputs to process
+  sources_count.value = counter;
+};
 //only call the function for the user links stuff if the user is logged in
 //and only call the function for the sign up form zipcode explanation if user not logged in
 if(hello_user){
@@ -68,23 +91,3 @@ if(hello_user){
 var nav_tag_menu_dropdown = document.getElementById('nav_tag_menu_dropdown_h4');
 var dropdown_main_links = document.getElementById('dropdown_main_links');
 openDivs(nav_tag_menu_dropdown, dropdown_main_links, 'block', true);
-
-//code for add sources button on blog post form pages
-var addSourceInput = function(){
-  var blog_sources = document.getElementById('blog_sources');
-  var sources_count = document.getElementById('sources_count');
-  //start counter variable to give each input a unique name
-  var counter  = 0;
-  //get an array of the current source inputs
-  source_input = document.getElementsByClassName('source_input');
-  //go through each of the current source inputs to properly recreate the current html of the blog_sources <ul> so that the new input html can be appended
-  //use loop instead of simply using .innerHTML because we need to preserve the value attributes for each input so the links users haveinputted so far are not lost
-  var blog_sources_html = "";
-  for(var i = 0; i<source_input.length; i++){
-   blog_sources_html += '<li><input class="source_input" name="source_input_' + i + '" type="text" value="' + source_input[i].value + '" placeholder="Paste link here"></li>';
-  }
-  blog_sources.innerHTML = blog_sources_html + '<li><input class="source_input" name="source_input_' + counter + '" type="text" placeholder="Paste link here"></li>';
-  counter ++;
-  //set innerhtml of hidden sources_count input to the current number of sources so php createPost function knows how many source inputs to process
-  sources_count.value = counter;
-};

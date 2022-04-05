@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>404 Not  Found</title>
-  <link rel="stylesheet" href="styles/styles.css">
+  <link rel="stylesheet" href="/styles/styles.css">
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
 </head>
 <body>

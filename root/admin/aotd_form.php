@@ -7,14 +7,6 @@ include "../user_join.php";
 //define $path variable so links inside nav tag and footer still point to the right page even though this file is in a folder
 $path = "../";
 
-if($specific_user['admin'] != 1){
-  header("Location: index.php");
-}
-
-//check if $_SESSION["new_post_data"] variable was set by the createBlogPreview function; if it wasn't, redirect user from this page to admin page
-if(!$_SESSION["new_post_data"]){
-  header('Location:admin.php');
-}
  ?>
 <html>
 <head>
@@ -30,6 +22,15 @@ if(!$_SESSION["new_post_data"]){
 <body>
   <?php
     include "../nav_tag.php";
+
+    if($specific_user['admin'] != 1){
+      header("Location: index.php");
+    }
+
+    //check if $_SESSION["new_post_data"] variable was set by the createBlogPreview function; if it wasn't, redirect user from this page to admin page
+    if(!$_SESSION["new_post_data"]){
+      header('Location:admin.php');
+    }
    ?>
   <div id="aotd_page_wrapper">
     <div id="aotd_form_instructions">
@@ -128,6 +129,7 @@ if(!$_SESSION["new_post_data"]){
       toolbar_mode: 'floating',
       tinycomments_mode: 'embedded',
       tinycomments_author: 'Author name',
+      invalid_styles: 'font-size font-family font-weight font-style font-variant-ligatures font-variant-caps font-variant-east-asian font-variant-position'
     });
 </script>
 </body>

@@ -60,13 +60,13 @@ $client = new Client($account_sid, $auth_token);
         $user_hours_today = ($user_seconds_today / 3600);
 
       //if its past 11am and earlier than 8pm text them
-        if($user_hours_today >= 11 && $hours_today < 20 && !$user['texted']):
+        if($user_hours_today >= 11 && $user_hours_today < 20 && !$user['texted']):
           $text_number = $user['phone'];
           $random_greeting_number = mt_rand(0,count($greetings_array)-1);
           //get current days since jan 11 1970
           $days_today = (time()/86400) - (time()%86400)/86400;
 
-          $message = $greetings_array[$random_greeting_number] . " " . $user['name'] . "! Your eco action today is: " . $actions_array[$user['curr_action']] . ". Log in to footprint.com to complete it!";
+          $message = $greetings_array[$random_greeting_number] . " " . $user['name'] . "! Your eco action today is: " . $actions_array[$user['curr_action'] - 1] . ". Log in to footprint.com to complete it!";
           //if it has been 14 days or more since the user last completed an action, append to their message a warning that another week of inactivity will result in them being removed
           if($days_today - $user['last_completed_action'] >= 14){
             $message = $message . " You've been inactive for a while - if you don't log in and complete an action in the next week, your account will be deleted.";
@@ -85,14 +85,6 @@ $client = new Client($account_sid, $auth_token);
           //update that the user has been texted
           $sql = "UPDATE users SET texted = ".time()." WHERE id=".$user['id'].";";
           $result = mysqli_query($conn, $sql);
-        endif;
-
-
-        //get current days since jan 1 1970 in the users time zone
-  	    $user_days = ($user_seconds/86400) - ($user_seconds%86400)/86400;
-        //if it's an appropriate time to text and the user has not completed an action in 15+ days, send the user a check-in text
-        if($user_hours_today >= 12 && $hours_today < 20 && ($user_days - $user['last_completed_action']) >= 15):
-            //send a check-in text
         endif;
     endforeach;
 

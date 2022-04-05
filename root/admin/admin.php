@@ -61,7 +61,7 @@ $path = "../";
               <input name="blog_preview_image" type="file" accept="image/png, image/jpeg, image/jpg">
               <p>Author Name</p>
               <input name="blog_author" type="text" value="'.$_SESSION['blog_input_author'].'" placeholder="Author name">
-              <p>Title</p>
+              <p>Title (Cannot end in punctuation)</p>
               <input name="blog_title" type="text" value="'.$_SESSION['blog_input_title'].'" placeholder="Title">
               <p>Description</p>
               <input name="blog_description" type="text" value="'.$_SESSION['blog_input_description'].'" placeholder="Description">

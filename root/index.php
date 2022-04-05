@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <?php
-
 $time = date_default_timezone_set('America/Los_Angeles');
 include "connection.php";
 include "user_join.php";

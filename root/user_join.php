@@ -141,7 +141,6 @@ function addUsers($connection){
 							$count_users = count($users_array);
 							$new_session_id = $users_array[$count_users-1]['id'];
 							$curr_action = $users_array[$count_users-1]['curr_action'];
-
 							//add a row to past_actions table for the user to track the actions they'e had and not give duplicates and start the row off by filling in today's action for the day0 column
 							$past_action_table_sql = "INSERT INTO past_actions (user_id, day0) VALUES ($new_session_id, $curr_action);";
 							$past_action_table_result = mysqli_query($connection, $past_action_table_sql);
@@ -157,15 +156,15 @@ function addUsers($connection){
 							$_SESSION['timestamp'] = time();
 
 							//send opening text to user
-							$message = "Welcome to Footprint! We'll text you one environmental action to do each day. Text STOP to opt out of sms, or log in at footprint.com to delete account.";
-							$_ENV['twilio_client']->messages->create(
+							$message = "Welcome to Footprint! We'll text you one environmental action to do each day, so save our contact. Text STOP to opt out of sms, or log in at footprint-earth.com to delete account.";
+						/*	$_ENV['twilio_client']->messages->create(
 			              // Where to send the text message
 			              $phone_stored,
 			              array(
 			                  'from' => $_ENV['twilio_number'],
 			                  'body' => $message
 			              )
-			         );
+			         );*/
 
 		         //redirect user to user page
 						 header("Location: user_page.php");
@@ -493,7 +492,7 @@ function completedAction($connection){
 
 	    $old_actions_sql = "SELECT * FROM main WHERE id=1;";
 	    $old_actions_result = mysqli_query($connection, $old_actions_sql);
-	    $array_main = mysqli_fetch_all($old_actions_result, MYSQLI_ASSOC);
+	    $array_main = mysqli_fetch_all($old_actions_result, MYSQLI_ASSOC)[0];
 	    $new_total_actions = $array_main['total_actions'] + 1;
 	    $total_actions_sql = "UPDATE main SET total_actions = $new_total_actions WHERE id = 1;";
 	    $total_actions_result = mysqli_query($connection, $total_actions_sql);

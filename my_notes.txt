@@ -2,23 +2,13 @@ Questions/issues:
 - where should i give credit to the illustrator of the doodles and to the sources for the actions?
   - make a credits page?
 - how do we still maintain the security of having pages reload on pageback but still make it convenient so if theyre on blog page they dont lose their place
+  - only have the page back check on sensitive pages?
 - should i user .htaccess files to keep ppl from seeing styles/scripts files?
+- note: in siteground version, i changed all header(location:) to <meta http-equiv="refresh" content="0;url='.$path.'wanted_page.php"> so either change in this version too or find way to make header() work
 
 things to do:
-- figure out session var problem
-  - https://programmierfrage.com/items/php-session-start-returns-false-session-variables-are-not-persistent
-- remake actions, blog posts tables starting at 0 id
-- when ready to upload site activate the texting function
-  - upgrade twilio account
-  - uncomment text user part in cron_functions
-  - change $twilio_number to the number i buy (in adduser and cron functions)
-  - do the webhook thing, change message in reply_sms.php
-  - update new twilio auth token (in adduser and cron functions) (but dont push this to github)
-  - make sure cron job sends out the texts, make cron job interval good
-- buy google api
-- once hosting is set up:
-  - change url in reply_sms.php to new website url
-- Launch site!!
+
+- its not going to cache anything w this htaccess file no cache line, so in production i should remove the file
 - Maybe remove learn abt maximizing battery after like 10 days bc it would be bad for ppl to get that one more than once
 - post social media content, build up hype, link accounts in footer
   - get Blair Conklin to shout it out on insta/youtube?
@@ -31,7 +21,6 @@ things to do:
 - at some point go through php and streamline code / fix logic errors
 
 bugs to fix:
-- id autoincrrement not workig
 - css html scroll-behavior:smooth on blog page isnt working
 - category form logic:
   - if i make a preview and go to category post page and then go to blog page, preview gets deleted bc of check on blog page
@@ -43,6 +32,10 @@ bugs to fix:
 
 
 styles/features to add at some point:
+- try cron tiing at exactly 11:00 instead of 11:01
+- add back buttons to category pages and individual blog posts
+- add exit; below php header redirects at top of pages
+- add a user count to the admin page
 - lock login / password recovery forms after a certain amount of incorrect guesses
 - make input boxes border red when errors inputting
 - have max character counts for title and description inputs in admin page, have a little number in the corner of the textbox counting down
@@ -97,9 +90,9 @@ cool extra features to add:
 Expenses:
  - Texting API, toll free number
   - twilio
-  - Textlocal
-- google api paid account
+- google api paid account (do free trial first)
   - if its too expensive just do a timezone dropdown instead
+  - console: https://console.cloud.google.com/apis/credentials?project=main-tine-324408
 - web hosting
   - look into managed wordpress hosting
   siteground.com start up plan: 3.99 per month
